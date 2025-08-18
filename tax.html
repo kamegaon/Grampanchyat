@@ -148,13 +148,29 @@ nav a:hover {
   font-size: 16px;
   line-height: 1.6;
 }
-#infoBox img {
-  max-width: 100%;
-  height: auto;
-  margin-top: 10px;
-  border-radius: 10px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-} 
+
+  .gp-info{
+  background:#fff;
+  border-radius:12px;
+  padding:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.12);
+}
+
+.gp-info-img{
+  display:block;
+  width:100%;
+  height:auto;           /* keeps image proportion (normal image) */
+  border-radius:10px;
+  object-fit:contain;    /* shows full image without cropping */
+  border:4px solid #eee; /* subtle frame */
+}
+
+.gp-info-note{
+  margin:10px 2px 0;
+  font-size:14px;
+  color:#333;
+}
+
 </style>
 </head>
 <body>
@@ -263,15 +279,11 @@ nav a:hover {
         ⚠️ जर कोणतीही व्यवहारात चूक / फसवणूक दिसली,<br>
         तर त्वरित ग्रामपंचायतीत संपर्क साधा.
       </p>
-      <img src="https://drive.google.com/uc?export=view&id=YOUR_FILE_ID" alt="ग्रामपंचायत सूचना">
-    </div>
+     <div class="gp-info">
+  <img class="gp-info-img" src="images/notice.jpg" alt="ग्रामपंचायत सूचना">
+  <p class="gp-info-note">📝 कृपया माहिती व्यवस्थित वाचा आणि आवश्यक कागदपत्रे तयार ठेवा.</p>
+</div>
 
-    <!-- Google Form -->
-    <iframe id="googleForm"
-      src="https://docs.google.com/forms/d/e/1FAIpQLSdXg7lxxxxxxxxyyyyzzz/viewform?embedded=true" 
-      width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0">
-    </iframe>
-  </div>
 </div>
     <div class="instructions">
       <h4>📝 सूचना / Instructions</h4>
@@ -410,6 +422,7 @@ function closeFormPopup() {
 </script>
 </body>
 </html>
+
 
 
 
