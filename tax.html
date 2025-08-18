@@ -127,6 +127,34 @@ nav a:hover {
   background-color: #00adb5; /* bright accent hover */
   color: #222831;
 }
+ /* सूचना बॉक्स */
+#infoBox {
+  background: #f9fff2;
+  border-left: 6px solid #4CAF50;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  font-family: "Noto Sans Devanagari", sans-serif;
+  color: #333;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  text-align: center;
+}
+#infoBox h3 {
+  margin-top: 0;
+  font-size: 20px;
+  color: #2e7d32;
+}
+#infoBox p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+#infoBox img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+} 
 </style>
 </head>
 <body>
@@ -225,6 +253,26 @@ nav a:hover {
       <p class="paid-highlight">Total Collection / एकूण वसुल: <span id="cTotalCollection"></span></p>
       <p>Balance / बाकी: <span id="cRemain"></span></p>
     </div>
+    <!-- गावकऱ्यांसाठी सूचना -->
+ <!-- सूचना + इमेज -->
+    <div id="infoBox">
+      <h3>🙏 ग्रामपंचायत सूचना 🙏</h3>
+      <p>
+        📝 हा फॉर्म भरताना आपली माहिती योग्य द्या.<br>
+        ✅ भरलेली माहिती ग्रामपंचायत नोंदीत थेट जाईल.<br>
+        ⚠️ जर कोणतीही व्यवहारात चूक / फसवणूक दिसली,<br>
+        तर त्वरित ग्रामपंचायतीत संपर्क साधा.
+      </p>
+      <img src="https://drive.google.com/uc?export=view&id=YOUR_FILE_ID" alt="ग्रामपंचायत सूचना">
+    </div>
+
+    <!-- Google Form -->
+    <iframe id="googleForm"
+      src="https://docs.google.com/forms/d/e/1FAIpQLSdXg7lxxxxxxxxyyyyzzz/viewform?embedded=true" 
+      width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0">
+    </iframe>
+  </div>
+</div>
     <div class="instructions">
       <h4>📝 सूचना / Instructions</h4>
       <p>सर्व माहिती तपासा आणि चुकीचे असल्यास ग्रामपंचायत कार्यालयाशी संपर्क करा.</p>
@@ -352,9 +400,17 @@ document.getElementById("cTotalCollection").innerText=c.harpi+c.arogya+c.dababi+
 document.getElementById("cRemain").innerText=(d.harpi+d.arogya+d.dababi+d.pani+d.pad+d.fine)-(c.harpi+c.arogya+c.dababi+c.pani+c.padLand+c.finePaid-c.sut);
 }
 </script>
-
+<script>
+function openFormPopup() {
+  document.getElementById("formPopup").style.display = "flex";
+}
+function closeFormPopup() {
+  document.getElementById("formPopup").style.display = "none";
+}
+</script>
 </body>
 </html>
+
 
 
 
