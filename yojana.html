@@ -120,6 +120,26 @@ th { background:#0077B6; color:#fff; }
         border-radius: 6px;
     }
 }
+.notice-bar {
+            display: none; /* hidden by default */
+            background: #e3f2fd; /* soft light blue */
+            color: #222; /* dark text */
+            padding: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            border-bottom: 2px solid #bbb;
+        }
+        .notice-text {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll-left 25s linear infinite; /* slowed down */
+        }
+        @keyframes scroll-left {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
 
 </style>
 
@@ -403,6 +423,7 @@ function closePopup() {
 
 </body>
 </html>
+
 
 
 
