@@ -74,6 +74,28 @@ footer { background: linear-gradient(135deg, #1a3d7c, #0d6d2f); color: #fff; pad
 .highlight{font-weight:bold;color:#d32f2f;font-size:16px;}
 .paid-highlight{font-weight:bold;color:#388e3c;font-size:16px;}
 .instructions{background:#e3f2fd;margin:15px;border-radius:10px;padding:15px;font-size:15px;color:#0d47a1;flex-shrink:0;}
+  /*Notice*/
+.notice-bar {
+            display: none; /* hidden by default */
+            background: #e3f2fd; /* soft light blue */
+            color: #222; /* dark text */
+            padding: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            border-bottom: 2px solid #bbb;
+        }
+        .notice-text {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll-left 25s linear infinite; /* slowed down */
+        }
+        @keyframes scroll-left {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
 </style>
 </head>
 <body>
@@ -302,4 +324,5 @@ document.getElementById("cRemain").innerText=(d.harpi+d.arogya+d.dababi+d.pani+d
 
 </body>
 </html>
+
 
