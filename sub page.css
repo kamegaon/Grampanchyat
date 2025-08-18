@@ -307,26 +307,7 @@ th {
 /*yojana page*/
 
  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 30px;
-    overflow-x: auto;
-    display: block;
-  }
-
-  th, td {
-    padding: 10px;
-    border: 1px solid #ccc;
-    text-align: left;
-    font-size: 16px;
-  }
-
-  th {
-    background-color: #0077B6;
-    color: white;
-  }
-
+ 
   h3 {
     background-color: #D0E8F2;
     padding: 10px 15px;
