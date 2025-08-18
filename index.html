@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <title>ग्रामपंचायत - KAMEGAON</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet"> 
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+  <!-- Header -->
+  <header class="webapp-header">
+    <div class="logo-section">
+      <div class="logo-title">
+        <img src="logo.jpg" alt="Logo" class="logo">
+        <div class="title-text">
+          <h1>कामेगाव ग्रामपंचायत</h1>
+          <p>आपले गाव, आपली जबाबदारी</p>
+        </div>
+      </div>
+      <div class="icons">
+        <a href="index.html" title="Home"><i class="fas fa-house"></i></a>
+        <a href="notice.html" title="Notifications"><i class="fas fa-bell"></i></a>
+        <a href="login.html" title="Login"><i class="fas fa-user-circle"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html"><i class="fas fa-home"></i> मुख्यपृष्ठ</a>
+    <a href="village.html"><i class="fas fa-map-marker-alt"></i> गावाची माहिती</a>
+    <a href="yojana.html"><i class="fas fa-list-alt"></i> योजना</a>
+    <a href="seva.html"><i class="fas fa-hand-holding-heart"></i> सेवा</a>
+    <a href="panchayat-info.html"><i class="fas fa-building"></i> ग्रामपंचायत माहिती</a>
+    <a href="law.html"><i class="fas fa-gavel"></i> कायदे आणि नियम</a>
+  </nav>
+
+  <div id="notice-bar" class="notice-bar">
+    <span id="notice" class="notice-text"></span>
+  </div>
+
+  <script>
+    async function fetchNotice() {
+      try {
+        const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRYmHwVuXHgocGoP7p1evwN8HN5cGneUv4Di0KIkk7Djvr7gC6U3F3PMwa1dqbQebaXM5IN3yyd_7Ig/pub?gid=1382462655&single=true&output=csv";
+        const response = await fetch(csvUrl);
+        const text = await response.text();
+        const lines = text.trim().split("\n");
+        const lastLine = lines[lines.length - 1];
+        const columns = lastLine.split(",");
+        const latestNotice = columns[1]?.trim();
+        if (latestNotice && latestNotice.toLowerCase() !== "no notice") {
+          document.getElementById("notice").textContent = latestNotice;
+          document.getElementById("notice-bar").style.display = "block";
+        } else {
+          document.getElementById("notice-bar").style.display = "none";
+        }
+      } catch (error) {
+        document.getElementById("notice-bar").style.display = "none";
+      }
+    }
+    fetchNotice();
+    setInterval(fetchNotice, 15000); // Refresh every 15 seconds
+  </script>
+
+  <!-- Main Content -->
+  <main>
+    <h2>🌟 आपले स्वागत आहे! 🌟</h2>
+    <script>
+      function openPopup() { document.getElementById("popup").style.display = "block"; }
+      function closePopup() { document.getElementById("popup").style.display = "none"; }
+    </script>
+  <!-- अधिक सुविधा बॉक्स -->
+    <div class="features-box" onclick="openPopup()">
+      <i class="fas fa-cog"></i>
+      <span>अधिक सुविधा पाहण्यासाठी येथे क्लिक करा</span>
+    </div>
+
+    <!-- पॉपअप -->
+    <div id="popup-overlay" class="popup-overlay" onclick="closePopup()">
+      <div class="popup-window" onclick="event.stopPropagation()">
+        <!-- small handle (instead of arrow/title) -->
+        <div class="popup-handle" aria-hidden="true"></div>
+        <ul class="features-list">
+          <li id="google_translate_element"></li>
+          <li><a href="tax.html">📍tax.html</a></li>
+          <li><a href="yojana.html">📜 शासकीय योजना</a></li>
+          <li><a href="seva.html">💼 सेवा</a></li>
+          <li><a href="panchayat-info.html">🏛 ग्रामपंचायत माहिती</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      function openPopup() {
+        const overlay = document.getElementById("popup-overlay");
+        const win = overlay.querySelector(".popup-window");
+        overlay.style.display = "flex";
+        requestAnimationFrame(() => {
+          win.style.transform = "translateY(0) rotateX(0) scale(1)";
+          win.style.opacity = "1";
+        });
+      }
+      function closePopup() {
+        const overlay = document.getElementById("popup-overlay");
+        const win = overlay.querySelector(".popup-window");
+        win.style.transform = "translateY(-20px) rotateX(6deg) scale(.96)";
+        win.style.opacity = "0";
+        setTimeout(() => { overlay.style.display = "none"; }, 260);
+      }
+    </script>
+
+   
+
+    <p> ही ग्रामपंचायतची माहिती देणारी वेबसाईट आहे. येथे विविध सेवा व माहिती उपलब्ध आहे. </p>
+<div class="slider-container">
+  <div class="slider-track">
+    <!-- Original slides -->
+    <div class="slide"><img src="image1.jpg" alt="Slide 1"></div>
+    <div class="slide"><img src="image2.jpg" alt="Slide 2"></div>
+    <div class="slide"><video src="video1.mp4" autoplay muted loop></video></div>
+    <div class="slide"><img src="image3.jpg" alt="Slide 3"></div>
+    <!-- Duplicate slides for seamless loop -->
+    <div class="slide"><img src="image1.jpg" alt="Slide 1"></div>
+    <div class="slide"><img src="image2.jpg" alt="Slide 2"></div>
+    <div class="slide"><video src="video1.mp4" autoplay muted loop></video></div>
+    <div class="slide"><img src="image3.jpg" alt="Slide 3"></div>
+  </div>
+</div>
+    <h1>1️⃣ "स्वच्छ, सुंदर आणि समृद्ध गाव — आपली ग्रामपंचायत, आपली शान!"</h1>
+    <p> आपले गाव म्हणजे शांत, सुंदर आणि समृद्ध परंपरांनी भरलेले एक छोटं गाव आहे. येथे सुमारे 1558 लोक राहतात. गावामध्ये प्राथमिक शाळा, आरोग्य केंद्र, आणि सार्वजनिक वीजपुरवठा आहे. शेतकरी मुख्य व्यवसाय असून विविध पिकांची शेती येथे केली जाते. ग्रामपंचायत गावाच्या विकासासाठी विविध योजना राबवित आहे, जसे की स्वच्छता अभियान, पाणीपुरवठा सुधारणा, आणि आरोग्य सेवा. </p>
+
+    <div class="poster-box">
+      <h2 style="color: #B71C1C;">कामेगाव गावाची माहिती (धाराशिव, महाराष्ट्र)</h2>
+      <ul class="info-list">
+        <li>📍 कामेगाव हे महाराष्ट्र राज्यातील धाराशिव जिल्ह्यातील एक प्रगतशील व ऐतिहासिक गाव आहे.</li>
+        <li>👥 लोकसंख्या: अंदाजे १५५८ नागरिक.</li>
+        <li>🌾 मुख्य व्यवसाय: शेती व दुग्धव्यवसाय.</li>
+        <li>🏫 गावात प्राथमिक शाळा, अंगणवाडी व आरोग्य केंद्र उपलब्ध आहे.</li>
+        <li>💧 स्वच्छ पाणीपुरवठा, वीज व्यवस्था व चांगली रस्ते व्यवस्था.</li>
+        <li>🛕 सांस्कृतिकदृष्ट्या समृद्ध — मंदिर, उत्सव व परंपरा जपणारे गाव.</li>
+      </ul>
+    </div>
+
+    <section>
+      <h2 style="color: #B71C1C;">कामेगाव ग्रामपंचायत निवडणूक व प्रशासन माहिती</h2>
+      <p><strong>ग्रामपंचायत निवडणुकीची तारीख:</strong> 15 ऑक्टोबर 2020</p>
+      <p><strong>सरपंच कार्यकाळाची सुरुवात:</strong> 01 नोव्हेंबर 2020</p>
+
+      <h3>📌 सध्याचे पदाधिकारी:</h3>
+      <ul style="font-size: 18px; line-height: 1.8;">
+        <li><strong>सरपंच:</strong> श्री. रामदास पाटील</li>
+        <li><strong>उपसरपंच:</strong> सौ. सुमती पाटील</li>
+        <li><strong>ग्रामसेवक:</strong> श्री. विशाल भोसले</li>
+      </ul>
+
+      <h3>🧾 सदस्यसंख्या:</h3>
+      <p>कामेगाव ग्रामपंचायतमध्ये एकूण 7 सदस्य आहेत. प्रत्येक सदस्य एक स्वतंत्र प्रभागाचे प्रतिनिधित्व करतो.</p>
+    </section>
+
+    <div class="poster-box">
+      <a href="https://maps.app.goo.gl/R6u6AEXg2E3cZzKE6" target="_blank" style="font-size: 18px; color: #FF0000; text-decoration: none; font-weight: bold;">
+        📍 गुगल नकाशावर ठिकाण पाहा <br>
+        <img src="GPS.png" alt="गावाचे चित्र">
+      </a>
+      <a href="https://maps.app.goo.gl/R6u6AEXg2E3cZzKE6" class="read-more-btn"> अधिक वाचा ➜ </a>
+    </div>
+
+    <div class="poster-box">
+      <h2 style="color: #B71C1C;">गावाची माहिती</h2>
+      <p style="font-size: 18px;">
+        कामेगाव हे एक ऐतिहासिक व प्रगतशील गाव आहे. येथील लोकसंख्या १५५८ आहे, आणि मुख्य व्यवसाय शेती आहे...
+      </p>
+      <a href="village.html" class="read-more-btn"> अधिक वाचा ➜ </a>
+    </div>
+
+    <div class="poster-box">
+      <h2 style="color: #B71C1C;">शासकीय योजना</h2>
+      <p style="font-size: 18px;">
+        ग्रामपंचायतद्वारे विविध शासकीय योजना राबवल्या जातात, जसे की जलजीवन मिशन, प्रधानमंत्री आवास योजना...
+      </p>
+      <a href="yojana.html" class="read-more-btn"> अधिक वाचा ➜ </a>
+    </div>
+
+    <div class="poster-box">
+      <h2 style="color: #B71C1C;">सेवा</h2>
+      <p style="font-size: 18px;">
+        ग्रामपंचायत कार्यालयामार्फत नागरिकांसाठी विविध सेवा उपलब्ध आहेत — जन्म प्रमाणपत्र, मृत्यू प्रमाणपत्र, कर भरणा...
+      </p>
+      <a href="seva.html" class="read-more-btn"> अधिक वाचा ➜ </a>
+    </div>
+
+    <div class="poster-box">
+      <h2 style="color: #B71C1C;;">ग्रामपंचायत माहिती</h2>
+      <p style="font-size: 18px;">
+        ग्रामपंचायत कामेगाव ही गावाच्या सर्वांगीण विकासासाठी कार्यरत आहे. गावातील नागरिकांना विविध सेवा, सुविधा व योजना उपलब्ध करून देणे हेच प्रमुख उद्दिष्ट आहे. पारदर्शक प्रशासन, जनतेच्या सहभागातून गावाचा विकास साधणे हे आमचे ध्येय आहे.
+      </p>
+      <a href="panchayat-info.html" class="read-more-btn"> अधिक वाचा ➜ </a>
+    </div>
+
+    <div class="poster-box">
+      <h2 style="color:#B71C1C;"> ग्रामपंचायतीचे कायदे व नोंदणी </h2>
+      <p style="font-size: 18px;">
+        ग्रामपंचायतीच्या माध्यमातून जन्म, मृत्यू, विवाह नोंदणी तसेच 7/12 उतारा, जात-उत्पन्न दाखले मिळवता येतात.
+      </p>
+      <a href="panchayat-info.html" class="read-more-btn"> अधिक वाचा ➜ </a>
+    </div>
+  </main>
+
+  <!-- ===== Footer Start ===== -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>🌐 ग्रामपंचायत सेतू</h3>
+        <p>आपल्या गावाची माहिती, योजना, आणि ताज्या सूचना एका क्लिकमध्ये.</p>
+      </div>
+      <div class="footer-section">
+        <h4>📍 संपर्क</h4>
+        <p>📞</p>
+        <p>✉️kamegaon@gmail.com</p>
+        <p>🏠 गाव, तालुका, जिल्हा</p>
+      </div>
+      <div class="footer-section">
+        <h4>🔗 दुवे</h4>
+        <ul>
+          <li><a href="index.html">🏠 मुख्य पान</a></li>
+          <li><a href="notice.html">📢 सूचना</a></li>
+          <li><a href="panchayat-info.html"> ग्रामपंचायत माहिती</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 ग्रामपंचायत KAMEGAON सेतू </p>
+    </div>
+  </footer>
+  <!-- ===== Footer End ===== -->
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

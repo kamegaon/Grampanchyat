@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <title>ग्रामपंचायत योजना व माहिती - KAMEGAON</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
+  <!-- Google Font -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ <link rel="stylesheet" href="sub page.css">
+  <style>
+  h2 {
+    background-color: #D0E8F2;  /* Soft blue background */
+    padding: 12px 20px;
+    border-radius: 10px;
+    color: #003049;             /* Dark blue text */
+    font-size: 24px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    border-left: 6px solid #0077B6; /* Blue side bar */
+  }
+
+  h3 {
+    background-color: #F1F3F5;  /* Light gray */
+    padding: 8px 16px;
+    border-left: 4px solid #ADB5BD; /* Gray bar */
+    color: #2E2E2E;
+    border-radius: 6px;
+    font-size: 20px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+ 
+
+/* Popup Styles */
+h2 { background-color:#D0E8F2; padding:12px 20px; border-radius:10px; color:#003049; margin-top:30px; margin-bottom:15px; border-left:6px solid #0077B6; }
+h3 { background-color:#F1F3F5; padding:8px 16px; border-left:4px solid #ADB5BD; color:#2E2E2E; border-radius:6px; margin-top:25px; margin-bottom:10px; }
+table { width:100%; border-collapse: collapse; margin-bottom:30px; }
+th, td { border:1px solid #ccc; padding:10px; text-align:left; }
+th { background:#0077B6; color:#fff; }
+/* Fullscreen popup */
+/* Popup overlay */
+/* Fullscreen popup overlay */
+/* Fullscreen popup overlay */
+.popup {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  z-index: 999;
+  overflow-y: auto; /* scroll if content exceeds screen */
+}
+
+/* Fullscreen popup content */
+.popup-content {
+  width: 100%;
+  max-width: 1000px;  /* optional */
+  height: 100%;        /* make it full height */
+  margin: 0;           /* remove auto margin */
+  padding: 30px;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 0;    /* optional: remove rounded corners for full screen */
+  box-shadow: none;
+  position: relative;
+  overflow-y: auto;    /* scroll content inside popup */
+}
+
+/* Back arrow on top-left */
+.back-arrow {
+  position: fixed;  /* fixed keeps it visible while scrolling */
+  top: 20px;
+  left: 20px;
+  font-size: 28px;
+  cursor: pointer;
+  color: #0077B6;
+  z-index: 1000;
+}
+
+/* Row style for details */
+.detail-row {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row .label {
+  width: 30%;
+  font-weight: bold;
+  color: #0077B6;
+}
+
+.detail-row .value {
+  width: 70%;
+  color: #333;
+}
+/* Popup image styling */
+.popup-image {
+    width: 100%;           /* Full width of container */
+    max-width: 600px;      /* Max width on larger screens */
+    height: auto;          /* Maintain aspect ratio */
+    display: block;
+    margin: 15px auto;     /* Center image with top/bottom spacing */
+    border-radius: 10px;   /* Rounded corners */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* Soft shadow */
+}
+
+/* Optional: mobile adjustments */
+@media (max-width: 480px) {
+    .popup-image {
+        margin: 10px auto;
+        border-radius: 6px;
+    }
+}
+
+</style>
+
+
+</head>
+<body>
+
+ <!-- Header -->
+<header class="webapp-header">
+  <div class="logo-section">
+    <div class="logo-title">
+      <img src="logo.png" alt="Logo" class="logo">
+      <div class="title-text">
+        <h1>कामेगाव ग्रामपंचायत</h1>
+        <p>आपले गाव, आपली जबाबदारी</p>
+      </div>
+    </div>
+    <div class="icons">
+      <a href="index.html" title="Home"><i class="fas fa-house"></i></a>
+      <a href="notifications.html" title="Notifications"><i class="fas fa-bell"></i></a>
+      <a href="login.html" title="Login"><i class="fas fa-user-circle"></i></a>
+    </div>
+  </div>
+</header>
+
+
+ 
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html"><i class="fas fa-home"></i> मुख्यपृष्ठ</a>
+    <a href="village.html"><i class="fas fa-map-marker-alt"></i> गावाची माहिती</a>
+    <a href="yojana.html"><i class="fas fa-list-alt"></i> योजना</a>
+    <a href="seva.html"><i class="fas fa-hand-holding-heart"></i> सेवा</a>
+    <a href="panchayat-info.html"><i class="fas fa-building"></i> ग्रामपंचायत माहिती</a>
+    <a href="law.html"><i class="fas fa-gavel"></i> कायदे आणि नियम</a>
+  </nav>
+
+
+  <!-- Main Content -->
+  <main>
+<img src="yojana.jpg" alt="वर्णन" class="popup-image">
+
+    <!-- योजनांचा भाग -->
+    <h2>ग्रामपंचायतीच्या योजना – परिचय</h2>
+    <p>
+      गावाचा विकास घडवण्यासाठी शासन वेगवेगळ्या योजना तयार करते. त्या योजना गावापर्यंत पोहोचवण्याचे आणि योग्य लोकांपर्यंत लाभ देण्याचे काम ग्रामपंचायत करते.
+    </p>
+
+    <h2>या योजना का आवश्यक आहेत?</h2>
+    <p>
+      ग्रामीण भागात अजूनही अनेक कुटुंबे मूलभूत सुविधांपासून वंचित आहेत — जसे की शौचालय, पिण्याचे पाणी, पक्के घर, रोजगार, आणि शिक्षण. अशा गरजांसाठी सरकारकडून योजना दिल्या जातात. 
+      त्या योजनांचा लाभ मिळाल्यास लोकांचे जीवनमान सुधारते आणि गावाचा विकासही वेगाने होतो.
+    </p>
+
+    <h2>योजना कशा राबवल्या जातात?</h2>
+    <p>
+      शासन योजना जाहीर केल्यानंतर ती ग्रामपंचायतकडे पाठवली जाते. ग्रामसेवक, सरपंच आणि इतर सदस्य त्या योजनेबाबत माहिती गावात देतात. यासाठी जाहीर सभा, नोटीस किंवा ग्रामसभा घेतली जाते.
+    </p>
+    <p>
+      पात्र लाभार्थ्यांनी त्यासाठी अर्ज करावा लागतो. त्यानंतर शासकीय नियमांनुसार अर्ज तपासले जातात आणि लाभ मंजूर केला जातो.
+    </p>
+
+    <h2>नागरिकांनी काय करावे?</h2>
+    <ul>
+      <li>ग्रामपंचायतमध्ये जाऊन योजनांची माहिती घ्यावी</li>
+      <li>जर योजना आपल्या गरजेची असेल तर अर्ज भरावा</li>
+      <li>सर्व आवश्यक कागदपत्रे (जसे की आधार कार्ड, उत्पन्न प्रमाणपत्र इ.) तयार ठेवावीत</li>
+      <li>गरजूंना माहिती द्यावी आणि मार्गदर्शन करावे</li>
+      <li>गावाच्या विकासात सक्रिय सहभाग घ्यावा</li>
+    </ul>
+
+    <h2>योजना म्हणजे संधी</h2>
+    <p>
+      या योजना म्हणजे केवळ सरकारी कामकाज नाही, तर प्रत्येक कुटुंबाच्या जीवनात बदल घडवणारी संधी आहे. घर, नोकरी, शिक्षण, आरोग्य, स्वच्छता — या सगळ्या क्षेत्रांमध्ये आपल्याला मदत मिळते, फक्त आपल्याला ती माहिती असावी आणि वेळेवर अर्ज केला पाहिजे.
+    </p>
+
+    <!-- ग्रामपंचायतीची माहिती -->
+    <h2>ग्रामपंचायतीची भूमिका</h2>
+    <p>ग्रामपंचायत ही गावातील स्थानिक स्वराज्य संस्थेची मुख्य यंत्रणा आहे. ती गावच्या विकासासाठी काम करणारी आणि गावकऱ्यांचे प्रश्न सोडवणारी संस्था आहे.</p>
+
+    <h3>ग्रामपंचायतीच्या मुख्य भूमिका:</h3>
+    <ul>
+      <li><strong>गावाचा विकास:</strong> पाणी, रस्ते, वीज, शौचालय, कचरा व्यवस्थापन यांची सुविधा करणे.</li>
+      <li><strong>शासकीय योजना:</strong> शासनाच्या विविध योजना गावात राबवणे व गरजूंना लाभ मिळवून देणे.</li>
+      <li><strong>ग्रामसभा:</strong> गावकऱ्यांच्या समस्या ऐकण्यासाठी ग्रामसभा घेणे व निर्णय घेणे.</li>
+      <li><strong>कागदपत्र सेवा:</strong> जन्म, मृत्यू, रहिवासी प्रमाणपत्र, जातीचे दाखले इ. पुरवणे.</li>
+      <li><strong>स्वच्छता व आरोग्य:</strong> गावात स्वच्छता राखणे, नाल्यांची साफसफाई करणे.</li>
+      <li><strong>शाळा व महिला बचत गट:</strong> अंगणवाडी, शाळा, बचत गटांना मदत करणे.</li>
+      <li><strong>विवाद निवारण:</strong> गावातील लहान वाद स्थानिक पातळीवरच सोडवणे.</li>
+    </ul>
+
+    <h3>ग्रामपंचायतीत कोण असतो?</h3>
+    <ul>
+      <li><strong>सरपंच:</strong> ग्रामपंचायतीचे प्रमुख.</li>
+      <li><strong>उपसरपंच:</strong> सरपंच नसल्यास काम पाहणारा.</li>
+      <li><strong>ग्रामसेवक:</strong> योजनांची माहिती देणारा व कागदपत्रे हाताळणारा अधिकारी.</li>
+      <li><strong>सदस्य:</strong> गावातील प्रत्येक वॉर्डमधून निवडलेले प्रतिनिधी.</li>
+    </ul>
+
+    <h2>निष्कर्ष</h2>
+    <p>
+      ग्रामपंचायत ही गावाचा विकास घडवणारी संस्था आहे. ती केवळ कागदोपत्री नसून गावकऱ्यांचे प्रश्न सोडवणारी, योजना राबवणारी आणि गाव पुढे नेणारी यंत्रणा आहे. 
+      तसेच शासनाच्या योजना ही जीवन बदलण्यासाठीची संधी आहे. त्यामुळे प्रत्येक नागरिकाने ग्रामपंचायतीच्या कामात सहभाग घ्यावा आणि गावाच्या प्रगतीत योगदान द्यावे.
+    </p>
+<h2>कामेगाव ग्रामपंचायत अंतर्गत लागू असलेल्या योजना</h2>
+<p>खाली दिलेल्या यादीत कामेगाव ग्रामपंचायतीमध्ये राबविल्या जाणाऱ्या महत्वाच्या योजनांची विभागवार यादी दिली आहे.</p>
+
+<img src="JAN_YOJNA_ABHIYAN.jpg" alt="वर्णन" class="popup-image">
+
+
+<div class="popup" id="popup">
+  <div class="popup-content info-box">
+    <i class="fas fa-arrow-left back-arrow" onclick="closePopup()"></i>
+    <h3 id="schemeTitle">शीर्षक</h3>
+    <div id="schemeDetails"></div>
+    <a id="applyLink" href="#" target="_blank" class="apply-btn">अर्ज करा</a>
+  </div>
+</div>
+
+
+
+<script>
+const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRswuq7yVuHWljQRDJ9c9IaeVfzW6gLn_yy59ckqRIgcbPq3RozVv3naIRQhSLHGxD0JuKnTvhnyIV6/pub?output=csv";
+
+// Fetch CSV
+fetch(sheetURL)
+  .then(res => res.text())
+  .then(data => {
+    const rows = parseCSV(data); // parse all rows
+    const main = document.querySelector("main");
+    const categories = {};
+
+    // Process each row
+    rows.forEach(cols => {
+      const category = cols[0] ? cols[0].trim() : "";
+      const schemeName = cols[1] ? cols[1].trim() : "";
+
+      // Skip empty rows, header rows, or metadata like Date/Time
+      if(!category || !schemeName) return;
+      if(schemeName.toLowerCase().includes("योजनेचे नाव")) return;
+      if(category.toLowerCase().includes("date") || category.toLowerCase().includes("time")) return;
+
+      // Add to category
+      if(!categories[category]) categories[category] = [];
+      categories[category].push(cols);
+    });
+
+    // Generate headings + tables
+    for(let category in categories){
+      const h3 = document.createElement("h3");
+      h3.innerText = category;
+      main.appendChild(h3);
+
+      const table = document.createElement("table");
+      table.innerHTML = `<tr><th>योजनेचे नाव</th><th>उद्दिष्ट</th><th>अधिक वाचा</th></tr>`;
+      
+      categories[category].forEach(scheme => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${scheme[1] || ""}</td>
+          <td>${scheme[2] || ""}</td>
+          <td><span class="read-more" onclick='showPopup(${JSON.stringify(scheme)})'>अधिक वाचा</span></td>
+        `;
+        table.appendChild(tr);
+      });
+
+      main.appendChild(table);
+    }
+  });
+
+// Simple CSV parser
+function parseCSV(str){
+  const rows = [];
+  let inQuotes = false, value = "", row = [];
+  for(let char of str){
+    if(char === '"') inQuotes = !inQuotes;
+    else if(char === ',' && !inQuotes) { row.push(value.trim()); value=""; }
+    else if((char=='\n'||char=='\r') && !inQuotes) { 
+      if(value || row.length) row.push(value.trim()); 
+      if(row.length) rows.push(row); 
+      row=[]; value=""; 
+    }
+    else value += char;
+  }
+  if(value) row.push(value.trim());
+  if(row.length) rows.push(row);
+  return rows;
+}
+
+// Show popup
+function showPopup(data) {
+  // Set popup heading (e.g., scheme name or last column)
+  document.getElementById("schemeTitle").innerText = data[1] || "नाम उपलब्ध नाही";
+
+  // Prepare details in row format
+  const labels = ["उद्दिष्ट", "पात्रता", "लाभार्थी", "अर्ज कसा करावा", "आवश्यक कागदपत्रे", "अधिक माहिती दुवा"];
+  let html = "";
+
+  for (let i = 2; i <= 7; i++) { // Columns 2 to 7
+    if (data[i]) {
+      html += `
+        <div class="detail-row">
+          <div class="label">${labels[i-2]}</div>
+          <div class="value">${data[i]}</div>
+        </div>
+      `;
+    }
+  }
+
+  document.getElementById("schemeDetails").innerHTML = html;
+
+  // Apply button link if exists
+  document.getElementById("applyLink").href = data[8] || "#";
+
+  // Show full screen popup
+  document.getElementById("popup").style.display = "block";
+}
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
+
+</script>
+
+
+
+  </main>
+
+ 
+  <!-- ===== Footer Start ===== -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h2>🌐 ग्रामपंचायत सेतू</h3>
+        <p>आपल्या गावाची माहिती, योजना, आणि ताज्या सूचना एका क्लिकमध्ये.</p>
+      </div>
+      <div class="footer-section">
+        <h4>📍 संपर्क</h4>
+        <p>📞</p>
+        <p>✉️kamegaon@gmail.com</p>
+        <p>🏠 गाव, तालुका, जिल्हा</p>
+      </div>
+      <div class="footer-section">
+        <h4>🔗 दुवे</h4>
+        <ul>
+          <li><a href="index.html">🏠 मुख्य पान</a></li>
+          <li><a href="notice.html">📢 सूचना</a></li>
+          <li><a href="panchayat-info.html"> ग्रामपंचायत माहिती</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 ग्रामपंचायत KAMEGAON सेतू </p>
+    </div>
+  </footer>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

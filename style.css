@@ -1,0 +1,481 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', 'Mangal', sans-serif;
+  background-color:	#DCDCDC;
+  color: #222831;            /* dark primary text */
+}
+/* HEADER ONLY */
+
+header.webapp-header {
+  background: linear-gradient(120deg, #b3e5fc, #81d4fa);
+  padding: 20px 30px;
+  border-bottom-left-radius: 80px;
+  border-bottom-right-radius: 80px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  color: #0D47A1;
+  animation: fadeInHeader 1.2s ease-in-out;
+}
+
+/* Header animation */
+@keyframes fadeInHeader {
+  0% { opacity: 0; transform: translateY(-30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Header layout */
+.logo-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* Logo title area */
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Logo image */
+.logo {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  border-radius: 12px;
+  background-color: white;
+  padding: 5px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* Title text */
+.title-text h1 {
+  font-size: 26px;
+  margin: 0;
+  color: #0D47A1;
+}
+
+.title-text p {
+  margin: 2px 0 0;
+  font-size: 16px;
+  color: #01579B;
+}
+
+/* Header Icons */
+.icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  font-size: 22px;
+  color: #0D47A1;
+  margin-top: 10px;
+}
+
+.icons a {
+  color: #0D47A1;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.icons a:hover {
+  color: #FF5722;
+}
+
+/* Responsive for mobile */
+@media (max-width: 600px) {
+  .logo-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .icons {
+    justify-content: center;
+    font-size: 20px;
+  }
+
+  .title-text h1 {
+    font-size: 22px;
+  }
+
+  .title-text p {
+    font-size: 14px;
+  }
+}
+
+/* Nav */
+nav {
+  background-color: #FCE4EC; /* Soft Pink */
+  padding: 10px 15px;
+  margin: 12px;
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap; 
+  -webkit-overflow-scrolling: touch;
+  box-shadow: 0 2px 6px rgba(57, 62, 70, 0.4);
+}
+
+nav::-webkit-scrollbar {
+  display: none;
+}
+
+nav a {
+  color: #880E4F; /* Dark pink/red text */
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 12px;
+  margin-right: 12px;
+  flex: 0 0 auto;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+nav a:hover {
+  background-color: #00adb5; /* bright accent hover */
+  color: #222831;
+}
+main {
+  position: relative;
+  background-image: url('shetkari.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  padding: 30px;
+  border-radius: 15px;
+  color:  #1a1a1a; /* dark text for good contrast */
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Add a white transparent overlay on top of the image */
+main::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(255, 255, 255, 0.65); /* white overlay, adjust opacity here */
+  z-index: -1;
+}
+
+
+
+
+h2 {
+  text-align: center;
+  color: #222831;
+  font-weight: 700;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(34, 40, 49, 0.1);
+}
+
+/* Footer */
+ footer {
+    background: linear-gradient(135deg, #1a3d7c, #0d6d2f);
+    color: #fff;
+    padding: 20px 0 10px 0;
+    font-family: "Noto Sans Devanagari", Arial, sans-serif;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: 1000px;
+    margin: auto;
+    padding: 0 10px;
+}
+
+.footer-section {
+    flex: 1 1 250px;
+    margin: 10px;
+}
+
+.footer-section h3,
+.footer-section h4 {
+    margin-bottom: 10px;
+    border-bottom: 2px solid #fff;
+    display: inline-block;
+    padding-bottom: 3px;
+}
+
+.footer-section p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin: 5px 0;
+}
+
+.footer-section ul li a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #ffd700;
+}
+
+.footer-bottom {
+    text-align: center;
+    font-size: 13px;
+    margin-top: 15px;
+    border-top: 1px solid rgba(255,255,255,0.3);
+    padding-top: 10px;
+}
+
+.poster-box {
+  background-color: #E0F7FA;
+  color: #004D40;
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px solid #00BCD4;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  max-width: 800px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+
+.read-more-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 16px;
+  background-color:#FFA000	;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.read-more-btn:hover {
+  background-color: #0097A7; /* hover effect */
+}
+
+.info-list li {
+    font-size: 18px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    margin-bottom: 8px;
+  }
+  /* Existing elements stay as is, adding 3D styles below */
+
+/* 3D shadow card effect for info blocks/posters */
+.info-block, .poster-box {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+.info-block:hover, .poster-box:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* 3D Button hover pop effect */
+.read-more-btn {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.read-more-btn:hover {
+  transform: scale(1.05);
+  background-color: #0097A7;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Header slight depth */
+header {
+  transform-style: preserve-3d;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Nav link pop effect */
+nav a:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0, 173, 181, 0.3);
+}
+
+/* Image pop on hover */
+img:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+/* features box (same look) */
+.features-box {
+  background: #f6f6f6;
+  border: 1px solid #bfbfbf;     /* small border as requested */
+  padding: 14px 20px;
+  margin: 20px auto;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 10px;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  transition: transform .16s ease, background .16s;
+  font-size: 17px;
+  font-family: 'Baloo 2', sans-serif;
+  color: #333;
+}
+.features-box i { font-size: 22px; color: #444; }
+.features-box:hover { transform: translateY(-3px); background: #efefef; }
+
+/* overlay */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+  padding: 20px;
+}
+
+/* popup window with 3D effect */
+.popup-window {
+  width: 380px;               /* slightly bigger */
+  background: linear-gradient(180deg, #ffffff 0%, #fbfbfb 100%);
+  border-radius: 14px;
+  border: 1px solid #d0d0d0;  /* subtle outer border */
+  box-shadow:
+    0 18px 45px rgba(0,0,0,0.25),   /* deep soft shadow */
+    0 6px 18px rgba(0,0,0,0.12),    /* mid shadow */
+    inset 0 1px 0 rgba(255,255,255,0.5); /* slight inner highlight */
+  overflow: hidden;
+  transform-origin: center top;
+  /* initial hidden transform for animation */
+  transform: translateY(-20px) rotateX(6deg) scale(.96);
+  opacity: 0;
+  transition: transform .28s cubic-bezier(.18,.9,.32,1), opacity .22s ease;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+/* show class toggled by JS (we use inline style toggle but here's the class if you prefer) */
+.popup-window.show {
+  transform: translateY(0) rotateX(0) scale(1);
+  opacity: 1;
+}
+
+/* small centered handle instead of text or arrow */
+.popup-handle {
+  width: 60px;
+  height: 6px;
+  margin: 12px auto 6px;
+  background: linear-gradient(90deg, #e6e6e6, #dcdcdc);
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+}
+
+/* features list with gray separators */
+.features-list {
+  list-style: none;
+  padding: 8px 10px 16px;
+  margin: 0;
+}
+.features-list li {
+  border-bottom: 1px solid #e0e0e0; /* gray line after every point */
+}
+.features-list li:last-child {
+  border-bottom: none;
+}
+
+/* link style: lighter textured font look */
+.features-list a {
+  display: block;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: #262626;               /* not too dark */
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: 0.2px;
+  /* subtle textured/light effect on text */
+  text-shadow: 0 1px 0 rgba(255,255,255,0.75), 0 0 1px rgba(0,0,0,0.02);
+  transition: background .14s ease, transform .12s ease;
+}
+.features-list a:hover {
+  background: #fafafa;
+  transform: translateX(4px);
+}
+
+/* small responsive tweak */
+@media (max-width:420px) {
+  .popup-window { width: calc(100% - 40px); }
+  .features-box { font-size: 15px; padding: 12px 14px; }
+}
+/*Notice*/
+.notice-bar {
+            display: none; /* hidden by default */
+            background: #e3f2fd; /* soft light blue */
+            color: #222; /* dark text */
+            padding: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            border-bottom: 2px solid #bbb;
+        }
+        .notice-text {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll-left 25s linear infinite; /* slowed down */
+        }
+        @keyframes scroll-left {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+/* img sliding */
+ .slider-container {
+    width: 400px;
+    height: 250px;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    perspective: 1000px;
+  }
+
+  .slider-track {
+    display: flex;
+    width: calc(400px * 8); /* doubled for seamless looping */
+    animation: slideLeft 20s linear infinite;
+  }
+
+  .slide {
+    width: 400px;
+    flex-shrink: 0;
+    height: 250px;
+    transform: rotateY(0deg);
+  }
+
+  .slide img,
+  .slide video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+  }
+
+  @keyframes slideLeft {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-1600px); } /* move all original slides width */
+  }

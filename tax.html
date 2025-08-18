@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<title>ग्रामपंचायत सेतू - Search Records</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:"Noto Sans Devanagari",Arial,sans-serif;margin:0;background:#f9f9f9;display:flex;flex-direction:column;min-height:100vh;}
+
+/* HEADER */
+header.webapp-header {
+  background: linear-gradient(120deg, #b3e5fc, #81d4fa);
+  padding: 20px 30px;
+  border-bottom-left-radius: 80px;
+  border-bottom-right-radius: 80px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  color: #0D47A1;
+  animation: fadeInHeader 1.2s ease-in-out;
+}
+@keyframes fadeInHeader {
+  0% { opacity: 0; transform: translateY(-30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.logo-section { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.logo-title { display: flex; align-items: center; gap: 15px; }
+.logo { width: 70px; height: 70px; object-fit: contain; border-radius: 12px; background-color: white; padding: 5px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+.title-text h1 { font-size: 26px; margin: 0; color: #0D47A1; }
+.title-text p { margin: 2px 0 0; font-size: 16px; color: #01579B; }
+.icons { display: flex; justify-content: center; align-items: center; gap: 24px; font-size: 22px; color: #0D47A1; margin-top: 10px; }
+.icons a { color: #0D47A1; text-decoration: none; transition: color 0.3s ease; }
+.icons a:hover { color: #FF5722; }
+.lang-switch { cursor: pointer; background: #fff; border-radius: 5px; border: 1px solid #ccc; font-size: 14px; padding: 5px 10px; transition: 0.3s; }
+.lang-switch:hover { background: #e0f0ff; border-color: #0D47A1; }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .logo-section { flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+  .icons { justify-content: center; font-size: 20px; }
+  .title-text h1 { font-size: 22px; }
+  .title-text p { font-size: 14px; }
+}
+
+/* Footer */
+footer { background: linear-gradient(135deg, #1a3d7c, #0d6d2f); color: #fff; padding: 20px 0 10px 0; font-family: "Noto Sans Devanagari", Arial, sans-serif; }
+.footer-container { display: flex; flex-wrap: wrap; justify-content: space-around; max-width: 1000px; margin: auto; padding: 0 10px; }
+.footer-section { flex: 1 1 250px; margin: 10px; }
+.footer-section h3, .footer-section h4 { margin-bottom: 10px; border-bottom: 2px solid #fff; display: inline-block; padding-bottom: 3px; }
+.footer-section p { margin: 5px 0; font-size: 14px; }
+.footer-section ul { list-style: none; padding: 0; }
+.footer-section ul li { margin: 5px 0; }
+.footer-section ul li a { color: #fff; text-decoration: none; transition: color 0.3s ease; }
+.footer-section ul li a:hover { color: #ffd700; }
+.footer-bottom { text-align: center; font-size: 13px; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 10px; }
+
+/* Main Container */
+.container{padding:20px;flex:1;}
+.search-bar{width:100%;max-width:400px;padding:10px;margin:20px auto;display:block;border-radius:8px;border:1px solid #ccc;font-size:16px;}
+.user-list{max-width:600px;margin:auto;}
+.user-item{background:#fff;padding:12px 15px;margin:8px 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);cursor:pointer;transition:.3s ease;}
+.user-item:hover{background:#e0f7fa;}
+
+/* Popup */
+.popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:1000;overflow-y:auto;}
+.popup-content{background:#fff;margin:0 auto;max-width:600px;border-radius:10px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.2); width:95%; height:auto; min-height:100vh; display:flex; flex-direction:column;}
+.popup-header{background:linear-gradient(135deg,#8fc1e3,#c1f0d1);color:#333;text-align:center;padding:20px;position:relative; flex-shrink:0;}
+.popup-header img{width:120px;height:120px;border-radius:50%;border:3px solid #fff;margin-bottom:10px; object-fit:cover;}
+.popup-header h2{margin:5px 0;font-size:24px;}
+.popup-header h3{margin:2px 0;font-size:16px;font-weight:normal;}
+.popup-header p{margin:4px 0;font-size:15px;}
+.close-btn{position:absolute;top:10px;right:10px;background:#fff;border:none;font-size:20px;padding:5px 10px;border-radius:50%;cursor:pointer;color:#333;}
+.section{background:#fdfdfd;margin:10px 15px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.05);padding:15px; flex-shrink:0;}
+.section h4{margin:0 0 10px;font-size:18px;color:#333;border-bottom:1px solid #ddd;padding-bottom:5px;}
+.section p{margin:6px 0;font-size:15px;}
+.highlight{font-weight:bold;color:#d32f2f;font-size:16px;}
+.paid-highlight{font-weight:bold;color:#388e3c;font-size:16px;}
+.instructions{background:#e3f2fd;margin:15px;border-radius:10px;padding:15px;font-size:15px;color:#0d47a1;flex-shrink:0;}
+</style>
+</head>
+<body>
+
+<header class="webapp-header">
+  <div class="logo-section">
+    <div class="logo-title">
+      <img src="logo.jpg" alt="Logo" class="logo">
+      <div class="title-text">
+        <h1 id="headerTitle">कामेगाव ग्रामपंचायत</h1>
+        <p>आपले गाव, आपली जबाबदारी</p>
+      </div>
+    </div>
+    <div class="icons">
+      <a href="index.html" title="Home"><i class="fas fa-house"></i></a>
+      <a href="notice.html" title="Notifications"><i class="fas fa-bell"></i></a>
+      <a href="login.html" title="Login"><i class="fas fa-user-circle"></i></a>
+      <button id="langBtn" class="lang-switch">EN</button>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+<input type="text" id="searchBar" class="search-bar" placeholder="🔍 नाव शोधा / Search name">
+<div class="user-list" id="userList"></div>
+</div>
+
+<div class="popup" id="popup">
+  <div class="popup-content">
+    <div class="popup-header">
+      <button class="close-btn" onclick="closePopup()">✕</button>
+      <img id="popupImg" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile">
+      <h2 id="popupNameMr">नाम</h2>
+      <h3 id="popupNameEn">Name</h3>
+      <p id="popupWard">🏠 वार्ड नं. __, घर नं. __</p>
+    </div>
+    <div class="section" id="demandSection">
+      <h4>🔹 मागणी (Demand)</h4>
+      <p>घरपी कर: <span id="dHarpi"></span></p>
+      <p>आरोग्य कर: <span id="dArogya"></span></p>
+      <p>दबाबी कर: <span id="dDababi"></span></p>
+      <p>पाणीपि कर: <span id="dPani"></span></p>
+      <p>पडसर जमीन: <span id="dPad"></span></p>
+      <p>दंड: <span id="dFine"></span></p>
+      <p class="highlight">एकूण मागणी: <span id="dTotal"></span></p>
+    </div>
+    <div class="section" id="collectionSection">
+      <h4>🔹 वसुल (Collection)</h4>
+      <p>बुक: <span id="cBook"></span></p>
+      <p>पावती क्रमांक: <span id="cReceipt"></span></p>
+      <p>पावती दिनांक: <span id="cDate"></span></p>
+      <p>Paid घरपी कर: <span id="cHarpi"></span></p>
+      <p>Paid आरोग्य कर: <span id="cArogya"></span></p>
+      <p>Paid दबाबी कर: <span id="cDababi"></span></p>
+      <p>Paid पाणीपि कर: <span id="cPani"></span></p>
+      <p>Paid Land Tax / भरलेला पडसर जमीन: <span id="cPadLand"></span></p>
+      <p>Paid Penalty / भरलेला दंड: <span id="cFinePaid"></span></p>
+      <p>Discount / सुट: <span id="cDiscount"></span></p>
+      <p class="paid-highlight">Total Collection / एकूण वसुल: <span id="cTotalCollection"></span></p>
+      <p>Balance / बाकी: <span id="cRemain"></span></p>
+    </div>
+    <div class="instructions">
+      <h4>📝 सूचना / Instructions</h4>
+      <p>सर्व माहिती तपासा आणि चुकीचे असल्यास ग्रामपंचायत कार्यालयाशी संपर्क करा.</p>
+      <p>Verify all details and contact Gram Panchayat office for any discrepancies.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-section">
+      <h3>🌐 ग्रामपंचायत सेतू</h3>
+      <p>आपल्या गावाची माहिती, योजना, आणि ताज्या सूचना एका क्लिकमध्ये.</p>
+    </div>
+    <div class="footer-section">
+      <h4>📍 संपर्क</h4>
+      <p>📞</p>
+      <p>✉️ kamegaon@gmail.com</p>
+      <p>🏠 गाव, तालुका, जिल्हा</p>
+    </div>
+    <div class="footer-section">
+      <h4>🔗 दुवे</h4>
+      <ul>
+        <li><a href="index.html">🏠 मुख्य पान</a></li>
+        <li><a href="notice.html">📢 सूचना</a></li>
+        <li><a href="panchayat-info.html">ग्रामपंचायत माहिती</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 ग्रामपंचायत KAMEGAON सेतू</p>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script>
+let lang = 'mr';
+document.getElementById('langBtn').addEventListener('click', function() {
+  lang = (lang === 'mr') ? 'en' : 'mr';
+  document.getElementById('headerTitle').innerText = (lang === 'mr') ? "कामेगाव ग्रामपंचायत" : "Kamegaon Gram Panchayat";
+  document.getElementById('searchBar').placeholder = (lang === 'mr') ? "🔍 नाव शोधा" : "🔍 Search name";
+  displayUsers(usersData);
+  this.innerText = (lang === 'mr') ? "EN" : "MR";
+});
+function closePopup(){document.getElementById('popup').style.display='none';}
+
+const csvURL="https://docs.google.com/spreadsheets/d/e/2PACX-1vTDCBhcg0ARlcpZqsc5KHZh6mWi3cgqS1KCtHoSVziWsCDoR0ZyxWcqkYMdWxPVCfgrj7kNSP574xVa/pub?output=csv";
+
+Papa.parse(csvURL,{
+download:true,
+header:true,
+skipEmptyLines:true,
+complete:function(results){
+usersData=results.data.map(u=>{
+u.demand={
+harpi:Number(u.House_Tax||0),
+arogya:Number(u.Health_Tax||0),
+dababi:Number(u.Other_Tax||0),
+pani:Number(u.Water_Tax||0),
+pad:Number(u.Land_Tax||0),
+fine:Number(u.Penalty||0)
+};
+u.collection={
+book:u.Book_No||'',
+receipt:u.Receipt_No||'',
+date:u.Receipt_Date||'',
+harpi:Number(u.Paid_House_Tax||0),
+arogya:Number(u.Paid_Health_Tax||0),
+dababi:Number(u.Paid_Other_Tax||0),
+pani:Number(u.Paid_Water_Tax||0),
+padLand:Number(u.Paid_Land_Tax||0),
+finePaid:Number(u.Paid_Penalty||0),
+sut:Number(u.Discount||0)
+};
+return u;
+});
+displayUsers(usersData);
+}});
+
+document.getElementById('searchBar').addEventListener('input',function(){
+const q=this.value.toLowerCase();
+displayUsers(usersData.filter(u=>(lang==='mr'?u.Name_Marathi:u.Name_English).toLowerCase().includes(q)));
+});
+
+function displayUsers(users){
+const list=document.getElementById('userList');
+list.innerHTML='';
+users.forEach(u=>{
+let div=document.createElement('div');
+div.className='user-item';
+div.innerText=lang==='mr'?u.Name_Marathi:u.Name_English;
+div.onclick=()=>openPopup(u);
+list.appendChild(div);
+});
+}
+
+function openPopup(u){
+document.getElementById('popup').style.display='block';
+document.getElementById("popupImg").src="https://cdn-icons-png.flaticon.com/512/149/149071.png";
+document.getElementById("popupNameMr").innerText=u.Name_Marathi;
+document.getElementById("popupNameEn").innerText=u.Name_English;
+document.getElementById("popupWard").innerText=`🏠 वार्ड नं. ${u.Ward_No}, घर नं. ${u.House_No}`;
+let d=u.demand;
+document.getElementById("dHarpi").innerText=d.harpi;
+document.getElementById("dArogya").innerText=d.arogya;
+document.getElementById("dDababi").innerText=d.dababi;
+document.getElementById("dPani").innerText=d.pani;
+document.getElementById("dPad").innerText=d.pad;
+document.getElementById("dFine").innerText=d.fine;
+document.getElementById("dTotal").innerText=d.harpi+d.arogya+d.dababi+d.pani+d.pad+d.fine;
+let c=u.collection;
+document.getElementById("cBook").innerText=c.book;
+document.getElementById("cReceipt").innerText=c.receipt;
+document.getElementById("cDate").innerText=c.date;
+document.getElementById("cHarpi").innerText=c.harpi;
+document.getElementById("cArogya").innerText=c.arogya;
+document.getElementById("cDababi").innerText=c.dababi;
+document.getElementById("cPani").innerText=c.pani;
+document.getElementById("cPadLand").innerText=c.padLand;
+document.getElementById("cFinePaid").innerText=c.finePaid;
+document.getElementById("cDiscount").innerText=c.sut;
+document.getElementById("cTotalCollection").innerText=c.harpi+c.arogya+c.dababi+c.pani+c.padLand+c.finePaid-c.sut;
+document.getElementById("cRemain").innerText=(d.harpi+d.arogya+d.dababi+d.pani+d.pad+d.fine)-(c.harpi+c.arogya+c.dababi+c.pani+c.padLand+c.finePaid-c.sut);
+}
+</script>
+
+</body>
+</html>

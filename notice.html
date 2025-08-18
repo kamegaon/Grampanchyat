@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<title>सूचना इतिहास</title>
+<style>
+    body {
+        font-family: "Noto Sans Devanagari", Arial, sans-serif;
+        background: linear-gradient(135deg, #f7f9fb, #e0e7ec);
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 25px;
+    text-shadow: 1px 1px 2px #bbb;
+    font-size: 1.8em; /* decreased from 2.2em */
+}
+
+.notice-card {
+    background: #fff;
+    padding: 15px; /* slightly smaller padding */
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    transform: perspective(1000px) rotateX(0deg);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-size: 1em; /* decreased from 1.2em */
+}
+
+.date-time {
+    font-size: 1.1em; /* decreased from 1.3em */
+    font-weight: bold;
+    color: #1a3d7c;
+}
+
+.day {
+    font-size: 1em; /* decreased from 1.2em */
+    color: #0d6d2f;
+    font-weight: bold;
+}
+
+.notice-text {
+    font-size: 1em; /* decreased from 1.2em */
+    color: #000;
+}
+</style>
+</head>
+<body>
+
+<h1>सूचना इतिहास</h1>
+<div class="notice-container" id="noticeList">
+    <p>सूचना लोड होत आहेत...</p>
+</div>
+
+<script>
+    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRYmHwVuXHgocGoP7p1evwN8HN5cGneUv4Di0KIkk7Djvr7gC6U3F3PMwa1dqbQebaXM5IN3yyd_7Ig/pub?gid=1382462655&single=true&output=csv";
+
+    function getDayNameFromDateParts(day, month, year) {
+        const days = ["रविवार", "सोमवार", "मंगळवार", "बुधवार", "गुरुवार", "शुक्रवार", "शनिवार"];
+        const dateObj = new Date(year, month - 1, day);
+        return days[dateObj.getDay()];
+    }
+
+    async function loadNotices() {
+        try {
+            const response = await fetch(csvUrl);
+            const text = await response.text();
+
+            const lines = text.trim().split("\n");
+            const container = document.getElementById("noticeList");
+            container.innerHTML = "";
+
+            for (let i = lines.length - 1; i > 0; i--) {
+                const cols = lines[i].split(",");
+
+                const rawDateTime = cols[0] || ""; // Timestamp
+                const notice = cols[1] || "";
+                let submittedBy = cols[2] || "";
+
+                if (!notice.trim()) continue;
+
+                // Show only name before @
+                if (submittedBy.includes("@")) {
+                    submittedBy = submittedBy.split("@")[0];
+                }
+
+                let datePart = "तारीख उपलब्ध नाही";
+                let timePart = "वेळ उपलब्ध नाही";
+                let dayName = "वार उपलब्ध नाही";
+
+                if (rawDateTime.includes("/")) {
+                    // Format like DD/MM/YYYY HH:MM:SS
+                    const [date, time] = rawDateTime.split(" ");
+                    const [day, month, year] = date.split("/").map(Number);
+                    datePart = `${day}/${month}/${year}`;
+                    timePart = time || "वेळ उपलब्ध नाही";
+                    dayName = getDayNameFromDateParts(day, month, year);
+                } 
+                else if (rawDateTime.includes("-")) {
+                    // ISO format YYYY-MM-DDTHH:MM:SS
+                    const dateObj = new Date(rawDateTime);
+                    if (!isNaN(dateObj)) {
+                        datePart = dateObj.toLocaleDateString("mr-IN");
+                        timePart = dateObj.toLocaleTimeString("mr-IN");
+                        dayName = getDayNameFromDateParts(dateObj.getDate(), dateObj.getMonth() + 1, dateObj.getFullYear());
+                    }
+                }
+
+                const card = document.createElement("div");
+                card.className = "notice-card";
+                card.innerHTML = `
+                    <div class="date-time">${datePart} ⏱ ${timePart}</div>
+                    <div class="day">(${dayName})</div>
+                    <div class="line"><span class="label">सूचना:</span> <span class="notice-text">${notice}</span></div>
+                    <div class="line"><span class="label">सादरकर्ता:</span> <span class="value">${submittedBy}</span></div>
+                `;
+                container.appendChild(card);
+            }
+        } catch (error) {
+            document.getElementById("noticeList").innerHTML = "<p>सूचना लोड करण्यात त्रुटी आली.</p>";
+        }
+    }
+
+    loadNotices();
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
