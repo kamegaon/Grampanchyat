@@ -59,21 +59,55 @@ footer { background: linear-gradient(135deg, #1a3d7c, #0d6d2f); color: #fff; pad
 .user-item{background:#fff;padding:12px 15px;margin:8px 0;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);cursor:pointer;transition:.3s ease;}
 .user-item:hover{background:#e0f7fa;}
 
-/* Popup */
-.popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:1000;overflow-y:auto;}
-.popup-content{background:#fff;margin:0 auto;max-width:600px;border-radius:10px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.2); width:95%; height:auto; min-height:100vh; display:flex; flex-direction:column;}
-.popup-header{background:linear-gradient(135deg,#8fc1e3,#c1f0d1);color:#333;text-align:center;padding:20px;position:relative; flex-shrink:0;}
-.popup-header img{width:120px;height:120px;border-radius:50%;border:3px solid #fff;margin-bottom:10px; object-fit:cover;}
-.popup-header h2{margin:5px 0;font-size:24px;}
-.popup-header h3{margin:2px 0;font-size:16px;font-weight:normal;}
-.popup-header p{margin:4px 0;font-size:15px;}
-.close-btn{position:absolute;top:10px;right:10px;background:#fff;border:none;font-size:20px;padding:5px 10px;border-radius:50%;cursor:pointer;color:#333;}
-.section{background:#fdfdfd;margin:10px 15px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.05);padding:15px; flex-shrink:0;}
-.section h4{margin:0 0 10px;font-size:18px;color:#333;border-bottom:1px solid #ddd;padding-bottom:5px;}
-.section p{margin:6px 0;font-size:15px;}
-.highlight{font-weight:bold;color:#d32f2f;font-size:16px;}
-.paid-highlight{font-weight:bold;color:#388e3c;font-size:16px;}
-.instructions{background:#e3f2fd;margin:15px;border-radius:10px;padding:15px;font-size:15px;color:#0d47a1;flex-shrink:0;}
+.popup {
+  display:none; position:fixed; top:0; left:0;
+  width:100%; height:100%; background:rgba(0,0,0,0.4);
+  z-index:1000; overflow-y:auto;
+}
+.popup-content {
+  background:#fff; margin:0 auto; max-width:600px;
+  border-radius:10px; overflow:hidden;
+  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+  width:95%; height:auto; min-height:100vh;
+  display:flex; flex-direction:column;
+}
+.popup-header {
+  background:linear-gradient(135deg,#8fc1e3,#c1f0d1);
+  color:#333; text-align:center; padding:20px;
+  position:relative; flex-shrink:0;
+}
+.popup-header img {
+  width:120px; height:120px; border-radius:50%;
+  border:3px solid #fff; margin-bottom:10px; object-fit:cover;
+}
+.popup-header h2 {margin:5px 0;font-size:24px;}
+.popup-header h3 {margin:2px 0;font-size:16px;font-weight:normal;}
+.popup-header p {margin:4px 0;font-size:15px;}
+.close-btn {
+  position:absolute; top:10px; right:10px; background:#fff;
+  border:none; font-size:20px; padding:5px 10px;
+  border-radius:50%; cursor:pointer; color:#333;
+}
+.section {
+  background:#fdfdfd; margin:10px 15px; border-radius:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  padding:15px; flex-shrink:0;
+}
+.section h4 {
+  margin:0 0 10px; font-size:18px; color:#333;
+  border-bottom:1px solid #ddd; padding-bottom:5px;
+}
+.section p {margin:6px 0;font-size:15px;}
+.highlight {font-weight:bold;color:#d32f2f;font-size:16px;}
+.paid-highlight {font-weight:bold;color:#388e3c;font-size:16px;}
+.instructions {
+  background:#e3f2fd; margin:15px; border-radius:10px;
+  padding:15px; font-size:15px; color:#0d47a1; flex-shrink:0;
+}
+.gp-info {text-align:center;margin-top:10px;}
+.gp-info-img {max-width:100px;margin-bottom:8px;}
+.gp-info-note {font-size:14px;color:#333;}
+
   /*Notice*/
 .notice-bar {
             display: none; /* hidden by default */
@@ -149,27 +183,7 @@ nav a:hover {
   line-height: 1.6;
 }
 
-  .gp-info{
-  background:#fff;
-  border-radius:12px;
-  padding:12px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.12);
-}
 
-.gp-info-img{
-  display:block;
-  width:100%;
-  height:auto;           /* keeps image proportion (normal image) */
-  border-radius:10px;
-  object-fit:contain;    /* shows full image without cropping */
-  border:4px solid #eee; /* subtle frame */
-}
-
-.gp-info-note{
-  margin:10px 2px 0;
-  font-size:14px;
-  color:#333;
-}
 
 </style>
 </head>
@@ -235,8 +249,11 @@ nav a:hover {
 <div class="user-list" id="userList"></div>
 </div>
 
+<!-- Popup -->
 <div class="popup" id="popup">
   <div class="popup-content">
+
+    <!-- Header -->
     <div class="popup-header">
       <button class="close-btn" onclick="closePopup()">✕</button>
       <img id="popupImg" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile">
@@ -244,6 +261,8 @@ nav a:hover {
       <h3 id="popupNameEn">Name</h3>
       <p id="popupWard">🏠 वार्ड नं. __, घर नं. __</p>
     </div>
+
+    <!-- Demand Section -->
     <div class="section" id="demandSection">
       <h4>🔹 मागणी (Demand)</h4>
       <p>घरपी कर: <span id="dHarpi"></span></p>
@@ -254,6 +273,8 @@ nav a:hover {
       <p>दंड: <span id="dFine"></span></p>
       <p class="highlight">एकूण मागणी: <span id="dTotal"></span></p>
     </div>
+
+    <!-- Collection Section -->
     <div class="section" id="collectionSection">
       <h4>🔹 वसुल (Collection)</h4>
       <p>बुक: <span id="cBook"></span></p>
@@ -269,8 +290,8 @@ nav a:hover {
       <p class="paid-highlight">Total Collection / एकूण वसुल: <span id="cTotalCollection"></span></p>
       <p>Balance / बाकी: <span id="cRemain"></span></p>
     </div>
-    <!-- गावकऱ्यांसाठी सूचना -->
- <!-- सूचना + इमेज -->
+
+    <!-- सूचना + इमेज -->
     <div class="instructions">
       <h3>🙏 ग्रामपंचायत सूचना 🙏</h3>
       <p>
@@ -279,19 +300,21 @@ nav a:hover {
         ⚠️ जर कोणतीही व्यवहारात चूक / फसवणूक दिसली,<br>
         तर त्वरित ग्रामपंचायतीत संपर्क साधा.
       </p>
-     <div class="gp-info">
-  <img class="gp-info-img" src="1.jpg" alt="ग्रामपंचायत सूचना">
-  <p class="gp-info-note">📝 कृपया माहिती व्यवस्थित वाचा .</p>
-</div>
+      <div class="gp-info">
+        <img class="gp-info-img" src="1.jpg" alt="ग्रामपंचायत सूचना">
+        <p class="gp-info-note">📝 कृपया माहिती व्यवस्थित वाचा .</p>
+      </div>
+    </div>
 
+    <!-- Extra Instructions -->
     <div class="instructions">
       <h4>📝 सूचना / Instructions</h4>
       <p>सर्व माहिती तपासा आणि चुकीचे असल्यास ग्रामपंचायत कार्यालयाशी संपर्क करा.</p>
       <p>Verify all details and contact Gram Panchayat office for any discrepancies.</p>
     </div>
+
   </div>
 </div>
-
 <!-- Footer -->
 <footer>
   <div class="footer-container">
@@ -421,6 +444,7 @@ function closeFormPopup() {
 </script>
 </body>
 </html>
+
 
 
 
