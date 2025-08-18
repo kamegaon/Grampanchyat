@@ -95,6 +95,43 @@ footer { background: linear-gradient(135deg, #1a3d7c, #0d6d2f); color: #fff; pad
     </div>
   </div>
 </header>
+ <!-- Navigation -->
+  <nav>
+    <a href="index.html"><i class="fas fa-home"></i> मुख्यपृष्ठ</a>
+    <a href="village.html"><i class="fas fa-map-marker-alt"></i> गावाची माहिती</a>
+    <a href="yojana.html"><i class="fas fa-list-alt"></i> योजना</a>
+    <a href="seva.html"><i class="fas fa-hand-holding-heart"></i> सेवा</a>
+    <a href="panchayat-info.html"><i class="fas fa-building"></i> ग्रामपंचायत माहिती</a>
+    <a href="law.html"><i class="fas fa-gavel"></i> कायदे आणि नियम</a>
+  </nav>
+
+  <div id="notice-bar" class="notice-bar">
+    <span id="notice" class="notice-text"></span>
+  </div>
+
+  <script>
+    async function fetchNotice() {
+      try {
+        const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRYmHwVuXHgocGoP7p1evwN8HN5cGneUv4Di0KIkk7Djvr7gC6U3F3PMwa1dqbQebaXM5IN3yyd_7Ig/pub?gid=1382462655&single=true&output=csv";
+        const response = await fetch(csvUrl);
+        const text = await response.text();
+        const lines = text.trim().split("\n");
+        const lastLine = lines[lines.length - 1];
+        const columns = lastLine.split(",");
+        const latestNotice = columns[1]?.trim();
+        if (latestNotice && latestNotice.toLowerCase() !== "no notice") {
+          document.getElementById("notice").textContent = latestNotice;
+          document.getElementById("notice-bar").style.display = "block";
+        } else {
+          document.getElementById("notice-bar").style.display = "none";
+        }
+      } catch (error) {
+        document.getElementById("notice-bar").style.display = "none";
+      }
+    }
+    fetchNotice();
+    setInterval(fetchNotice, 15000); // Refresh every 15 seconds
+  </script>
 
 <div class="container">
 <input type="text" id="searchBar" class="search-bar" placeholder="🔍 नाव शोधा / Search name">
@@ -265,3 +302,4 @@ document.getElementById("cRemain").innerText=(d.harpi+d.arogya+d.dababi+d.pani+d
 
 </body>
 </html>
+
