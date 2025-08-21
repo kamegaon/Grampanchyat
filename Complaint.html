@@ -12,8 +12,6 @@ body {
   background: #fdf7f2;
   color: #333;
 }
-
-/* Header */
 header {
   background: #ff9800;
   color: #fff;
@@ -26,15 +24,11 @@ header {
   top: 0;
   z-index: 1000;
 }
-
-/* Main container */
 main {
   max-width: 900px;
   margin: 20px auto;
   padding: 0 15px;
 }
-
-/* 3D Card style */
 .card {
   background: #fff;
   border-radius: 15px;
@@ -48,7 +42,6 @@ main {
   transform: translateY(-8px) rotateX(2deg) rotateY(2deg);
   box-shadow: 0 12px 25px rgba(0,0,0,0.25);
 }
-
 .card-head {
   background: #f57c00;
   color: #fff;
@@ -57,8 +50,6 @@ main {
   font-weight: bold;
   letter-spacing: 1px;
 }
-
-/* List and items */
 .list { display: grid; gap: 18px; padding: 18px; }
 .item {
   background: #fff7ef;
@@ -75,21 +66,14 @@ main {
 .name { font-weight: bold; font-size: 16px; }
 .time { font-size: 12px; color: #666; margin-top: 2px; }
 .text { margin-top: 8px; white-space: pre-wrap; font-size: 14px; }
-.thumb a {
-  display: inline-flex;
-  align-items: center;
-  text-decoration: none;
-  color: #f57c00;
-  font-weight: bold;
+.thumb img {
   margin-top: 10px;
+  border-radius: 10px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid #ccc;
 }
-.thumb a img {
-  width: 28px;
-  height: 28px;
-  margin-right: 8px;
-}
-
-/* Empty message */
 .empty {
   text-align: center;
   color: #888;
@@ -97,8 +81,6 @@ main {
   padding: 30px;
   font-size: 15px;
 }
-
-/* Floating Add Complaint button */
 .floating-btn {
   position: fixed;
   bottom: 25px;
@@ -116,8 +98,6 @@ main {
   z-index: 1000;
 }
 .floating-btn:hover { background: #e65100; }
-
-/* Responsive */
 @media (max-width: 600px) {
   header { font-size: 18px; padding: 15px; }
   .card-head { font-size: 16px; padding: 12px; }
@@ -144,7 +124,7 @@ main {
 const CSV_LINK = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRlJiG7E-uic4Z-j_hk_Yji3BDCH52HLUCV7Hkpg7QaRDs87mzqDko6xPgFsXgoU_mEyeyESpqpGH8m/pub?output=csv";
 const FORM_LINK = "https://docs.google.com/forms/d/e/1FAIpQLSfQ-BZJMRk2poh_ww0BuRISMH8QnyrsD0rf4pM8C8dHfy7rnQ/viewform";
 
-// Extract name before @
+// Extract name from email
 function nameFromEmail(email) {
   if (!email) return "Guest";
   return email.split('@')[0].replace(/[._-]+/g, ' ');
@@ -168,14 +148,7 @@ function render(items) {
         <div class="text">${it.text}</div>
       `;
       if (it.image) {
-        html += `
-          <div class="thumb">
-            <a href="${it.image}" target="_blank">
-              <img src="https://cdn-icons-png.flaticon.com/512/709/709496.png" alt="Image icon">
-              फोटो पहा
-            </a>
-          </div>
-        `;
+        html += `<div class="thumb"><img src="${it.image}" alt="Complaint image"></div>`;
       }
       card.innerHTML = html;
       listEl.appendChild(card);
