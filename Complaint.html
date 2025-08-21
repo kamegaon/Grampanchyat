@@ -12,6 +12,8 @@ body {
   background: #fdf7f2;
   color: #333;
 }
+
+/* Header */
 header {
   background: #ff9800;
   color: #fff;
@@ -19,43 +21,57 @@ header {
   text-align: center;
   font-size: 22px;
   font-weight: bold;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
+
+/* Main container */
 main {
   max-width: 900px;
   margin: 20px auto;
   padding: 0 15px;
 }
+
+/* 3D Card style */
 .card {
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  border-radius: 15px;
   margin-bottom: 25px;
   overflow: hidden;
-  transition: transform 0.2s;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transform-style: preserve-3d;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
-.card:hover { transform: translateY(-3px); }
+.card:hover {
+  transform: translateY(-8px) rotateX(2deg) rotateY(2deg);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+}
+
 .card-head {
   background: #f57c00;
   color: #fff;
-  padding: 16px 20px;
+  padding: 18px 22px;
   font-size: 18px;
   font-weight: bold;
+  letter-spacing: 1px;
 }
-.list { display: grid; gap: 16px; padding: 16px; }
+
+/* List and items */
+.list { display: grid; gap: 18px; padding: 18px; }
 .item {
-  border: 1px solid #eee;
+  background: #fff7ef;
   border-radius: 12px;
   padding: 16px;
-  background: #fff7ef;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  word-wrap: break-word;
-  transition: box-shadow 0.2s;
+  border: 1px solid #eee;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
-.item:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.item:hover {
+  transform: translateY(-4px) rotateX(1deg);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
 .name { font-weight: bold; font-size: 16px; }
 .time { font-size: 12px; color: #666; margin-top: 2px; }
 .text { margin-top: 8px; white-space: pre-wrap; font-size: 14px; }
@@ -68,10 +84,12 @@ main {
   margin-top: 10px;
 }
 .thumb a img {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   margin-right: 8px;
 }
+
+/* Empty message */
 .empty {
   text-align: center;
   color: #888;
@@ -79,6 +97,8 @@ main {
   padding: 30px;
   font-size: 15px;
 }
+
+/* Floating Add Complaint button */
 .floating-btn {
   position: fixed;
   bottom: 25px;
@@ -96,6 +116,8 @@ main {
   z-index: 1000;
 }
 .floating-btn:hover { background: #e65100; }
+
+/* Responsive */
 @media (max-width: 600px) {
   header { font-size: 18px; padding: 15px; }
   .card-head { font-size: 16px; padding: 12px; }
@@ -161,6 +183,7 @@ function render(items) {
   }
 }
 
+// Open Google Form
 function openForm() {
   window.open(FORM_LINK, "_blank");
 }
