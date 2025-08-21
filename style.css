@@ -479,45 +479,39 @@ img:hover {
     0% { transform: translateX(0); }
     100% { transform: translateX(-1600px); } /* move all original slides width */
   }
-.new-feature-section {
+/* New Feature Bar - Indian Flag Style */
+.new-feature-bar {
   display: flex;
-  flex-direction: column;
-  gap: 12px; /* space between items */
-  margin: 20px 0;
-}
-
-.feature-item {
-  padding: 12px;
-  border-radius: 10px;
-  font-size: 18px;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px;
+  font-size: 16px;
   font-weight: bold;
-  text-align: center;
+  color: white;
+  border-radius: 6px;
 
   /* Indian Flag gradient */
-  background: linear-gradient(90deg, #FF9933, #FFFFFF, #138808);
-
-  /* 3D shadow effect */
-  box-shadow: 0 4px 6px rgba(0,0,0,0.25),
-              0 8px 12px rgba(0,0,0,0.15);
-  transform: perspective(600px) rotateX(2deg);
-  transition: all 0.3s ease;
+  background: linear-gradient(to right, #FF9933 0%, #FFFFFF 50%, #138808 100%);
+  border: 2px solid #000080; /* Navy blue border (Ashok Chakra color) */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-.feature-item:hover {
-  transform: perspective(600px) rotateX(0deg) scale(1.03);
-  box-shadow: 0 6px 10px rgba(0,0,0,0.3),
-              0 12px 18px rgba(0,0,0,0.2);
-}
-
-.feature-item a {
+.new-feature-bar a {
   text-decoration: none;
-  color: #000;
-  display: block;
+  color: #000080; /* Navy blue text for links */
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: 0.3s ease;
 }
 
-.update-text {
-  color: #B71C1C;
-  font-size: 16px;
-  font-weight: 600;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+.new-feature-bar a:hover {
+  background: rgba(0,0,0,0.1);
+}
+
+.new-feature-bar .update-text {
+  font-size: 14px;
+  font-style: italic;
+  margin-left: 10px;
+  color: #B71C1C; /* Bold red for updates */
 }
