@@ -175,12 +175,13 @@ function loadCSV() {
     skipEmptyLines: true,
     complete: function(results) {
       console.log("CSV Data:", results.data); // debug
-      const data = results.data.map(r => ({
-        name: nameFromEmail(r["Email Address"]),
-        when: formatDate(r["Timestamp"]),
-        text: r["Complaint"] || "",
-        image: r["img"] || ""
-      }));
+    const data = results.data.map(r => ({
+  name: nameFromEmail(r["Email"] || ""),
+  when: formatDate(r["Timestamp"]),
+  text: r["Complaint Text"] || "",
+  image: r["Img URL"] || ""
+}));
+
       render(data);
     },
     error: function(err) {
@@ -195,3 +196,4 @@ loadCSV();
 
 </body>
 </html>
+
