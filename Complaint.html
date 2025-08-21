@@ -174,14 +174,13 @@ function loadCSV() {
     header: true,
     skipEmptyLines: true,
     complete: function(results) {
-      console.log("CSV Data:", results.data); // debug
-    const data = results.data.map(r => ({
-  name: nameFromEmail(r["Email"] || ""),
-  when: formatDate(r["Timestamp"]),
-  text: r["Complaint Text"] || "",
-  image: r["Img URL"] || ""
-}));
-
+      console.log("CSV Data:", results.data); // debug to see column names
+      const data = results.data.map(r => ({
+        name: nameFromEmail(r["Email"] || ""),
+        when: formatDate(r["Timestamp"]),
+        text: r["Complaint"] || "",
+        image: r["Image"] || ""   // Use exact CSV header for image column
+      }));
       render(data);
     },
     error: function(err) {
@@ -196,4 +195,3 @@ loadCSV();
 
 </body>
 </html>
-
