@@ -13,13 +13,13 @@ body {
   color: #333;
 }
 header {
-  background: #ff9800;
+  background: linear-gradient(90deg,#ff9800,#ffb74d);
   color: #fff;
   padding: 20px;
   text-align: center;
   font-size: 22px;
   font-weight: bold;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -63,7 +63,7 @@ main {
   transform: translateY(-4px) rotateX(1deg);
   box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
-.name { font-weight: bold; font-size: 16px; }
+.name { font-weight: bold; font-size: 16px; color:#d84315; }
 .time { font-size: 12px; color: #666; margin-top: 2px; }
 .text { margin-top: 8px; white-space: pre-wrap; font-size: 14px; }
 .thumb img {
@@ -73,6 +73,7 @@ main {
   height: auto;
   display: block;
   border: 1px solid #ccc;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 .empty {
   text-align: center;
@@ -124,13 +125,12 @@ main {
 const CSV_LINK = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRlJiG7E-uic4Z-j_hk_Yji3BDCH52HLUCV7Hkpg7QaRDs87mzqDko6xPgFsXgoU_mEyeyESpqpGH8m/pub?output=csv";
 const FORM_LINK = "https://docs.google.com/forms/d/e/1FAIpQLSfQ-BZJMRk2poh_ww0BuRISMH8QnyrsD0rf4pM8C8dHfy7rnQ/viewform";
 
-// Extract name from email
 function nameFromEmail(email) {
   if (!email) return "Guest";
-  return email.split('@')[0].replace(/[._-]+/g, ' ');
+  let name = email.split('@')[0].replace(/[._-]+/g, ' ');
+  return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
-// Render complaints
 function render(items) {
   const listEl = document.getElementById("list");
   const emptyMsg = document.getElementById("emptyMsg");
@@ -142,26 +142,26 @@ function render(items) {
     items.forEach(it => {
       const card = document.createElement("div");
       card.className = "item";
-      let html = `
-        <div class="name">${it.name}</div>
-        <div class="time">${it.when}</div>
-        <div class="text">${it.text}</div>
+
+      // Use default image if not present
+      let imgHTML = it.image ? `<div class="thumb"><img src="${it.image}" alt="Complaint image" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'"></div>` 
+                              : `<div class="thumb"><img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="No image"></div>`;
+
+      card.innerHTML = `
+        <div class="name">${it.name || "Guest"}</div>
+        <div class="time">${it.when || ""}</div>
+        <div class="text">${it.text || ""}</div>
+        ${imgHTML}
       `;
-      if (it.image) {
-        html += `<div class="thumb"><img src="${it.image}" alt="Complaint image"></div>`;
-      }
-      card.innerHTML = html;
       listEl.appendChild(card);
     });
   }
 }
 
-// Open Google Form
 function openForm() {
   window.open(FORM_LINK, "_blank");
 }
 
-// Load CSV using PapaParse
 function loadCSV() {
   Papa.parse(CSV_LINK, {
     download: true,
@@ -169,10 +169,10 @@ function loadCSV() {
     skipEmptyLines: true,
     complete: function(results) {
       const data = results.data.map(r => ({
-        name: nameFromEmail(r["Email Address"]),
+        name: r["Name"] || nameFromEmail(r["Email Address"]),
         when: r["Timestamp"] || "",
         text: r["Complaint"] || "",
-        image: r["img"] || ""
+        image: r["Image"] || r["img"] || ""
       }));
       render(data);
     },
