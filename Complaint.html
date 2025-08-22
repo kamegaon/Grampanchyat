@@ -1,197 +1,136 @@
 <!DOCTYPE html>
 <html lang="mr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ग्रामपंचायत – तक्रार प्रणाली</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-<style>
-body {
-  margin: 0;
-  font-family: "Noto Sans Devanagari", Arial, sans-serif;
-  background: #fdf7f2;
-  color: #333;
-}
-header {
-  background: #ff9800;
-  color: #fff;
-  padding: 20px;
-  text-align: center;
-  font-size: 22px;
-  font-weight: bold;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-main {
-  max-width: 900px;
-  margin: 20px auto;
-  padding: 0 15px;
-}
-.card {
-  background: #fff;
-  border-radius: 15px;
-  margin-bottom: 25px;
-  overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-  transform-style: preserve-3d;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-.card:hover {
-  transform: translateY(-8px) rotateX(2deg) rotateY(2deg);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.25);
-}
-.card-head {
-  background: #f57c00;
-  color: #fff;
-  padding: 18px 22px;
-  font-size: 18px;
-  font-weight: bold;
-  letter-spacing: 1px;
-}
-.list { display: grid; gap: 18px; padding: 18px; }
-.item {
-  background: #fff7ef;
-  border-radius: 12px;
-  padding: 16px;
-  border: 1px solid #eee;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-.item:hover {
-  transform: translateY(-4px) rotateX(1deg);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-}
-.name { font-weight: bold; font-size: 16px; }
-.time { font-size: 12px; color: #666; margin-top: 2px; }
-.text { margin-top: 8px; white-space: pre-wrap; font-size: 14px; }
-.thumb img {
-  margin-top: 10px;
-  border-radius: 10px;
-  max-width: 100%;
-  height: auto;
-  display: block;
-  border: 1px solid #ccc;
-}
-.empty {
-  text-align: center;
-  color: #888;
-  font-style: italic;
-  padding: 30px;
-  font-size: 15px;
-}
-.floating-btn {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  background: #f57c00;
-  color: #fff;
-  padding: 16px 24px;
-  border: none;
-  border-radius: 50px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 16px;
-  transition: 0.3s;
-  z-index: 1000;
-}
-.floating-btn:hover { background: #e65100; }
-@media (max-width: 600px) {
-  header { font-size: 18px; padding: 15px; }
-  .card-head { font-size: 16px; padding: 12px; }
-  .item { font-size: 14px; padding: 12px; }
-  .floating-btn { padding: 12px 20px; font-size: 14px; }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ग्रामपंचायत – तक्रार प्रणाली</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Noto Sans Devanagari", Arial, sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #fff);
+      color: #333;
+    }
+
+    header {
+      text-align: center;
+      background: #673ab7;
+      color: white;
+      padding: 15px;
+      font-size: 1.5em;
+      font-weight: bold;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 15px;
+    }
+
+    .complaint-card {
+      background: #fff;
+      margin: 20px 0;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .complaint-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0px 12px 25px rgba(0,0,0,0.25);
+    }
+
+    .complaint-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 20px;
+      border: 3px solid #673ab7;
+    }
+
+    .complaint-details {
+      flex: 1;
+    }
+
+    .complaint-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #673ab7;
+    }
+
+    .complaint-text {
+      margin-top: 5px;
+      font-size: 1em;
+      color: #444;
+    }
+
+    .add-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin: 20px auto;
+      padding: 15px;
+      background: #ff5722;
+      color: white;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0px 6px 15px rgba(0,0,0,0.2);
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .add-btn:hover {
+      background: #e64a19;
+      transform: scale(1.05);
+    }
+  </style>
 </head>
 <body>
+  <header>ग्रामपंचायत – तक्रार प्रणाली</header>
+  <div class="container" id="complaints"></div>
 
-<header>ग्रामपंचायत तक्रार प्रणाली</header>
+  <!-- Add Complaint Button -->
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSfQ-BZJMRk2poh_ww0BuRISMH8QnyrsD0rf4pM8C8dHfy7rnQ/viewform?usp=header" 
+     target="_blank" class="add-btn">📝 नवी तक्रार नोंदवा</a>
 
-<main>
-  <section class="card">
-    <div class="card-head">अलीकडील तक्रारी</div>
-    <div class="list" id="list"></div>
-    <div class="empty" id="emptyMsg">ग्रामपंचायतसाठी कोणतीही तक्रार उपलब्ध नाही.</div>
-  </section>
-</main>
+  <script>
+    const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRlJiG7E-uic4Z-j_hk_Yji3BDCH52HLUCV7Hkpg7QaRDs87mzqDko6xPgFsXgoU_mEyeyESpqpGH8m/pub?output=csv";
+    const defaultImg = "https://cdn-icons-png.flaticon.com/512/149/149071.png"; // default profile img
 
-<button class="floating-btn" onclick="openForm()">➕ तक्रार नोंदवा</button>
+    Papa.parse(sheetURL, {
+      download: true,
+      header: true,
+      complete: function(results) {
+        const data = results.data;
+        let container = document.getElementById("complaints");
 
-<script>
-const CSV_LINK = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRlJiG7E-uic4Z-j_hk_Yji3BDCH52HLUCV7Hkpg7QaRDs87mzqDko6xPgFsXgoU_mEyeyESpqpGH8m/pub?output=csv";
-const FORM_LINK = "https://docs.google.com/forms/d/e/1FAIpQLSfQ-BZJMRk2poh_ww0BuRISMH8QnyrsD0rf4pM8C8dHfy7rnQ/viewform";
+        data.forEach(row => {
+          if (!row["Complaint"]) return;
 
-// Extract name from email
-function nameFromEmail(email) {
-  if (!email) return "Guest";
-  let name = email.split('@')[0].replace(/[._-]+/g, ' ');
-  return name ? name : "Guest";
-}
+          let name = row["Email Address"] ? row["Email Address"].split("@")[0] : "Guest";
+          let complaint = row["Complaint"] || "No complaint text";
+          let img = row["img"] && row["img"].trim() !== "" ? row["img"] : defaultImg;
 
-// Format timestamp in Marathi
-function formatDate(ts) {
-  if (!ts) return "";
-  const d = new Date(ts);
-  return d.toLocaleString('mr-IN', { dateStyle: 'short', timeStyle: 'short' });
-}
-
-// Render complaints
-function render(items) {
-  const listEl = document.getElementById("list");
-  const emptyMsg = document.getElementById("emptyMsg");
-  listEl.innerHTML = "";
-  if (items.length === 0) {
-    emptyMsg.style.display = "block";
-  } else {
-    emptyMsg.style.display = "none";
-    items.forEach(it => {
-      const card = document.createElement("div");
-      card.className = "item";
-      let imgSrc = it.image ? it.image.trim() : "https://cdn-icons-png.flaticon.com/512/149/149071.png";
-      card.innerHTML = `
-        <div class="name">${it.name}</div>
-        <div class="time">${it.when}</div>
-        <div class="text">${it.text}</div>
-        <div class="thumb"><img src="${imgSrc}" alt="Complaint image"></div>
-      `;
-      listEl.appendChild(card);
+          let card = `
+            <div class="complaint-card">
+              <img src="${img}" class="complaint-img" alt="User">
+              <div class="complaint-details">
+                <div class="complaint-name">${name}</div>
+                <div class="complaint-text">${complaint}</div>
+              </div>
+            </div>
+          `;
+          container.innerHTML += card;
+        });
+      }
     });
-  }
-}
-
-// Open Google Form
-function openForm() {
-  window.open(FORM_LINK, "_blank");
-}
-
-// Load CSV using PapaParse
-function loadCSV() {
-  Papa.parse(CSV_LINK, {
-    download: true,
-    header: true,
-    skipEmptyLines: true,
-    complete: function(results) {
-      console.log("CSV Data:", results.data); // debug to see column names
-      const data = results.data.map(r => ({
-        name: nameFromEmail(r["Email"] || ""),
-        when: formatDate(r["Timestamp"]),
-        text: r["Complaint"] || "",
-        image: r["Image"] || ""   // Use exact CSV header for image column
-      }));
-      render(data);
-    },
-    error: function(err) {
-      console.error("CSV Load Error:", err);
-      document.getElementById("emptyMsg").style.display = "block";
-    }
-  });
-}
-
-loadCSV();
-</script>
-
+  </script>
 </body>
 </html>
