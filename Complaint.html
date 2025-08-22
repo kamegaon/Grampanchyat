@@ -8,54 +8,80 @@
   <style>
     body {
       font-family: 'Baloo 2', cursive;
-      background: #f0f4f8;
+      background: #f9f9f9;
       margin: 0;
       padding: 0;
       color: #333;
     }
 
     header {
-      background: #4caf50;
-      color: white;
-      padding: 1rem;
+      background: #f5f5f5;
+      color: #444;
+      padding: 1.2rem;
       text-align: center;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
     .container {
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 2rem auto;
       padding: 1rem;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
     }
 
     h2 {
       text-align: center;
+      margin-bottom: 2rem;
+      color: #555;
+    }
+
+    .complaints-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .complaint-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .complaint-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    .complaint-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 1rem;
-      color: #2e7d32;
+      font-size: 0.9rem;
+      color: #777;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 1.5rem;
+    .complaint-email {
+      font-weight: bold;
+      color: #333;
     }
 
-    table th, table td {
-      padding: 0.8rem;
-      border: 1px solid #ddd;
-      text-align: left;
+    .complaint-text {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      color: #444;
     }
 
-    table th {
-      background-color: #a5d6a7;
-      color: #1b5e20;
+    .complaint-image {
+      text-align: center;
     }
 
-    tr:nth-child(even) {
-      background-color: #f1f8e9;
+    .complaint-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     .btn {
@@ -63,33 +89,24 @@
       padding: 0.8rem 1.5rem;
       font-size: 1rem;
       color: white;
-      background: #388e3c;
+      background: #2196f3;
       border: none;
       border-radius: 8px;
       cursor: pointer;
       text-decoration: none;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, transform 0.2s;
+      margin-top: 2rem;
+      text-align: center;
     }
 
     .btn:hover {
-      background: #2e7d32;
+      background: #1976d2;
+      transform: translateY(-2px);
     }
 
-    .img-cell img {
-      width: 50px;
-      height: 50px;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-
-    @media(max-width: 768px){
-      table th, table td {
-        font-size: 0.9rem;
-        padding: 0.5rem;
-      }
-      .btn {
-        width: 100%;
-        text-align: center;
+    @media(max-width: 600px){
+      .complaints-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -102,50 +119,45 @@
 
 <div class="container">
   <h2>सर्व तक्रारी</h2>
-  <table id="complaintTable">
-    <thead>
-      <tr>
-        <th>Timestamp</th>
-        <th>Email</th>
-        <th>तक्रार लिहा</th>
-        <th>Image</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Data will populate here -->
-    </tbody>
-  </table>
+
+  <div class="complaints-grid" id="complaintsGrid">
+    <!-- Complaint cards will populate here -->
+  </div>
 
   <a href="https://docs.google.com/forms/d/e/1FAIpQLSf-wIOdK3EVCG7FB43DHwD476Fs3tFoSBkEcDmo8dtyFFQDjg/viewform?usp=header" target="_blank" class="btn">तक्रार जोडा</a>
 </div>
 
-<!-- PapaParse library to read CSV -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script>
   const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTpOuwnZp1PRmJM44XXOMzGptNccvslmBsCjhndRoNaMYjpFt2yQRpodWEiJIQTTT0bb3zY_bSd1Yy7/pub?output=csv';
 
   fetch(csvUrl)
-    .then(response => response.text())
+    .then(res => res.text())
     .then(data => {
       Papa.parse(data, {
         header: true,
         skipEmptyLines: true,
         complete: function(results) {
-          const tbody = document.querySelector('#complaintTable tbody');
+          const grid = document.getElementById('complaintsGrid');
           results.data.forEach(row => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-              <td>${row.Timestamp || '-'}</td>
-              <td>${row['Email address'] || 'Guest'}</td>
-              <td>${row['तक्रार लिहा'] || '-'}</td>
-              <td class="img-cell">${row['add img link'] ? `<img src="${row['add img link']}" alt="img">` : '—'}</td>
+            const card = document.createElement('div');
+            card.className = 'complaint-card';
+            card.innerHTML = `
+              <div class="complaint-header">
+                <span class="complaint-timestamp">${row.Timestamp || '-'}</span>
+                <span class="complaint-email">${row['Email address'] || 'Guest'}</span>
+              </div>
+              <div class="complaint-text">${row['तक्रार लिहा'] || '-'}</div>
+              <div class="complaint-image">
+                ${row['add img link'] ? `<img src="${row['add img link']}" alt="Complaint Image">` : ''}
+              </div>
             `;
-            tbody.appendChild(tr);
+            grid.appendChild(card);
           });
         }
       });
     })
-    .catch(error => console.error('Error fetching CSV:', error));
+    .catch(err => console.error('Error loading CSV:', err));
 </script>
 
 </body>
