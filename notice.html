@@ -2,8 +2,7 @@
 <html lang="mr">
 <head>
 <meta charset="UTF-8">
-<title>तक्रार यादी</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<title>सूचना इतिहास</title>
 <style>
     body {
         font-family: "Noto Sans Devanagari", Arial, sans-serif;
@@ -20,12 +19,23 @@
         font-size: 1.8em;
     }
 
-    .complaint-card {
+    .notice-card {
         background: #fff;
         padding: 15px;
         border-radius: 12px;
         box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        transform: perspective(1000px) rotateX(0deg);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        font-size: 1em;
         margin-bottom: 15px;
+        width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+    }
+
+    .date-time, .day, .line {
+        margin-top: 6px;
     }
 
     .date-time {
@@ -34,110 +44,111 @@
         color: #1a3d7c;
     }
 
-    .complaint-text {
+    .day {
+        font-size: 1em;
+        color: #0d6d2f;
+        font-weight: bold;
+    }
+
+    .notice-text {
         font-size: 1em;
         color: #000;
-        margin-top: 5px;
-    }
-
-    .submitted-by {
-        font-size: 0.95em;
-        color: #444;
-        margin-top: 5px;
-    }
-
-    .complaint-img {
-        max-width: 100%;
-        border-radius: 8px;
-        margin-top: 8px;
-        border: 1px solid #ccc;
-    }
-
-    .add-btn {
         display: block;
-        width: 100%;
-        text-align: center;
-        margin: 20px auto;
-        padding: 15px;
-        background: #ff5722;
-        color: white;
-        font-size: 1.2em;
-        border-radius: 12px;
-        text-decoration: none;
+        word-wrap: break-word;
+        white-space: pre-wrap;
     }
 
-    .add-btn:hover {
-        background: #e64a19;
+    /* Responsive for small screens */
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 1.4em;
+        }
+        .notice-card {
+            font-size: 0.9em;
+            padding: 12px;
+        }
+        .date-time {
+            font-size: 1em;
+        }
     }
 </style>
 </head>
 <body>
 
-<h1>तक्रार यादी</h1>
-<div id="complaintList">
-    <p>तक्रारी लोड होत आहेत...</p>
+<h1>सूचना इतिहास</h1>
+<div class="notice-container" id="noticeList">
+    <p>सूचना लोड होत आहेत...</p>
 </div>
 
-<!-- Add Complaint Button -->
-<a href="https://docs.google.com/forms/d/e/1FAIpQLSfQ-BZJMRk2poh_ww0BuRISMH8QnyrsD0rf4pM8C8dHfy7rnQ/viewform?usp=header" 
-   target="_blank" class="add-btn">📝 नवी तक्रार नोंदवा</a>
-
 <script>
-    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRlJiG7E-uic4Z-j_hk_Yji3BDCH52HLUCV7Hkpg7QaRDs87mzqDko6xPgFsXgoU_mEyeyESpqpGH8m/pub?output=csv";
-    const defaultImg = "https://cdn-icons-png.flaticon.com/512/1829/1829586.png"; // default if no img
+    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRYmHwVuXHgocGoP7p1evwN8HN5cGneUv4Di0KIkk7Djvr7gC6U3F3PMwa1dqbQebaXM5IN3yyd_7Ig/pub?gid=1382462655&single=true&output=csv";
 
-    Papa.parse(csvUrl, {
-        download: true,
-        header: true,
-        complete: function(results) {
-            const data = results.data;
-            const container = document.getElementById("complaintList");
+    function getDayNameFromDateParts(day, month, year) {
+        const days = ["रविवार", "सोमवार", "मंगळवार", "बुधवार", "गुरुवार", "शुक्रवार", "शनिवार"];
+        const dateObj = new Date(year, month - 1, day);
+        return days[dateObj.getDay()];
+    }
+
+    async function loadNotices() {
+        try {
+            const response = await fetch(csvUrl);
+            const text = await response.text();
+            const lines = text.trim().split("\n");
+            const container = document.getElementById("noticeList");
             container.innerHTML = "";
 
-            // Show latest first
-            for (let i = data.length - 1; i >= 0; i--) {
-                const row = data[i];
-                if (!row["Complaint"]) continue;
+            for (let i = lines.length - 1; i > 0; i--) {
+                const cols = lines[i].split(",");
 
-                const rawDateTime = row["Timestamp"] || "";
-                const complaint = row["Complaint"] || "";
-                let submittedBy = row["Email Address"] || "Guest";
-                let img = row["img"] && row["img"].trim() !== "" ? row["img"] : defaultImg;
+                const rawDateTime = cols[0] || ""; // Timestamp
+                const notice = cols[1] || "";
+                let submittedBy = cols[2] || "";
 
-                // only name before @
+                if (!notice.trim()) continue;
+
+                // Show only name before @
                 if (submittedBy.includes("@")) {
                     submittedBy = submittedBy.split("@")[0];
                 }
 
                 let datePart = "तारीख उपलब्ध नाही";
                 let timePart = "वेळ उपलब्ध नाही";
+                let dayName = "वार उपलब्ध नाही";
 
                 if (rawDateTime.includes("/")) {
                     // Format like DD/MM/YYYY HH:MM:SS
                     const [date, time] = rawDateTime.split(" ");
-                    datePart = date || "";
-                    timePart = time || "";
-                } else if (rawDateTime.includes("-")) {
-                    // ISO format
+                    const [day, month, year] = date.split("/").map(Number);
+                    datePart = `${day}/${month}/${year}`;
+                    timePart = time || "वेळ उपलब्ध नाही";
+                    dayName = getDayNameFromDateParts(day, month, year);
+                } 
+                else if (rawDateTime.includes("-")) {
+                    // ISO format YYYY-MM-DDTHH:MM:SS
                     const dateObj = new Date(rawDateTime);
                     if (!isNaN(dateObj)) {
                         datePart = dateObj.toLocaleDateString("mr-IN");
                         timePart = dateObj.toLocaleTimeString("mr-IN");
+                        dayName = getDayNameFromDateParts(dateObj.getDate(), dateObj.getMonth() + 1, dateObj.getFullYear());
                     }
                 }
 
                 const card = document.createElement("div");
-                card.className = "complaint-card";
+                card.className = "notice-card";
                 card.innerHTML = `
-                    <div class="date-time">📅 ${datePart} ⏱ ${timePart}</div>
-                    <div class="complaint-text">📝 ${complaint}</div>
-                    <div class="submitted-by">👤 ${submittedBy}</div>
-                    <img src="${img}" class="complaint-img" alt="Complaint Image">
+                    <div class="date-time">${datePart} ⏱ ${timePart}</div>
+                    <div class="day">(${dayName})</div>
+                    <div class="line"><span class="label">सूचना:</span> <span class="notice-text">${notice}</span></div>
+                    <div class="line"><span class="label">सादरकर्ता:</span> <span class="value">${submittedBy}</span></div>
                 `;
                 container.appendChild(card);
             }
+        } catch (error) {
+            document.getElementById("noticeList").innerHTML = "<p>सूचना लोड करण्यात त्रुटी आली.</p>";
         }
-    });
+    }
+
+    loadNotices();
 </script>
 </body>
 </html>
