@@ -62,11 +62,13 @@ fetch(csvUrl)
       complete: function(results) {
         const grid = document.getElementById('complaintsGrid');
         results.data.forEach(row => {
-          // Safely get columns with multiple name possibilities
+          // Get only the name from email
           const emailCol = row['Email address'] || row['Email'] || 'Guest';
           const nameOnly = emailCol.includes('@') ? emailCol.split('@')[0] : emailCol;
-          const complaintText = row['तक्रार लिहा'] || row['Complaint'] || '-';
-          const imgLink = row['add img link'] || row['Image Link'] || '';
+
+          // Use new column names
+          const complaintText = row['Complaint'] || '-';
+          const imgLink = row['Image'] || '';
 
           const card = document.createElement('div');
           card.className = 'complaint-card';
@@ -88,5 +90,7 @@ fetch(csvUrl)
   .catch(err => console.error('Error loading CSV:', err));
 </script>
 
+
 </body>
 </html>
+
