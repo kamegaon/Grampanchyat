@@ -6,42 +6,148 @@
 <title>ग्रामपंचायत तक्रार डेटा</title>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
 <style>
+/* ===== Body & Header ===== */
 body {
   font-family: 'Baloo 2', cursive;
-  background: #f0f4f8;
-  margin: 0; padding: 0; color: #333;
+  background: #f2f6fc;
+  margin: 0;
+  padding: 0;
+  color: #333;
 }
 header {
-  background: #ffffff; color: #444; padding: 1.2rem;
-  text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  background: #ffffff;
+  color: #333;
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 600;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
 }
-.container { max-width: 1100px; margin: 2rem auto; padding: 1rem; }
-h2 { text-align: center; margin-bottom: 2rem; color: #555; }
+
+/* ===== Container ===== */
+.container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.6rem;
+  color: #444;
+}
+
+/* ===== Grid Cards ===== */
 .complaints-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
 }
+
+/* ===== Complaint Card ===== */
 .complaint-card {
-  background: linear-gradient(145deg, #ffffff, #f9f9f9);
-  border-radius: 12px; padding: 1.5rem; box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-  transition: transform 0.2s, box-shadow 0.2s; position: relative;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-.complaint-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
-.complaint-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; font-size: 0.9rem; }
-.complaint-email { font-weight: bold; color: #ff5722; }
-.complaint-timestamp { font-size: 0.8rem; color: #999; }
-.complaint-text { font-size: 1rem; margin-bottom: 1rem; color: #444; }
-.complaint-image { text-align: center; margin-top: 0.5rem; }
-.complaint-image img { max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-.btn { display: inline-block; padding: 0.8rem 1.5rem; font-size: 1rem; color: white; background: #ff9800; border: none; border-radius: 8px; cursor: pointer; text-decoration: none; transition: background 0.3s ease, transform 0.2s; margin-top: 2rem; text-align: center; }
-.btn:hover { background: #fb8c00; transform: translateY(-2px); }
-@media(max-width: 600px){ .complaints-grid { grid-template-columns: 1fr; } }
+.complaint-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+/* ===== Card Header ===== */
+.complaint-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.complaint-email {
+  font-weight: 600;
+  color: #1976d2;
+  font-size: 1rem;
+}
+.complaint-timestamp {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+/* ===== Complaint Text ===== */
+.complaint-text {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #444;
+  line-height: 1.4;
+}
+
+/* ===== Complaint Image ===== */
+.complaint-image {
+  text-align: center;
+}
+.complaint-image img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* ===== No Image Placeholder ===== */
+.no-image {
+  display: inline-block;
+  width: 100%;
+  height: 200px;
+  background: #e0e0e0;
+  color: #777;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-style: italic;
+}
+
+/* ===== Add Complaint Button ===== */
+.btn {
+  display: inline-block;
+  padding: 0.9rem 1.8rem;
+  font-size: 1rem;
+  color: white;
+  background: #ff9800;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s;
+  margin: 2rem auto;
+  display: block;
+  text-align: center;
+  max-width: 250px;
+}
+.btn:hover {
+  background: #fb8c00;
+  transform: translateY(-2px);
+}
+
+/* ===== Mobile Responsiveness ===== */
+@media(max-width: 600px){
+  .complaints-grid {
+    grid-template-columns: 1fr;
+  }
+  .complaint-card {
+    padding: 1.2rem;
+  }
+  header { font-size: 1.2rem; }
+}
 </style>
 </head>
 <body>
 
-<header>
-  <h1>ग्रामपंचायत तक्रार डेटा</h1>
-</header>
+<header>ग्रामपंचायत तक्रार डेटा</header>
 
 <div class="container">
   <h2>सर्व तक्रारी</h2>
@@ -62,11 +168,8 @@ fetch(csvUrl)
       complete: function(results) {
         const grid = document.getElementById('complaintsGrid');
         results.data.forEach(row => {
-          // Get only the name from email
           const emailCol = row['Email address'] || row['Email'] || 'Guest';
           const nameOnly = emailCol.includes('@') ? emailCol.split('@')[0] : emailCol;
-
-          // Use new column names
           const complaintText = row['Complaint'] || '-';
           const imgLink = row['Image'] || '';
 
@@ -79,7 +182,7 @@ fetch(csvUrl)
             </div>
             <div class="complaint-text">${complaintText}</div>
             <div class="complaint-image">
-              ${imgLink ? `<img src="${imgLink}" alt="Complaint Image">` : '<span style="color:#999;">No Image</span>'}
+              ${imgLink ? `<img src="${imgLink}" alt="Complaint Image">` : '<div class="no-image">No Image</div>'}
             </div>
           `;
           grid.appendChild(card);
@@ -90,7 +193,5 @@ fetch(csvUrl)
   .catch(err => console.error('Error loading CSV:', err));
 </script>
 
-
 </body>
 </html>
-
