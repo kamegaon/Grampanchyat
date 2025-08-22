@@ -9,8 +9,7 @@
     body {
       margin: 0;
       font-family: "Noto Sans Devanagari", Arial, sans-serif;
-      background: linear-gradient(135deg, #e0f7fa, #fff);
-      color: #333;
+      background: #f0f0f0;
     }
 
     header {
@@ -20,54 +19,39 @@
       padding: 15px;
       font-size: 1.5em;
       font-weight: bold;
-      box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
     }
 
     .container {
-      max-width: 900px;
-      margin: 30px auto;
-      padding: 15px;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 10px;
     }
 
-    .complaint-card {
+    .complaint-box {
       background: #fff;
-      margin: 20px 0;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
-      transition: transform 0.2s ease, box-shadow 0.3s ease;
-      display: flex;
-      align-items: flex-start;
+      border: 2px solid #673ab7;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 15px 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
-    .complaint-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0px 12px 25px rgba(0,0,0,0.25);
-    }
-
-    .complaint-img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-right: 20px;
-      border: 3px solid #673ab7;
-    }
-
-    .complaint-details {
-      flex: 1;
-    }
-
-    .complaint-name {
-      font-size: 1.2em;
+    .complaint-header {
       font-weight: bold;
+      font-size: 1.1em;
       color: #673ab7;
+      margin-bottom: 8px;
     }
 
     .complaint-text {
-      margin-top: 5px;
-      font-size: 1em;
-      color: #444;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .complaint-img {
+      max-width: 100%;
+      border-radius: 8px;
+      border: 1px solid #ccc;
     }
 
     .add-btn {
@@ -82,13 +66,10 @@
       border: none;
       border-radius: 12px;
       text-decoration: none;
-      box-shadow: 0px 6px 15px rgba(0,0,0,0.2);
-      transition: background 0.3s ease, transform 0.2s ease;
     }
 
     .add-btn:hover {
       background: #e64a19;
-      transform: scale(1.05);
     }
   </style>
 </head>
@@ -102,7 +83,7 @@
 
   <script>
     const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRlJiG7E-uic4Z-j_hk_Yji3BDCH52HLUCV7Hkpg7QaRDs87mzqDko6xPgFsXgoU_mEyeyESpqpGH8m/pub?output=csv";
-    const defaultImg = "https://cdn-icons-png.flaticon.com/512/149/149071.png"; // default profile img
+    const defaultImg = "https://cdn-icons-png.flaticon.com/512/1829/1829586.png"; // box default img
 
     Papa.parse(sheetURL, {
       download: true,
@@ -115,19 +96,17 @@
           if (!row["Complaint"]) return;
 
           let name = row["Email Address"] ? row["Email Address"].split("@")[0] : "Guest";
-          let complaint = row["Complaint"] || "No complaint text";
+          let complaint = row["Complaint"];
           let img = row["img"] && row["img"].trim() !== "" ? row["img"] : defaultImg;
 
-          let card = `
-            <div class="complaint-card">
-              <img src="${img}" class="complaint-img" alt="User">
-              <div class="complaint-details">
-                <div class="complaint-name">${name}</div>
-                <div class="complaint-text">${complaint}</div>
-              </div>
+          let box = `
+            <div class="complaint-box">
+              <div class="complaint-header">👤 ${name}</div>
+              <div class="complaint-text">${complaint}</div>
+              <img src="${img}" class="complaint-img" alt="Complaint Image">
             </div>
           `;
-          container.innerHTML += card;
+          container.innerHTML += box;
         });
       }
     });
