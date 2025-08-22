@@ -8,18 +8,18 @@
   <style>
     body {
       font-family: 'Baloo 2', cursive;
-      background: #f9f9f9;
+      background: #f0f4f8;
       margin: 0;
       padding: 0;
       color: #333;
     }
 
     header {
-      background: #f5f5f5;
+      background: #ffffff;
       color: #444;
       padding: 1.2rem;
       text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
 
     .container {
@@ -41,11 +41,12 @@
     }
 
     .complaint-card {
-      background: #ffffff;
+      background: linear-gradient(145deg, #ffffff, #f9f9f9);
       border-radius: 12px;
       padding: 1.5rem;
       box-shadow: 0 6px 15px rgba(0,0,0,0.08);
       transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
     }
 
     .complaint-card:hover {
@@ -59,12 +60,16 @@
       align-items: center;
       margin-bottom: 1rem;
       font-size: 0.9rem;
-      color: #777;
     }
 
     .complaint-email {
       font-weight: bold;
-      color: #333;
+      color: #ff5722;
+    }
+
+    .complaint-timestamp {
+      font-size: 0.8rem;
+      color: #999;
     }
 
     .complaint-text {
@@ -75,6 +80,7 @@
 
     .complaint-image {
       text-align: center;
+      margin-top: 0.5rem;
     }
 
     .complaint-image img {
@@ -89,7 +95,7 @@
       padding: 0.8rem 1.5rem;
       font-size: 1rem;
       color: white;
-      background: #2196f3;
+      background: #ff9800;
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -100,7 +106,7 @@
     }
 
     .btn:hover {
-      background: #1976d2;
+      background: #fb8c00;
       transform: translateY(-2px);
     }
 
@@ -140,12 +146,15 @@
         complete: function(results) {
           const grid = document.getElementById('complaintsGrid');
           results.data.forEach(row => {
+            // Extract name before @
+            let emailName = row['Email address'] ? row['Email address'].split('@')[0] : 'Guest';
+
             const card = document.createElement('div');
             card.className = 'complaint-card';
             card.innerHTML = `
               <div class="complaint-header">
                 <span class="complaint-timestamp">${row.Timestamp || '-'}</span>
-                <span class="complaint-email">${row['Email address'] || 'Guest'}</span>
+                <span class="complaint-email">${emailName}</span>
               </div>
               <div class="complaint-text">${row['तक्रार लिहा'] || '-'}</div>
               <div class="complaint-image">
