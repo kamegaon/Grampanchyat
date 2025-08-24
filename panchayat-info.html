@@ -5,12 +5,13 @@
   <title>ग्रामपंचायत माहिती - KAMEGAON</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
+  <!-- Google icon -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- External CSS -->
   <link rel="stylesheet" href="sub page.css">
 </head>
 <body>
-
-<!-- Header -->
+ <!-- Header -->
 <header class="webapp-header">
   <div class="logo-section">
     <div class="logo-title">
@@ -38,133 +39,136 @@
   <a href="law.html"><i class="fas fa-gavel"></i> कायदे आणि नियम</a>
 </nav>
 
+<!-- Notice Bar -->
+<div id="notice-bar" class="notice-bar">
+  <span id="notice" class="notice-text"></span>
+</div>
+
+<script>
+  async function fetchNotice() {
+    try {
+      const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRYmHwVuXHgocGoP7p1evwN8HN5cGneUv4Di0KIkk7Djvr7gC6U3F3PMwa1dqbQebaXM5IN3yyd_7Ig/pub?gid=1382462655&single=true&output=csv";
+      const response = await fetch(csvUrl);
+      const text = await response.text();
+      const lines = text.trim().split("\n");
+      const lastLine = lines[lines.length - 1];
+      const columns = lastLine.split(",");
+      const latestNotice = columns[1]?.trim();
+      if (latestNotice && latestNotice.toLowerCase() !== "no notice") {
+        document.getElementById("notice").textContent = latestNotice;
+        document.getElementById("notice-bar").style.display = "block";
+      } else {
+        document.getElementById("notice-bar").style.display = "none";
+      }
+    } catch (error) {
+      document.getElementById("notice-bar").style.display = "none";
+    }
+  }
+  fetchNotice();
+  setInterval(fetchNotice, 15000);
+</script>
+
 <main>
-  <!-- 🎞️ Image Slider -->
+  <!-- Gram Panchayat Image Slider -->
   <section class="slider">
-    <div class="slides">
-      <img src="images/gp1.jpg" alt="ग्रामपंचायत इमारत">
-      <img src="images/gp2.jpg" alt="ग्रामपंचायत कार्यक्रम">
-      <img src="images/gp3.jpg" alt="ग्रामसभा">
-      <img src="images/gp4.jpg" alt="विकास योजना">
+    <h2>🏢 ग्रामपंचायत इमारत</h2>
+    <div class="slider-container">
+      <div class="slides">
+        <img src="images/new-building1.jpg" alt="ग्रामपंचायत इमारत">
+        <img src="images/new-building2.jpg" alt="ग्रामपंचायत इमारत">
+        <img src="images/new-building3.jpg" alt="ग्रामपंचायत इमारत">
+        <img src="images/new-building4.jpg" alt="ग्रामपंचायत इमारत">
+      </div>
     </div>
   </section>
 
-  <!-- Current Office Bearers -->
-  <div class="poster">
-    <h2>📋 सध्याचे पदाधिकारी</h2>
-    <p>👤 सरपंच: श्री. रामदास पाटील</p>
-    <p>👩 उपसरपंच: सौ. मीनाताई मोरे</p>
-    <p>👥 सदस्यांची संख्या: 7</p>
-
-    <h2>🕒 कार्यालय वेळ</h2>
-    <p>सोमवार ते शुक्रवार: सकाळी 10 ते संध्या 5</p>
-    <p>शनिवार: सकाळी 10 ते दुपारी 1</p>
-    <p>रविवार: सुट्टी</p>
-  </div>
-<!-- सदस्य यादी -->
-<section class="members">
-  <h2>👥 ग्रामपंचायत पदाधिकारी व कर्मचारी (२०२३ - २०२८)</h2>
-  <div class="member-grid">
-
-    <div class="member-card">
-      <img src="images/amita_waghmare.jpg" alt="सरपंच">
-      <h3>सौ. वाघमारे अमिता बालाजी</h3>
-      <p>सरपंच</p>
+  <!-- Members List -->
+  <section class="members">
+    <h2>👥 ग्रामपंचायत पदाधिकारी व कर्मचारी (०५ जानेवारी २०२३ – ०४ जानेवारी २०२८)</h2>
+    <div class="member-grid">
+      <div class="member-card">
+        <img src="images/members/sarpanch.jpg" alt="सरपंच">
+        <h3>सौ. अमिता बालाजी वाघमारे</h3>
+        <p>सरपंच</p>
+      </div>
+      <div class="member-card">
+        <img src="images/members/up-sarpanch.jpg" alt="उपसरपंच">
+        <h3>सौ. मिरा राहुल कदम</h3>
+        <p>उपसरपंच</p>
+      </div>
+      <div class="member-card">
+        <img src="images/members/member1.jpg" alt="सदस्य">
+        <h3>श्री. पाटील नानासाहेब अनंतराव</h3>
+        <p>सदस्य</p>
+      </div>
+      <div class="member-card">
+        <img src="images/members/member2.jpg" alt="सदस्य">
+        <h3>श्री. मोरे नितीन बलभिम</h3>
+        <p>सदस्य</p>
+      </div>
+      <div class="member-card">
+        <img src="images/members/member3.jpg" alt="सदस्य">
+        <h3>श्री. शेवाळे बिरु महादेव</h3>
+        <p>सदस्य</p>
+      </div>
+      <div class="member-card">
+        <img src="images/members/member4.jpg" alt="सदस्य">
+        <h3>श्री. अवतारे विनोद विजय</h3>
+        <p>सदस्य</p>
+      </div>
+      <div class="member-card">
+        <img src="images/members/member5.jpg" alt="सदस्या">
+        <h3>सौ. कदम सुनिता मच्छिंद्रनाथ</h3>
+        <p>सदस्या</p>
+      </div>
+      <div class="member-card">
+        <img src="images/members/member6.jpg" alt="सदस्या">
+        <h3>सौ. झोरे मनिषा नामदेव</h3>
+        <p>सदस्या</p>
+      </div>
+      <div class="member-card">
+        <img src="images/members/member7.jpg" alt="सदस्या">
+        <h3>सौ. वाघमारे सुनंदा शिवाजी</h3>
+        <p>सदस्या</p>
+      </div>
+      <div class="member-card">
+        <img src="images/members/member8.jpg" alt="सदस्या">
+        <h3>सौ. टिके अलका कुंडलिक</h3>
+        <p>सदस्या</p>
+      </div>
+      <div class="member-card">
+        <img src="images/members/clerk.jpg" alt="ग्रामसेवक">
+        <h3>श्री. लोकांडे डी. बी.</h3>
+        <p>ग्रामसेवक</p>
+      </div>
+      <div class="member-card">
+        <img src="images/members/operator.jpg" alt="संगणक परिचालक">
+        <h3>श्री. ओव्हाळ आण्णासाहेब आबासाहेब</h3>
+        <p>संगणक परिचालक</p>
+      </div>
+      <div class="member-card">
+        <img src="images/members/peon.jpg" alt="शिपाई">
+        <h3>श्री. रणदिवे फुलचंद सुखदेव</h3>
+        <p>शिपाई</p>
+      </div>
     </div>
+  </section>
 
-    <div class="member-card">
-      <img src="images/meera_kadam.jpg" alt="उपसरपंच">
-      <h3>सौ. कदम मिरा राहुल</h3>
-      <p>उपसरपंच</p>
-    </div>
-
-    <div class="member-card">
-      <img src="images/nanasaheb_patil.jpg" alt="सदस्य">
-      <h3>श्री. पाटील नानासाहेब अनंतराव</h3>
-      <p>सदस्य</p>
-    </div>
-
-    <div class="member-card">
-      <img src="images/nitin_more.jpg" alt="सदस्य">
-      <h3>श्री. मोरे नितीन बलभिम</h3>
-      <p>सदस्य</p>
-    </div>
-
-    <div class="member-card">
-      <img src="images/biru_shewale.jpg" alt="सदस्य">
-      <h3>श्री. शेवाळे बिरु महादेव</h3>
-      <p>सदस्य</p>
-    </div>
-
-    <div class="member-card">
-      <img src="images/vinod_avatare.jpg" alt="सदस्य">
-      <h3>श्री. अवतारे विनोद विजय</h3>
-      <p>सदस्य</p>
-    </div>
-
-    <div class="member-card">
-      <img src="images/sunita_kadam.jpg" alt="सदस्या">
-      <h3>सौ. कदम सुनिता मच्छिंद्रनाथ</h3>
-      <p>सदस्या</p>
-    </div>
-
-    <div class="member-card">
-      <img src="images/manisha_jhore.jpg" alt="सदस्या">
-      <h3>सौ. झोरे मनिषा नामदेव</h3>
-      <p>सदस्या</p>
-    </div>
-
-    <div class="member-card">
-      <img src="images/sunanda_waghmare.jpg" alt="सदस्या">
-      <h3>सौ. वाघमारे सुनंदा शिवाजी</h3>
-      <p>सदस्या</p>
-    </div>
-
-    <div class="member-card">
-      <img src="images/alka_tike.jpg" alt="सदस्या">
-      <h3>सौ. टिके अलका कुंडलिक</h3>
-      <p>सदस्या</p>
-    </div>
-
-    <div class="member-card">
-      <img src="images/db_lokhande.jpg" alt="ग्रामसेवक">
-      <h3>श्री. लोकांडे डि.बी.</h3>
-      <p>ग्रामसेवक</p>
-    </div>
-
-    <div class="member-card">
-      <img src="images/annasaheb_ovhal.jpg" alt="संगणक परिचालक">
-      <h3>श्री. ओव्हाळ आण्णासाहेब आबासाहेब</h3>
-      <p>संगणक परिचालक</p>
-    </div>
-
-    <div class="member-card">
-      <img src="images/fulchand_randive.jpg" alt="शिपाई">
-      <h3>श्री. रणदिवे फुलचंद सुखदेव</h3>
-      <p>शिपाई</p>
-    </div>
-
-  </div>
-</section>
-
-  <!-- नवीन ग्रामपंचायत इमारत -->
-  <div class="poster">
-    <h2>🏢 नवीन ग्रामपंचायत इमारत</h2>
-    <p>2024 मध्ये KAMEGAON ग्रामपंचायतीची नवीन इमारत बांधण्यात आली आहे.</p>
-    <p>यामध्ये आधुनिक बैठक हॉल, डिजिटल अभिलेख व्यवस्था, महिला विश्रांतीगृह आणि नागरिकांसाठी सुलभ सेवा उपलब्ध आहेत.</p>
-  </div>
-
-  <!-- उद्घाटन -->
-  <div class="poster">
-    <h2>📅 उद्घाटन सोहळा</h2>
-    <p>🔸 दिनांक: 5 जानेवारी 2024</p>
-    <p>🔸 उद्घाटक: मा. आमदार सौ. रेखा ताई देशमुख</p>
-    <p>🔸 विशेष उपस्थिती: जिल्हा परिषद अधिकारी, पंचायत समिती सदस्य</p>
-  </div>
-
+  <!-- Events / Works -->
+  <section class="events">
+    <h2>📌 चालू व पूर्ण झालेले कामे</h2>
+    <ul>
+      <li>✅ पाणीपुरवठा योजना सुधारणा (2023-24)</li>
+      <li>✅ ग्रामपंचायत डिजिटल अभिलेख व्यवस्था सुरु</li>
+      <li>✅ प्राथमिक शाळेत शौचालय व पाणीटाकी बांधकाम</li>
+      <li>⏳ रस्त्यांचे डांबरीकरण (2024 मध्ये सुरू)</li>
+      <li>⏳ स्वच्छ भारत अंतर्गत कचरा व्यवस्थापन प्रकल्प</li>
+      <li>📅 आगामी ग्रामसभा: 15 सप्टेंबर 2025</li>
+    </ul>
+  </section>
 </main>
 
-<!-- Footer -->
+<!-- ===== Footer Start ===== -->
 <footer>
   <div class="footer-container">
     <div class="footer-section">
@@ -173,7 +177,7 @@
     </div>
     <div class="footer-section">
       <h4>📍 संपर्क</h4>
-      <p>📞 +91-9876543210</p>
+      <p>📞</p>
       <p>✉️ kamegaon@gmail.com</p>
       <p>🏠 गाव, तालुका, जिल्हा</p>
     </div>
@@ -193,4 +197,3 @@
 
 </body>
 </html>
-
