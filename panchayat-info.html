@@ -6,9 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
   <!-- Google icon -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- External CSS -->
   <link rel="stylesheet" href="sub page.css">
+
 </head>
 <body>
  <!-- Header -->
@@ -29,171 +30,77 @@
   </div>
 </header>
 
-<!-- Navigation -->
-<nav>
-  <a href="index.html"><i class="fas fa-home"></i> मुख्यपृष्ठ</a>
-  <a href="village.html"><i class="fas fa-map-marker-alt"></i> गावाची माहिती</a>
-  <a href="yojana.html"><i class="fas fa-list-alt"></i> योजना</a>
-  <a href="seva.html"><i class="fas fa-hand-holding-heart"></i> सेवा</a>
-  <a href="panchayat-info.html"><i class="fas fa-building"></i> ग्रामपंचायत माहिती</a>
-  <a href="law.html"><i class="fas fa-gavel"></i> कायदे आणि नियम</a>
-</nav>
 
-<!-- Notice Bar -->
-<div id="notice-bar" class="notice-bar">
-  <span id="notice" class="notice-text"></span>
-</div>
+ 
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html"><i class="fas fa-home"></i> मुख्यपृष्ठ</a>
+    <a href="village.html"><i class="fas fa-map-marker-alt"></i> गावाची माहिती</a>
+    <a href="yojana.html"><i class="fas fa-list-alt"></i> योजना</a>
+    <a href="seva.html"><i class="fas fa-hand-holding-heart"></i> सेवा</a>
+    <a href="panchayat-info.html"><i class="fas fa-building"></i> ग्रामपंचायत माहिती</a>
+    <a href="law.html"><i class="fas fa-gavel"></i> कायदे आणि नियम</a>
+  </nav>
 
-<script>
-  async function fetchNotice() {
-    try {
-      const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRYmHwVuXHgocGoP7p1evwN8HN5cGneUv4Di0KIkk7Djvr7gC6U3F3PMwa1dqbQebaXM5IN3yyd_7Ig/pub?gid=1382462655&single=true&output=csv";
-      const response = await fetch(csvUrl);
-      const text = await response.text();
-      const lines = text.trim().split("\n");
-      const lastLine = lines[lines.length - 1];
-      const columns = lastLine.split(",");
-      const latestNotice = columns[1]?.trim();
-      if (latestNotice && latestNotice.toLowerCase() !== "no notice") {
-        document.getElementById("notice").textContent = latestNotice;
-        document.getElementById("notice-bar").style.display = "block";
-      } else {
-        document.getElementById("notice-bar").style.display = "none";
-      }
-    } catch (error) {
-      document.getElementById("notice-bar").style.display = "none";
-    }
-  }
-  fetchNotice();
-  setInterval(fetchNotice, 15000);
-</script>
+  <main>
+    <div class="poster">
+      <h2>📋 सध्याचे पदाधिकारी</h2>
+      <p>👤 सरपंच: श्री. रामदास पाटील</p>
+      <p>👩 उपसरपंच: सौ. मीनाताई मोरे</p>
+      <p>👥 सदस्यांची संख्या: 7</p>
 
-<main>
-  <!-- Gram Panchayat Image Slider -->
-  <section class="slider">
-    <h2>🏢 ग्रामपंचायत इमारत</h2>
-    <div class="slider-container">
-      <div class="slides">
-        <img src="images/new-building1.jpg" alt="ग्रामपंचायत इमारत">
-        <img src="images/new-building2.jpg" alt="ग्रामपंचायत इमारत">
-        <img src="images/new-building3.jpg" alt="ग्रामपंचायत इमारत">
-        <img src="images/new-building4.jpg" alt="ग्रामपंचायत इमारत">
+      <h2>🕒 कार्यालय वेळ</h2>
+      <p>सोमवार ते शुक्रवार: सकाळी 10 ते संध्या 5</p>
+      <p>शनिवार: सकाळी 10 ते दुपारी 1</p>
+      <p>रविवार: सुट्टी</p>
+
+      <h2>🏢 नवीन ग्रामपंचायत इमारत</h2>
+      <p>2024 मध्ये KAMEGAON ग्रामपंचायतीची नवीन इमारत बांधण्यात आली आहे.</p>
+      <p>यामध्ये आधुनिक बैठक हॉल, डिजिटल अभिलेख व्यवस्था, महिला विश्रांतीगृह आणि नागरिकांसाठी सुलभ सेवा उपलब्ध आहेत.</p>
+
+      <div class="image-window">
+        <img src="images/new-building.jpg" alt="नवीन ग्रामपंचायत इमारत">
+		<img src="images/new-building.jpg" alt="नवीन ग्रामपंचायत इमारत">
+        <img src="images/new-building.jpg" alt="नवीन ग्रामपंचायत इमारत">
+        <img src="images/new-building.jpg" alt="नवीन ग्रामपंचायत इमारत">
+        <img src="images/new-building.jpg" alt="नवीन ग्रामपंचायत इमारत">
+        <p><em>नवीन ग्रामपंचायत इमारतीचे छायाचित्र</em></p>
+      </div>
+
+      <h2>📅 उद्घाटन सोहळा</h2>
+      <p>🔸 दिनांक: 5 जानेवारी 2024</p>
+      <p>🔸 उद्घाटक: मा. आमदार सौ. रेखा ताई देशमुख</p>
+      <p>🔸 विशेष उपस्थिती: जिल्हा परिषद अधिकारी, पंचायत समिती सदस्य</p>
+    </div>
+  </main>
+
+   <!-- ===== Footer Start ===== -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>🌐 ग्रामपंचायत सेतू</h3>
+        <p>आपल्या गावाची माहिती, योजना, आणि ताज्या सूचना एका क्लिकमध्ये.</p>
+      </div>
+      <div class="footer-section">
+        <h4>📍 संपर्क</h4>
+        <p>📞</p>
+        <p>✉️kamegaon@gmail.com</p>
+        <p>🏠 गाव, तालुका, जिल्हा</p>
+      </div>
+      <div class="footer-section">
+        <h4>🔗 दुवे</h4>
+        <ul>
+          <li><a href="index.html">🏠 मुख्य पान</a></li>
+          <li><a href="notice.html">📢 सूचना</a></li>
+          <li><a href="panchayat-info.html"> ग्रामपंचायत माहिती</a></li>
+        </ul>
       </div>
     </div>
-  </section>
-
-  <!-- Members List -->
-  <section class="members">
-    <h2>👥 ग्रामपंचायत पदाधिकारी व कर्मचारी (०५ जानेवारी २०२३ – ०४ जानेवारी २०२८)</h2>
-    <div class="member-grid">
-      <div class="member-card">
-        <img src="images/members/sarpanch.jpg" alt="सरपंच">
-        <h3>सौ. अमिता बालाजी वाघमारे</h3>
-        <p>सरपंच</p>
-      </div>
-      <div class="member-card">
-        <img src="images/members/up-sarpanch.jpg" alt="उपसरपंच">
-        <h3>सौ. मिरा राहुल कदम</h3>
-        <p>उपसरपंच</p>
-      </div>
-      <div class="member-card">
-        <img src="images/members/member1.jpg" alt="सदस्य">
-        <h3>श्री. पाटील नानासाहेब अनंतराव</h3>
-        <p>सदस्य</p>
-      </div>
-      <div class="member-card">
-        <img src="images/members/member2.jpg" alt="सदस्य">
-        <h3>श्री. मोरे नितीन बलभिम</h3>
-        <p>सदस्य</p>
-      </div>
-      <div class="member-card">
-        <img src="images/members/member3.jpg" alt="सदस्य">
-        <h3>श्री. शेवाळे बिरु महादेव</h3>
-        <p>सदस्य</p>
-      </div>
-      <div class="member-card">
-        <img src="images/members/member4.jpg" alt="सदस्य">
-        <h3>श्री. अवतारे विनोद विजय</h3>
-        <p>सदस्य</p>
-      </div>
-      <div class="member-card">
-        <img src="images/members/member5.jpg" alt="सदस्या">
-        <h3>सौ. कदम सुनिता मच्छिंद्रनाथ</h3>
-        <p>सदस्या</p>
-      </div>
-      <div class="member-card">
-        <img src="images/members/member6.jpg" alt="सदस्या">
-        <h3>सौ. झोरे मनिषा नामदेव</h3>
-        <p>सदस्या</p>
-      </div>
-      <div class="member-card">
-        <img src="images/members/member7.jpg" alt="सदस्या">
-        <h3>सौ. वाघमारे सुनंदा शिवाजी</h3>
-        <p>सदस्या</p>
-      </div>
-      <div class="member-card">
-        <img src="images/members/member8.jpg" alt="सदस्या">
-        <h3>सौ. टिके अलका कुंडलिक</h3>
-        <p>सदस्या</p>
-      </div>
-      <div class="member-card">
-        <img src="images/members/clerk.jpg" alt="ग्रामसेवक">
-        <h3>श्री. लोकांडे डी. बी.</h3>
-        <p>ग्रामसेवक</p>
-      </div>
-      <div class="member-card">
-        <img src="images/members/operator.jpg" alt="संगणक परिचालक">
-        <h3>श्री. ओव्हाळ आण्णासाहेब आबासाहेब</h3>
-        <p>संगणक परिचालक</p>
-      </div>
-      <div class="member-card">
-        <img src="images/members/peon.jpg" alt="शिपाई">
-        <h3>श्री. रणदिवे फुलचंद सुखदेव</h3>
-        <p>शिपाई</p>
-      </div>
+    <div class="footer-bottom">
+      <p>© 2025 ग्रामपंचायत KAMEGAON सेतू </p>
     </div>
-  </section>
-
-  <!-- Events / Works -->
-  <section class="events">
-    <h2>📌 चालू व पूर्ण झालेले कामे</h2>
-    <ul>
-      <li>✅ पाणीपुरवठा योजना सुधारणा (2023-24)</li>
-      <li>✅ ग्रामपंचायत डिजिटल अभिलेख व्यवस्था सुरु</li>
-      <li>✅ प्राथमिक शाळेत शौचालय व पाणीटाकी बांधकाम</li>
-      <li>⏳ रस्त्यांचे डांबरीकरण (2024 मध्ये सुरू)</li>
-      <li>⏳ स्वच्छ भारत अंतर्गत कचरा व्यवस्थापन प्रकल्प</li>
-      <li>📅 आगामी ग्रामसभा: 15 सप्टेंबर 2025</li>
-    </ul>
-  </section>
-</main>
-
-<!-- ===== Footer Start ===== -->
-<footer>
-  <div class="footer-container">
-    <div class="footer-section">
-      <h3>🌐 ग्रामपंचायत सेतू</h3>
-      <p>आपल्या गावाची माहिती, योजना, आणि ताज्या सूचना एका क्लिकमध्ये.</p>
-    </div>
-    <div class="footer-section">
-      <h4>📍 संपर्क</h4>
-      <p>📞</p>
-      <p>✉️ kamegaon@gmail.com</p>
-      <p>🏠 गाव, तालुका, जिल्हा</p>
-    </div>
-    <div class="footer-section">
-      <h4>🔗 दुवे</h4>
-      <ul>
-        <li><a href="index.html">🏠 मुख्य पान</a></li>
-        <li><a href="notice.html">📢 सूचना</a></li>
-        <li><a href="panchayat-info.html"> ग्रामपंचायत माहिती</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2025 ग्रामपंचायत KAMEGAON सेतू </p>
-  </div>
-</footer>
+  </footer>
 
 </body>
 </html>
+
