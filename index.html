@@ -44,47 +44,33 @@
   </div>
 
   <script>
+ <div id="notice-bar" class="notice-bar">
+  <span id="notice" class="notice-text"></span>
+</div>
+
+<script>
   async function fetchNotice() {
-  const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRvaXXOTVvUCeLRkfp_-VlIathV_mt-g-iL5Mt6pdwPKY2vh-mIxsqdLdktq9TBrG391KjOnuczcqFN/pub?output=csv";
-
-  try {
-    const response = await fetch(csvUrl);
-    if (!response.ok) throw new Error("Network response was not ok");
-
-    const csvText = await response.text();
-
-    // Parse CSV safely
-    const results = Papa.parse(csvText, { header: true, skipEmptyLines: true });
-    const data = results.data;
-
-    // Get the last row
-    const lastEntry = data[data.length - 1];
-
-    // Replace "Notice" with your actual column header in the sheet
-    const latestNotice = lastEntry["Notice"]?.trim();
-
-    const noticeBar = document.getElementById("notice-bar");
-    const noticeText = document.getElementById("notice");
-
-    if (latestNotice && latestNotice.toLowerCase() !== "no notice") {
-      noticeText.textContent = latestNotice;
-      noticeBar.style.display = "block";
-    } else {
-      noticeBar.style.display = "none";
+    try {
+      const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRvaXXOTVvUCeLRkfp_-VlIathV_mt-g-iL5Mt6pdwPKY2vh-mIxsqdLdktq9TBrG391KjOnuczcqFN/pub?output=csv";
+      const response = await fetch(csvUrl);
+      const text = await response.text();
+      const lines = text.trim().split("\n");
+      const lastLine = lines[lines.length - 1];
+      const columns = lastLine.split(",");
+      const latestNotice = columns[1]?.trim();
+      if (latestNotice && latestNotice.toLowerCase() !== "no notice") {
+        document.getElementById("notice").textContent = latestNotice;
+        document.getElementById("notice-bar").style.display = "block";
+      } else {
+        document.getElementById("notice-bar").style.display = "none";
+      }
+    } catch (error) {
+      document.getElementById("notice-bar").style.display = "none";
     }
-
-  } catch (error) {
-    console.error("Failed to fetch notice:", error);
-    document.getElementById("notice-bar").style.display = "none";
   }
-}
-
-// Initial fetch
-fetchNotice();
-
-// Refresh every 15 seconds
-setInterval(fetchNotice, 15000);
-
+  fetchNotice();
+  setInterval(fetchNotice, 15000); // Refresh every 15 seconds
+</script>
 
   </script>
 
@@ -268,6 +254,7 @@ setInterval(fetchNotice, 15000);
   <!-- ===== Footer End ===== -->
 </body>
 </html>
+
 
 
 
