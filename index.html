@@ -53,7 +53,7 @@ function fetchNotice() {
     complete: function(results) {
       const data = results.data;
       if(data.length > 0){
-        const latestNotice = data[data.length - 1]["Notice"]?.trim(); // Replace "Notice" with your column header
+        const latestNotice = data[data.length - 1]["ADD NOTICE ❣️"]?.trim(); // Replace "Notice" with your column header
         if(latestNotice && latestNotice.toLowerCase() !== "no notice"){
           document.getElementById("notice").textContent = latestNotice;
           document.getElementById("notice-bar").style.display = "block";
@@ -255,6 +255,7 @@ setInterval(fetchNotice, 15000);
   <!-- ===== Footer End ===== -->
 </body>
 </html>
+
 
 
 
