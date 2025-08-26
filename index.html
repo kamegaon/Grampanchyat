@@ -41,10 +41,7 @@
 <div id="notice-bar" class="notice-bar" style="display:none;">
   <span id="notice" class="notice-text"></span>
 </div>
-  <!-- Notice Bar -->
-  <div id="notice-bar" class="notice-bar" style="display:none;">
-    <span id="notice" class="notice-text"></span>
-  </div>
+
  <!-- Main Content -->
   <main>
     <h2>🌟 आपले स्वागत आहे! 🌟</h2>
@@ -223,58 +220,6 @@
     </div>
   </footer>
   <!-- ===== Footer End ===== -->
-  
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-
-  <script>
- // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyBvTQvsSsy4nq-xknFYQmiVcdTOSIQ9T-c",
-    authDomain: "panchayatsetu.firebaseapp.com",
-    projectId: "panchayatsetu",
-    storageBucket: "panchayatsetu.firebasestorage.app",
-    messagingSenderId: "1082762014645",
-    appId: "1:1082762014645:web:ef3a343c8d75907aba73fc"
-  };
-
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    // Fetch latest notice from Firestore (like previous Google Sheets)
-    function fetchNotice() {
-      db.collection('notifications')
-        .orderBy('createdAt', 'desc')
-        .limit(1)
-        .get()
-        .then(snapshot => {
-          if (!snapshot.empty) {
-            const data = snapshot.docs[0].data();
-            const noticeText = data.message?.trim();
-            if (noticeText && noticeText.toLowerCase() !== "no notice") {
-              document.getElementById("notice").textContent = noticeText;
-              document.getElementById("notice-bar").style.display = "block";
-            } else {
-              document.getElementById("notice-bar").style.display = "none";
-            }
-          } else {
-            document.getElementById("notice-bar").style.display = "none";
-          }
-        })
-        .catch(err => {
-          console.error("Error fetching notice:", err);
-          document.getElementById("notice-bar").style.display = "none";
-        });
-    }
-
-    // Fetch on page load
-    fetchNotice();
-
-    // Refresh every 15 seconds
-    setInterval(fetchNotice, 15000);
-  </script>
 
 </body>
 </html>
