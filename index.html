@@ -41,41 +41,11 @@
 <div id="notice-bar" class="notice-bar" style="display:none;">
   <span id="notice" class="notice-text"></span>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-<script>
-function fetchNotice() {
-  const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRvaXXOTVvUCeLRkfp_-VlIathV_mt-g-iL5Mt6pdwPKY2vh-mIxsqdLdktq9TBrG391KjOnuczcqFN/pub?output=csv";
-
-  Papa.parse(csvUrl, {
-    download: true,
-    header: true,
-    complete: function(results) {
-      const data = results.data;
-      if(data.length > 0){
-        const latestNotice = data[data.length - 1]["ADD NOTICE ❣️"]?.trim(); // Replace "Notice" with your column header
-        if(latestNotice && latestNotice.toLowerCase() !== "no notice"){
-          document.getElementById("notice").textContent = latestNotice;
-          document.getElementById("notice-bar").style.display = "block";
-        } else {
-          document.getElementById("notice-bar").style.display = "none";
-        }
-      }
-    },
-    error: function(err){
-      console.error("Error parsing CSV:", err);
-      document.getElementById("notice-bar").style.display = "none";
-    }
-  });
-}
-
-fetchNotice();
-setInterval(fetchNotice, 15000);
-</script>
-
-
-
-  <!-- Main Content -->
+  <!-- Notice Bar -->
+  <div id="notice-bar" class="notice-bar" style="display:none;">
+    <span id="notice" class="notice-text"></span>
+  </div>
+ <!-- Main Content -->
   <main>
     <h2>🌟 आपले स्वागत आहे! 🌟</h2>
     <script>
@@ -253,8 +223,62 @@ setInterval(fetchNotice, 15000);
     </div>
   </footer>
   <!-- ===== Footer End ===== -->
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
+  <script>
+ // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBvTQvsSsy4nq-xknFYQmiVcdTOSIQ9T-c",
+    authDomain: "panchayatsetu.firebaseapp.com",
+    projectId: "panchayatsetu",
+    storageBucket: "panchayatsetu.firebasestorage.app",
+    messagingSenderId: "1082762014645",
+    appId: "1:1082762014645:web:ef3a343c8d75907aba73fc"
+  };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Fetch latest notice from Firestore (like previous Google Sheets)
+    function fetchNotice() {
+      db.collection('notifications')
+        .orderBy('createdAt', 'desc')
+        .limit(1)
+        .get()
+        .then(snapshot => {
+          if (!snapshot.empty) {
+            const data = snapshot.docs[0].data();
+            const noticeText = data.message?.trim();
+            if (noticeText && noticeText.toLowerCase() !== "no notice") {
+              document.getElementById("notice").textContent = noticeText;
+              document.getElementById("notice-bar").style.display = "block";
+            } else {
+              document.getElementById("notice-bar").style.display = "none";
+            }
+          } else {
+            document.getElementById("notice-bar").style.display = "none";
+          }
+        })
+        .catch(err => {
+          console.error("Error fetching notice:", err);
+          document.getElementById("notice-bar").style.display = "none";
+        });
+    }
+
+    // Fetch on page load
+    fetchNotice();
+
+    // Refresh every 15 seconds
+    setInterval(fetchNotice, 15000);
+  </script>
+
 </body>
 </html>
+
 
 
 
