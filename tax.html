@@ -220,29 +220,40 @@ nav a:hover {
     <span id="notice" class="notice-text"></span>
   </div>
 
-  <script>
-    async function fetchNotice() {
-      try {
-        const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTDCBhcg0ARlcpZqsc5KHZh6mWi3cgqS1KCtHoSVziWsCDoR0ZyxWcqkYMdWxPVCfgrj7kNSP574xVa/pub?output=csv";
-        const response = await fetch(csvUrl);
-        const text = await response.text();
-        const lines = text.trim().split("\n");
-        const lastLine = lines[lines.length - 1];
-        const columns = lastLine.split(",");
-        const latestNotice = columns[1]?.trim();
-        if (latestNotice && latestNotice.toLowerCase() !== "no notice") {
-          document.getElementById("notice").textContent = latestNotice;
-          document.getElementById("notice-bar").style.display = "block";
-        } else {
-          document.getElementById("notice-bar").style.display = "none";
-        }
-      } catch (error) {
-        document.getElementById("notice-bar").style.display = "none";
-      }
+ <script>
+async function fetchNotice() {
+  try {
+    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTDCBhcg0ARlcpZqsc5KHZh6mWi3cgqS1KCtHoSVziWsCDoR0ZyxWcqkYMdWxPVCfgrj7kNSP574xVa/pub?output=csv";
+    const response = await fetch(csvUrl);
+    const text = await response.text();
+    const lines = text.trim().split("\n");
+
+    // Remove header row
+    const dataLines = lines.slice(1);
+
+    // Get the last *real* entry
+    const lastLine = dataLines[dataLines.length - 1];
+    const columns = lastLine.split(",");
+
+    // Adjust column index (0 = Timestamp, 1 = Notice)
+    const latestNotice = columns[1]?.trim();
+
+    if (latestNotice && latestNotice.toLowerCase() !== "no notice") {
+      document.getElementById("notice").textContent = latestNotice;
+      document.getElementById("notice-bar").style.display = "block";
+    } else {
+      document.getElementById("notice-bar").style.display = "none";
     }
-    fetchNotice();
-    setInterval(fetchNotice, 15000); // Refresh every 15 seconds
-  </script>
+  } catch (error) {
+    console.error("Error fetching notice:", error);
+    document.getElementById("notice-bar").style.display = "none";
+  }
+}
+
+fetchNotice();
+setInterval(fetchNotice, 15000); // Refresh every 15s
+</script>
+
 
 <div class="container">
 <input type="text" id="searchBar" class="search-bar" placeholder="🔍 नाव शोधा / Search name">
@@ -444,6 +455,7 @@ function closeFormPopup() {
 </script>
 </body>
 </html>
+
 
 
 
