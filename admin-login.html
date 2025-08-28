@@ -1,67 +1,62 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="mr">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin Dashboard - Kamegaon</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background: #f3f3f3;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-    h1, h2 { color: #333; }
-    button {
-      background-color: #e0e0e0;
-      border-radius: 8px;
-      border: none;
-      padding: 10px 20px;
-      margin: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-      transition: 0.2s;
-    }
-    button:hover { transform: translateY(-2px); box-shadow: 4px 4px 8px rgba(0,0,0,0.3); }
-    input, textarea {
-      width: 90%; max-width: 400px;
-      padding: 10px; margin: 5px 0;
-      border-radius: 6px; border: none;
-      box-shadow: inset 2px 2px 5px rgba(0,0,0,0.1);
-      font-size: 14px;
-    }
-    .dashboard { max-width: 800px; margin: 20px auto; background:#fff; padding:20px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
-    .card { background:#f9f9f9; padding:15px; margin:10px 0; border-radius:10px; box-shadow:2px 2px 5px rgba(0,0,0,0.1); position:relative; }
-    .card button { position:absolute; top:10px; right:10px; font-size:12px; padding:5px 10px; }
-    #loginBtn { background:#4285F4; color:#fff; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Kamegaon</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+body { font-family: Arial,sans-serif; margin:0; padding:20px; background:#f9f9f9; color:#333; display:flex; flex-direction:column; align-items:center;}
+h1,h2 {text-align:center; color:#222;}
+input,textarea,button { width:300px; max-width:90%; margin:8px 0; padding:10px; border-radius:8px; border:none; font-size:15px; }
+textarea { height:100px; resize:vertical; }
+button { background:#f0f0f0; cursor:pointer; border-radius:10px; box-shadow:3px 3px 8px rgba(0,0,0,0.2), -3px -3px 8px rgba(255,255,255,0.7); transition:0.2s; }
+button:hover { transform:translateY(-2px); box-shadow:5px 5px 10px rgba(0,0,0,0.2), -5px -5px 10px rgba(255,255,255,0.7);}
+.card { background:#fff; border-radius:12px; padding:15px; margin:10px 0; width:90%; max-width:600px; box-shadow:4px 4px 12px rgba(0,0,0,0.1), -4px -4px 12px rgba(255,255,255,0.6);}
+.dashboard-container { width:90%; max-width:900px; margin:20px auto; display:flex; flex-direction:column; align-items:center;}
+#loginForm { display:flex; flex-direction:column; align-items:center; }
+#signOut { margin-top:15px; background:#e0e0e0; color:#444;}
+label { font-weight:bold; margin-top:10px; display:block;}
+</style>
 </head>
 <body>
 
-  <h1>Admin Dashboard - Kamegaon</h1>
-  <button id="loginBtn"><i class="fab fa-google"></i> Sign In with Google</button>
-  <button id="signOutBtn" style="display:none;"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+<h1>Admin - Kamegaon</h1>
 
-  <div class="dashboard" id="dashboard" style="display:none;">
+<div id="loginForm">
+  <h2>Admin Login</h2>
+  <label>Email</label>
+  <input id="email" type="email" placeholder="admin@example.com">
+  <label>Password</label>
+  <input id="password" type="password" placeholder="********">
+  <button id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</button>
+</div>
+
+<div id="dashboard" style="display:none;">
+  <button id="signOut"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+
+  <div class="dashboard-container">
     <h2>नवीन सूचना जोडा</h2>
-    <input type="text" id="title" placeholder="शीर्षक (optional)">
+    <label>शीर्षक (optional)</label>
+    <input id="title" placeholder="उदा: पाणीपुरवठा सूचना">
+    <label>संदेश</label>
     <textarea id="message" placeholder="संदेश येथे टाका..."></textarea>
-    <button id="saveNotice">सुरक्षित करा</button>
-
-    <h2>सूचना यादी</h2>
-    <div id="noticeList"></div>
+    <button id="save">सुरक्षित करा</button>
   </div>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+  <div class="dashboard-container">
+    <h2>सूचना यादी</h2>
+    <ul id="noticeList"></ul>
+  </div>
+</div>
 
-  <script>
-    // 🔹 Your Firebase Config
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
+<script>
+// Firebase Config
     const firebaseConfig = {
   apiKey: "AIzaSyBvTQvsSsy4nq-xknFYQmiVcdTOSIQ9T-c",
   authDomain: "panchayatsetu.firebaseapp.com",
@@ -70,82 +65,60 @@
   messagingSenderId: "1082762014645",
   appId: "1:1082762014645:web:ef3a343c8d75907aba73fc"
 };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-    const loginBtn = document.getElementById('loginBtn');
-    const signOutBtn = document.getElementById('signOutBtn');
-    const dashboard = document.getElementById('dashboard');
+// LOGIN
+document.getElementById('loginBtn').onclick = async () => {
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value.trim();
+  if(!email||!password){ alert('सर्व फील्ड भरा'); return; }
+  try {
+    const userCred = await auth.signInWithEmailAndPassword(email,password);
+    const adminDoc = await db.collection('admins').doc(email).get();
+    if(!adminDoc.exists){ alert('आपण अधिकृत प्रशासक नाही'); auth.signOut(); return; }
+    document.getElementById('loginForm').style.display='none';
+    document.getElementById('dashboard').style.display='block';
+    loadNotices();
+  } catch(e){ alert('Login Failed: '+e.message); }
+};
 
-    // Google Sign-In
-    loginBtn.onclick = () => {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      auth.signInWithPopup(provider);
-    }
+// SIGN OUT
+document.getElementById('signOut').onclick = async () => {
+  await auth.signOut();
+  document.getElementById('dashboard').style.display='none';
+  document.getElementById('loginForm').style.display='flex';
+};
 
-    // Sign out
-    signOutBtn.onclick = () => auth.signOut();
+// ADD / SAVE NOTICE
+document.getElementById('save').onclick = async () => {
+  const title = document.getElementById('title').value;
+  const message = document.getElementById('message').value;
+  if(!message.trim()){ alert('संदेश रिक्त राहू शकत नाही'); return; }
+  await db.collection('notifications').add({
+    title, message,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  });
+  document.getElementById('title').value='';
+  document.getElementById('message').value='';
+  loadNotices();
+};
 
-    auth.onAuthStateChanged(async user => {
-      if(user){
-        loginBtn.style.display = 'none';
-        signOutBtn.style.display = 'inline-block';
-
-        // Check admin role
-        const adminDoc = await db.collection('admins').doc(user.email).get();
-        if(!adminDoc.exists){
-          alert('आपण अधिकृत प्रशासक नाही.');
-          auth.signOut();
-          return;
-        }
-        dashboard.style.display = 'block';
-        loadNotices();
-      } else {
-        loginBtn.style.display = 'inline-block';
-        signOutBtn.style.display = 'none';
-        dashboard.style.display = 'none';
-      }
-    });
-
-    // Save Notice
-    document.getElementById('saveNotice').onclick = async () => {
-      const title = document.getElementById('title').value.trim();
-      const message = document.getElementById('message').value.trim();
-      if(!message){ alert('संदेश रिक्त राहू शकत नाही'); return; }
-
-      await db.collection('notifications').add({
-        title, message,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-
-      document.getElementById('title').value='';
-      document.getElementById('message').value='';
-      loadNotices();
-    };
-
-    // Load Notices
-    async function loadNotices(){
-      const noticeList = document.getElementById('noticeList');
-      noticeList.innerHTML = '';
-      const snapshot = await db.collection('notifications').orderBy('createdAt','desc').get();
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `<strong>${data.title || ''}</strong><p>${data.message}</p>`;
-
-        // Delete button
-        const delBtn = document.createElement('button');
-        delBtn.textContent = 'Delete';
-        delBtn.onclick = async () => {
-          await db.collection('notifications').doc(doc.id).delete();
-          loadNotices();
-        }
-        card.appendChild(delBtn);
-        noticeList.appendChild(card);
-      });
-    }
-  </script>
+// LOAD NOTICES
+async function loadNotices(){
+  const ul = document.getElementById('noticeList');
+  ul.innerHTML='';
+  const snapshot = await db.collection('notifications').orderBy('createdAt','desc').get();
+  snapshot.forEach(doc=>{
+    const data=doc.data();
+    const li=document.createElement('li');
+    li.className='card';
+    li.innerHTML=`<strong>${data.title||''}</strong><br>${data.message}`;
+    ul.appendChild(li);
+  });
+}
+</script>
 </body>
 </html>
+
