@@ -34,6 +34,19 @@
     .admin-actions button { padding:6px 12px; font-size:14px; margin-right:8px; }
 
     .notice-meta { font-size:12px; color:#666; margin-top:6px; }
+
+    /* Profile box */
+    .profile-box {
+      display:flex; align-items:center; gap:15px;
+      background:#fff; padding:15px; border-radius:12px;
+      box-shadow:4px 4px 12px rgba(0,0,0,0.1), -4px -4px 12px #fff;
+      margin-bottom:20px;
+    }
+    .profile-img {
+      width:60px; height:60px; border-radius:50%;
+      background:#dceefc; display:flex; align-items:center; justify-content:center;
+      font-size:28px; font-weight:bold; color:#444;
+    }
   </style>
 </head>
 <body>
@@ -53,6 +66,15 @@
 <!-- Dashboard -->
 <div id="dashboard" class="container hidden">
   <button id="signOutBtn"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+
+  <!-- Profile -->
+  <div class="profile-box">
+    <div class="profile-img" id="profileImg">👤</div>
+    <div>
+      <div><b>Email:</b> <span id="profileEmail"></span></div>
+      <div><b>Role:</b> <span id="profileRole"></span></div>
+    </div>
+  </div>
 
   <!-- Superadmin Panel -->
   <div id="superAdminPanel" class="hidden">
@@ -107,6 +129,10 @@
   const dashboard = document.getElementById('dashboard');
   const superAdminPanel = document.getElementById('superAdminPanel');
 
+  const profileEmail = document.getElementById('profileEmail');
+  const profileRole = document.getElementById('profileRole');
+  const profileImg = document.getElementById('profileImg');
+
   // Login
   document.getElementById('loginBtn').onclick = async () => {
     const email = document.getElementById('loginEmail').value;
@@ -128,6 +154,12 @@
         auth.signOut(); return;
       }
       const role = adminDoc.data().role;
+
+      // Profile update
+      profileEmail.innerText = user.email;
+      profileRole.innerText = role;
+      profileImg.innerText = user.email[0].toUpperCase();
+
       if(role==='superadmin'){
         superAdminPanel.classList.remove('hidden');
         loadAdmins();
@@ -154,13 +186,14 @@
     loadAdmins();
   };
 
-  // Load Admins
+  // Load Admins (skip superadmins)
   async function loadAdmins(){
     const ul=document.getElementById('adminList');
     ul.innerHTML='';
     const snapshot=await db.collection('admins').get();
     snapshot.forEach(doc=>{
       const data=doc.data();
+      if(data.role==='superadmin') return; // ❌ Don't show superadmins
       const li=document.createElement('li');
       li.className='card';
       li.innerHTML=`${doc.id} - Role: ${data.role} (By ${data.createdBy})
