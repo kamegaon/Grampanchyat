@@ -59,8 +59,9 @@
 </head>
 <body>
 
-<header>🌸 ग्रामपंचायत - Admin Dashboard</header>
-
+<header style="background:#cfe8fc; color:#222; font-size:24px; font-weight:bold; text-align:center; padding:20px; box-shadow:0 4px 8px rgba(0,0,0,0.1);">
+  🌸 ग्रामपंचायत - Admin Dashboard
+</header>
 <!-- Login -->
 <div id="loginDiv" class="container">
   <h2>Login</h2>
@@ -88,20 +89,23 @@
   <div id="superAdminPanel" class="hidden">
     <h2>👑 Superadmin Controls</h2>
 
-    <!-- Add User (Admin only, superadmin manual) -->
-    <div class="card green">
-      <h3>नवीन User जोडा</h3>
-      <label>Email</label>
-      <input type="email" id="newAdminEmail" placeholder="User ईमेल">
-      <button id="addAdminBtn">Add User</button>
-    </div>
+    <!-- Add Admin (Superadmin only) -->
+  <div class="card green">
+    <h3>नवीन Admin जोडा</h3>
+    <label>Admin Email</label>
+    <input type="email" id="newAdminEmail" placeholder="Admin ईमेल">
+    <button id="addAdminBtn">Add Admin</button>
+    <p style="font-size:12px; color:#555; margin-top:5px;">
+      ✅ Superadmin manually sets the password in Firebase Console after adding.
+    </p>
+  </div>
 
     <!-- Admin List -->
-    <div class="card orange">
-      <h3>User यादी</h3>
-      <ul id="adminList"></ul>
-    </div>
+  <div class="card orange">
+    <h3>Admin यादी</h3>
+    <ul id="adminList"></ul>
   </div>
+</div>
 
   <!-- Notices -->
   <div class="card yellow">
@@ -279,3 +283,4 @@
 </script>
 </body>
 </html>
+
