@@ -13,35 +13,132 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-body { font-family: 'Arial', sans-serif; margin:0; background:#f7f9fc; color:#333; }
-header { background:#cfe8fc; color:#222; padding:15px; text-align:center; font-size:22px; box-shadow:0 4px 8px rgba(0,0,0,0.1); position:sticky; top:0; z-index:100; }
-h2 { color:#444; margin-top:20px; }
-.container { width:90%; max-width:900px; margin:20px auto; padding:15px; }
+body {
+  font-family: 'Arial', sans-serif;
+  margin:0;
+  background:#f7f9fc;
+  color:#333;
+}
+header {
+  background:#cfe8fc;
+  color:#222;
+  padding:20px;
+  text-align:center;
+  font-size:24px;
+  font-weight:bold;
+  box-shadow:0 4px 8px rgba(0,0,0,0.1);
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+/* Container */
+.container {
+  width:90%;
+  max-width:900px;
+  margin:20px auto;
+  padding:15px;
+}
+
+/* Hidden class */
 .hidden { display:none; }
-input, textarea, select { width:100%; padding:10px; margin:8px 0; border-radius:8px; border:1px solid #ccc; font-size:15px; box-shadow:inset 2px 2px 5px #e0e0e0, inset -2px -2px 5px #fff; }
-button { background:#f0f0f0; border:none; border-radius:10px; padding:10px 20px; margin:5px 0; font-size:16px; cursor:pointer; box-shadow:3px 3px 8px rgba(0,0,0,0.2), -3px -3px 8px #fff; transition:all 0.2s ease; }
-button:hover { transform:translateY(-2px); box-shadow:5px 5px 10px rgba(0,0,0,0.2), -5px -5px 10px #fff; }
+
+/* Inputs and buttons */
+input, textarea, select {
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:15px;
+  box-shadow: inset 2px 2px 5px #e0e0e0, inset -2px -2px 5px #fff;
+}
+button {
+  background:#f0f0f0;
+  border:none;
+  border-radius:10px;
+  padding:10px 20px;
+  margin:5px 0;
+  font-size:16px;
+  cursor:pointer;
+  box-shadow:3px 3px 8px rgba(0,0,0,0.2), -3px -3px 8px #fff;
+  transition:all 0.2s ease;
+}
+button:hover {
+  transform:translateY(-2px);
+  box-shadow:5px 5px 10px rgba(0,0,0,0.2), -5px -5px 10px #fff;
+}
 
 /* Card variations */
-.card { border-radius:12px; padding:15px; margin:15px 0; box-shadow:4px 4px 12px rgba(0,0,0,0.1), -4px -4px 12px #fff; transition:transform 0.2s ease; }
+.card {
+  border-radius:12px;
+  padding:15px;
+  margin:15px 0;
+  box-shadow:4px 4px 12px rgba(0,0,0,0.1), -4px -4px 12px #fff;
+  transition:transform 0.2s ease;
+}
 .card:hover { transform:translateY(-3px); }
-.card.green { background:#e6f7ed; } /* light green */
-.card.yellow { background:#fff8e6; } /* light yellow */
-.card.purple { background:#f3e6ff; } /* light purple */
-.card.orange { background:#ffeedd; } /* light orange */
+.card.green { background:#e6f7ed; }
+.card.yellow { background:#fff8e6; }
+.card.purple { background:#f3e6ff; }
+.card.orange { background:#ffeedd; }
 .admin-actions button { padding:6px 12px; font-size:14px; margin-right:8px; }
 .notice-meta { font-size:12px; color:#666; margin-top:6px; }
 
 /* Profile box */
-.profile-box { display:flex; align-items:center; gap:15px; background:#e8f4fc; /* light blue */ padding:15px; border-radius:12px; box-shadow:4px 4px 12px rgba(0,0,0,0.1), -4px -4px 12px #fff; margin-bottom:20px; }
-.profile-img { width:60px; height:60px; border-radius:50%; background:#dceefc; display:flex; align-items:center; justify-content:center; font-size:28px; font-weight:bold; color:#444; }
+.profile-box {
+  display:flex;
+  align-items:center;
+  gap:15px;
+  background:#e8f4fc;
+  padding:15px;
+  border-radius:12px;
+  box-shadow:4px 4px 12px rgba(0,0,0,0.1), -4px -4px 12px #fff;
+  margin-bottom:20px;
+}
+.profile-img {
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:#dceefc;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  font-weight:bold;
+  color:#444;
+}
+
+/* Login page styling */
+#loginDiv {
+  background:#ffffff;
+  border-radius:12px;
+  padding:30px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.1);
+  max-width:400px;
+  margin:60px auto;
+}
+#loginDiv h2 {
+  text-align:center;
+  margin-bottom:20px;
+  color:#1a73e8;
+}
+#loginDiv input {
+  font-size:16px;
+}
+#loginBtn {
+  width:100%;
+  background:#1a73e8;
+  color:white;
+  font-weight:bold;
+  margin-top:15px;
+}
+#loginBtn:hover { background:#155bb5; }
 </style>
 </head>
 <body>
 
-<header style="background:#cfe8fc; color:#222; font-size:24px; font-weight:bold; text-align:center; padding:20px; box-shadow:0 4px 8px rgba(0,0,0,0.1);">
-🌸 ग्रामपंचायत - Admin Dashboard
-</header>
+<header>🌸 ग्रामपंचायत - Admin Dashboard</header>
 
 <!-- Login -->
 <div id="loginDiv" class="container">
@@ -66,17 +163,17 @@ button:hover { transform:translateY(-2px); box-shadow:5px 5px 10px rgba(0,0,0,0.
 </div>
 </div>
 
-<!-- Superadmin Panel -->
-<div id="superAdminPanel" class="hidden">
-<h2>👑 Superadmin Controls</h2>
+<!-- Admin Panel -->
+<div id="superAdminPanel">
+<h2>👑 Admin Controls</h2>
 
-<!-- Add Admin (Superadmin only) -->
+<!-- Add Admin -->
 <div class="card green">
 <h3>नवीन Admin जोडा</h3>
 <label>Admin Email</label>
 <input type="email" id="newAdminEmail" placeholder="Admin ईमेल">
 <button id="addAdminBtn">Add Admin</button>
-<p style="font-size:12px; color:#555; margin-top:5px;"> ✅ Superadmin manually sets the password in Firebase Console after adding. </p>
+<p style="font-size:12px; color:#555; margin-top:5px;"> ✅ Password manually set in Firebase Console. </p>
 </div>
 
 <!-- Admin List -->
@@ -111,7 +208,6 @@ storageBucket: "panchayatsetu.firebasestorage.app",
 messagingSenderId: "1082762014645",
 appId: "1:1082762014645:web:ef3a343c8d75907aba73fc"
 };
-
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
@@ -136,26 +232,25 @@ auth.onAuthStateChanged(async user=>{
 if(user){
 loginDiv.classList.add('hidden');
 dashboard.classList.remove('hidden');
+
 const adminDoc = await db.collection('admins').doc(user.email).get();
 if(!adminDoc.exists){
 alert('आपण अधिकृत प्रशासक नाही.');
 auth.signOut();
 return;
 }
-const role = adminDoc.data().role;
+
+const role = adminDoc.data().role || 'admin';
 
 // Profile update
 profileEmail.innerText = user.email;
 profileRole.innerText = role;
 profileImg.innerText = user.email[0].toUpperCase();
 
-if(role==='superadmin'){
+// Show all features to all admins
 superAdminPanel.classList.remove('hidden');
 loadAdmins();
-} else { superAdminPanel.classList.add('hidden'); }
-
-loadNotices(role,user.email);
-
+loadNotices();
 } else {
 loginDiv.classList.remove('hidden');
 dashboard.classList.add('hidden');
@@ -164,7 +259,7 @@ dashboard.classList.add('hidden');
 
 document.getElementById('signOutBtn').onclick = ()=>auth.signOut();
 
-// Add Admin (superadmin only)
+// Add Admin
 document.getElementById('addAdminBtn').onclick = async ()=>{
 const email=document.getElementById('newAdminEmail').value;
 const currentUser=auth.currentUser.email;
@@ -175,21 +270,24 @@ document.getElementById('newAdminEmail').value='';
 loadAdmins();
 };
 
-// Load Admins (skip superadmins)
+// Load Admins
 async function loadAdmins(){
 const ul=document.getElementById('adminList');
 ul.innerHTML='';
 const snapshot=await db.collection('admins').get();
 snapshot.forEach(doc=>{
 const data=doc.data();
-if(data.role==='superadmin') return; // ❌ Don't show superadmins
 const li=document.createElement('li');
 li.className='card';
-li.innerHTML=`${doc.id} - Role: ${data.role} (By ${data.createdBy}) <div class="admin-actions"> <button onclick="deleteAdmin('${doc.id}')">Delete</button> <button onclick="resetPassword('${doc.id}')">Reset Password</button> </div>`;
+li.innerHTML=`${doc.id} - Role: ${data.role} (By ${data.createdBy}) <div class="admin-actions">
+<button onclick="deleteAdmin('${doc.id}')">Delete</button>
+<button onclick="resetPassword('${doc.id}')">Reset Password</button>
+</div>`;
 ul.appendChild(li);
 });
 }
 
+// Delete admin
 async function deleteAdmin(email){
 if(confirm('Delete user?')){
 await db.collection('admins').doc(email).delete();
@@ -197,6 +295,7 @@ loadAdmins();
 }
 }
 
+// Reset password
 async function resetPassword(email){
 await auth.sendPasswordResetEmail(email);
 alert('Password reset link sent to '+email);
@@ -218,7 +317,7 @@ loadNotices();
 };
 
 // Load Notices
-async function loadNotices(role,email){
+async function loadNotices(){
 const ul=document.getElementById('noticeList');
 ul.innerHTML='';
 const snapshot=await db.collection('notifications').orderBy('createdAt','desc').get();
@@ -228,8 +327,7 @@ const li=document.createElement('li');
 li.className='card';
 li.innerHTML=`<strong>${data.title||''}</strong><br>${data.message} <div class="notice-meta">By: ${data.createdBy||'Unknown'}</div>`;
 
-// Edit/Delete
-if(role==='superadmin' || data.createdBy===email){
+// Show edit/delete for all admins
 const actions=document.createElement('div');
 actions.className='admin-actions';
 
@@ -239,7 +337,7 @@ editBtn.onclick=async ()=>{
 const newMsg=prompt('Edit message:',data.message);
 if(newMsg!==null){
 await db.collection('notifications').doc(doc.id).update({message:newMsg});
-loadNotices(role,email);
+loadNotices();
 }
 };
 
@@ -248,14 +346,13 @@ delBtn.textContent='Delete';
 delBtn.onclick=async ()=>{
 if(confirm('Delete notice?')){
 await db.collection('notifications').doc(doc.id).delete();
-loadNotices(role,email);
+loadNotices();
 }
 };
 
 actions.appendChild(editBtn);
 actions.appendChild(delBtn);
 li.appendChild(actions);
-}
 
 ul.appendChild(li);
 });
