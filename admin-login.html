@@ -144,14 +144,15 @@ const loginPassword = document.getElementById('loginPassword');
 
 // Login
 document.getElementById('loginBtn').onclick = async () => {
-  const email = document.getElementById('loginEmail').value;
-  const password = loginPassword.value;
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = loginPassword.value.trim();
+  if(!email || !password) return alert('ईमेल आणि पासवर्ड भरा');
   try { await auth.signInWithEmailAndPassword(email,password); } 
   catch(err) { alert(err.message); }
 };
 
 // Show/hide password
-document.getElementById('togglePassword').addEventListener('click', ()=>{
+document.getElementById('togglePassword').addEventListener('click', function(){
   if(loginPassword.type==='password'){ loginPassword.type='text'; this.textContent='🙈'; } 
   else { loginPassword.type='password'; this.textContent='👁️'; }
 });
@@ -162,7 +163,8 @@ auth.onAuthStateChanged(async user=>{
     loginDiv.classList.add('hidden');
     dashboard.classList.remove('hidden');
 
-    const adminDoc = await db.collection('admins').doc(user.email).get();
+    // Use UID-based admin doc
+    const adminDoc = await db.collection('admins').doc(user.uid).get();
     if(!adminDoc.exists){ alert('आपण अधिकृत प्रशासक नाही.'); auth.signOut(); return; }
 
     const role = adminDoc.data().role;
@@ -177,14 +179,15 @@ auth.onAuthStateChanged(async user=>{
   } else { loginDiv.classList.remove('hidden'); dashboard.classList.add('hidden'); }
 });
 
+// Sign Out
 document.getElementById('signOutBtn').onclick = ()=>auth.signOut();
 
 // Superadmin Add Admin
 document.getElementById('addAdminBtn').onclick = async ()=>{
-  const email=document.getElementById('newAdminEmail').value;
-  const currentUser=auth.currentUser.email;
+  const email=document.getElementById('newAdminEmail').value.trim();
   if(!email) return alert('ईमेल भरा');
-  await db.collection('admins').doc(email).set({role:'admin', createdBy:currentUser});
+  const uid = email.replace(/[.@]/g,"_"); // temp UID for testing
+  await db.collection('admins').doc(uid).set({role:'admin', createdBy:auth.currentUser.email, email:email});
   alert('User added!');
   document.getElementById('newAdminEmail').value='';
   loadAdmins();
@@ -200,16 +203,17 @@ async function loadAdmins(){
     if(data.role==='superadmin') return;
     const li=document.createElement('li');
     li.className='card';
-    li.innerHTML=`${doc.id} - Role: ${data.role} (By ${data.createdBy})
+    li.innerHTML=`${data.email} - Role: ${data.role} (By ${data.createdBy})
       <div class="admin-actions">
         <button onclick="deleteAdmin('${doc.id}')">Delete</button>
-        <button onclick="resetPassword('${doc.id}')">Reset Password</button>
+        <button onclick="resetPassword('${data.email}')">Reset Password</button>
       </div>`;
     ul.appendChild(li);
   });
 }
 
-async function deleteAdmin(email){ if(confirm('Delete user?')){ await db.collection('admins').doc(email).delete(); loadAdmins(); } }
+// Delete / Reset
+async function deleteAdmin(docId){ if(confirm('Delete user?')){ await db.collection('admins').doc(docId).delete(); loadAdmins(); } }
 async function resetPassword(email){ await auth.sendPasswordResetEmail(email); alert('Password reset link sent to '+email); }
 
 // Notices
@@ -242,14 +246,9 @@ async function loadNotices(role,email){
       const actions=document.createElement('div');
       actions.className='admin-actions';
       const editBtn=document.createElement('button'); editBtn.textContent='Edit';
-      editBtn.onclick=async ()=>{
-        const newMsg=prompt('Edit message:',data.message);
-        if(newMsg!==null){ await db.collection('notifications').doc(doc.id).update({message:newMsg}); loadNotices(role,email); }
-      };
+      editBtn.onclick=async ()=>{ const newMsg=prompt('Edit message:',data.message); if(newMsg!==null){ await db.collection('notifications').doc(doc.id).update({message:newMsg}); loadNotices(role,email); } };
       const delBtn=document.createElement('button'); delBtn.textContent='Delete';
-      delBtn.onclick=async ()=>{
-        if(confirm('Delete notice?')){ await db.collection('notifications').doc(doc.id).delete(); loadNotices(role,email); }
-      };
+      delBtn.onclick=async ()=>{ if(confirm('Delete notice?')){ await db.collection('notifications').doc(doc.id).delete(); loadNotices(role,email); } };
       actions.appendChild(editBtn); actions.appendChild(delBtn); li.appendChild(actions);
     }
     ul.appendChild(li);
