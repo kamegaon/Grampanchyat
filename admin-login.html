@@ -2,127 +2,67 @@
 <html lang="mr">
 <head>
   <meta charset="UTF-8">
-  <title>Admin - Kamegaon</title>
+  <title>Admin Dashboard - Kamegaon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* ===== General Styles ===== */
     body {
-      font-family: 'Baloo 2', cursive;
-      background-color: #f9f9f9;
-      color: #333;
+      font-family: 'Arial', sans-serif;
+      background: #f3f3f3;
       margin: 0;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    h1, h2 {
-      color: #ff5722;
+      padding: 0;
       text-align: center;
     }
-
-    /* ===== Boxes / Cards ===== */
-    .login-box, .dashboard-container, .card {
-      background-color: #ffffff;
-      border-radius: 15px;
-      padding: 25px 30px;
-      margin: 15px 0;
-      box-shadow: 6px 6px 12px rgba(0,0,0,0.08), -6px -6px 12px rgba(255,255,255,0.6);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .login-box:hover, .dashboard-container:hover, .card:hover {
-      transform: translateY(-3px);
-      box-shadow: 8px 8px 15px rgba(0,0,0,0.12), -8px -8px 15px rgba(255,255,255,0.7);
-    }
-
-    /* ===== Inputs / Textarea ===== */
-    input, textarea {
-      width: 90%;
-      max-width: 400px;
-      padding: 12px 15px;
-      margin: 10px 0;
-      border-radius: 10px;
-      border: none;
-      box-shadow: inset 3px 3px 6px rgba(0,0,0,0.08), inset -3px -3px 6px rgba(255,255,255,0.6);
-      font-size: 15px;
-    }
-    textarea { height: 100px; resize: vertical; }
-
-    /* ===== Buttons ===== */
+    h1, h2 { color: #333; }
     button {
-      background-color: #ffe0b2;
-      color: #333;
+      background-color: #e0e0e0;
+      border-radius: 8px;
       border: none;
-      border-radius: 12px;
-      padding: 12px 25px;
-      font-size: 16px;
+      padding: 10px 20px;
+      margin: 5px;
       cursor: pointer;
-      box-shadow: 4px 4px 8px rgba(0,0,0,0.15), -4px -4px 8px rgba(255,255,255,0.6);
-      transition: all 0.2s ease;
-      margin: 5px 0;
+      font-size: 16px;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+      transition: 0.2s;
     }
-    button:hover {
-      background-color: #ffcc80;
-      transform: translateY(-2px);
-      box-shadow: 6px 6px 12px rgba(0,0,0,0.2), -6px -6px 12px rgba(255,255,255,0.7);
+    button:hover { transform: translateY(-2px); box-shadow: 4px 4px 8px rgba(0,0,0,0.3); }
+    input, textarea {
+      width: 90%; max-width: 400px;
+      padding: 10px; margin: 5px 0;
+      border-radius: 6px; border: none;
+      box-shadow: inset 2px 2px 5px rgba(0,0,0,0.1);
+      font-size: 14px;
     }
-
-    /* ===== Notice List ===== */
-    #noticeList li {
-      background-color: #ffffff;
-      border-radius: 12px;
-      padding: 15px 20px;
-      margin: 10px 0;
-      box-shadow: 4px 4px 12px rgba(0,0,0,0.1), -4px -4px 12px rgba(255,255,255,0.6);
-      transition: transform 0.2s ease;
-    }
-    #noticeList li:hover { transform: translateY(-3px); }
-
-    a { color: #ff5722; text-decoration: none; transition: color 0.2s; }
-    a:hover { color: #e64a19; }
-    label { font-weight: bold; display: block; margin-top: 10px; }
-
-    /* ===== Hide dashboard initially ===== */
-    .dashboard-container { display: none; width: 90%; max-width: 900px; align-items: center; }
+    .dashboard { max-width: 800px; margin: 20px auto; background:#fff; padding:20px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+    .card { background:#f9f9f9; padding:15px; margin:10px 0; border-radius:10px; box-shadow:2px 2px 5px rgba(0,0,0,0.1); position:relative; }
+    .card button { position:absolute; top:10px; right:10px; font-size:12px; padding:5px 10px; }
+    #loginBtn { background:#4285F4; color:#fff; }
   </style>
 </head>
 <body>
 
-  <h1>Admin Panel - Kamegaon</h1>
+  <h1>Admin Dashboard - Kamegaon</h1>
+  <button id="loginBtn"><i class="fab fa-google"></i> Sign In with Google</button>
+  <button id="signOutBtn" style="display:none;"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
 
-  <!-- ===== Login Box ===== -->
-  <div class="login-box" id="loginBox">
-    <h2>प्रशासक लॉगिन</h2>
-    <input type="email" id="email" placeholder="Gmail ID">
-    <input type="password" id="password" placeholder="Password">
-    <button id="loginBtn"><i class="fas fa-sign-in-alt"></i> लॉगिन</button>
-  </div>
-
-  <!-- ===== Dashboard ===== -->
-  <div class="dashboard-container" id="dashboard">
-    <button id="signOut"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
-
+  <div class="dashboard" id="dashboard" style="display:none;">
     <h2>नवीन सूचना जोडा</h2>
-    <label>शीर्षक (optional)</label>
-    <input id="title" placeholder="उदा: पाणीपुरवठा सूचना">
-    <label>संदेश</label>
+    <input type="text" id="title" placeholder="शीर्षक (optional)">
     <textarea id="message" placeholder="संदेश येथे टाका..."></textarea>
-    <button id="save"><i class="fas fa-save"></i> सुरक्षित करा</button>
+    <button id="saveNotice">सुरक्षित करा</button>
 
     <h2>सूचना यादी</h2>
-    <ul id="noticeList"></ul>
+    <div id="noticeList"></div>
   </div>
 
-  <!-- ===== Firebase SDK ===== -->
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 
   <script>
-    // 🔹 Firebase Config
-const firebaseConfig = {
+    // 🔹 Your Firebase Config
+    const firebaseConfig = {
   apiKey: "AIzaSyBvTQvsSsy4nq-xknFYQmiVcdTOSIQ9T-c",
   authDomain: "panchayatsetu.firebaseapp.com",
   projectId: "panchayatsetu",
@@ -134,58 +74,78 @@ const firebaseConfig = {
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // ===== Login =====
-    document.getElementById('loginBtn').onclick = async () => {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      try {
-        const userCredential = await auth.signInWithEmailAndPassword(email, password);
-        const user = userCredential.user;
+    const loginBtn = document.getElementById('loginBtn');
+    const signOutBtn = document.getElementById('signOutBtn');
+    const dashboard = document.getElementById('dashboard');
+
+    // Google Sign-In
+    loginBtn.onclick = () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider);
+    }
+
+    // Sign out
+    signOutBtn.onclick = () => auth.signOut();
+
+    auth.onAuthStateChanged(async user => {
+      if(user){
+        loginBtn.style.display = 'none';
+        signOutBtn.style.display = 'inline-block';
+
+        // Check admin role
         const adminDoc = await db.collection('admins').doc(user.email).get();
-        if(!adminDoc.exists) { alert('आपण अधिकृत प्रशासक नाही.'); await auth.signOut(); return; }
-        document.getElementById('loginBox').style.display = 'none';
-        document.getElementById('dashboard').style.display = 'flex';
+        if(!adminDoc.exists){
+          alert('आपण अधिकृत प्रशासक नाही.');
+          auth.signOut();
+          return;
+        }
+        dashboard.style.display = 'block';
         loadNotices();
-      } catch(err) { alert(err.message); }
+      } else {
+        loginBtn.style.display = 'inline-block';
+        signOutBtn.style.display = 'none';
+        dashboard.style.display = 'none';
+      }
+    });
+
+    // Save Notice
+    document.getElementById('saveNotice').onclick = async () => {
+      const title = document.getElementById('title').value.trim();
+      const message = document.getElementById('message').value.trim();
+      if(!message){ alert('संदेश रिक्त राहू शकत नाही'); return; }
+
+      await db.collection('notifications').add({
+        title, message,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      document.getElementById('title').value='';
+      document.getElementById('message').value='';
+      loadNotices();
     };
 
-    // ===== Sign Out =====
-    document.getElementById('signOut').onclick = async () => {
-      await auth.signOut();
-      document.getElementById('dashboard').style.display = 'none';
-      document.getElementById('loginBox').style.display = 'block';
-    };
-
-    // ===== Load Notices =====
-    async function loadNotices() {
-      const ul = document.getElementById('noticeList');
-      ul.innerHTML = '';
+    // Load Notices
+    async function loadNotices(){
+      const noticeList = document.getElementById('noticeList');
+      noticeList.innerHTML = '';
       const snapshot = await db.collection('notifications').orderBy('createdAt','desc').get();
       snapshot.forEach(doc => {
         const data = doc.data();
-        const li = document.createElement('li');
-        li.className = 'card';
-        li.innerHTML = `<strong>${data.title || ''}</strong><br>${data.message}`;
-        ul.appendChild(li);
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `<strong>${data.title || ''}</strong><p>${data.message}</p>`;
+
+        // Delete button
+        const delBtn = document.createElement('button');
+        delBtn.textContent = 'Delete';
+        delBtn.onclick = async () => {
+          await db.collection('notifications').doc(doc.id).delete();
+          loadNotices();
+        }
+        card.appendChild(delBtn);
+        noticeList.appendChild(card);
       });
     }
-
-    // ===== Add Notice =====
-    document.getElementById('save').onclick = async () => {
-      const title = document.getElementById('title').value;
-      const message = document.getElementById('message').value;
-      if(!message.trim()) { alert('संदेश रिक्त राहू शकत नाही'); return; }
-      await db.collection('notifications').add({
-        title,
-        message,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      document.getElementById('title').value = '';
-      document.getElementById('message').value = '';
-      loadNotices();
-    };
   </script>
-
 </body>
 </html>
-
