@@ -197,16 +197,15 @@ button:hover {
 <h2>सूचना यादी</h2>
 <ul id="noticeList"></ul>
 </div>
-
 <script>
 // Firebase Config
 const firebaseConfig = {
-apiKey: "AIzaSyBvTQvsSsy4nq-xknFYQmiVcdTOSIQ9T-c",
-authDomain: "panchayatsetu.firebaseapp.com",
-projectId: "panchayatsetu",
-storageBucket: "panchayatsetu.firebasestorage.app",
-messagingSenderId: "1082762014645",
-appId: "1:1082762014645:web:ef3a343c8d75907aba73fc"
+  apiKey: "AIzaSyBvTQvsSsy4nq-xknFYQmiVcdTOSIQ9T-c",
+  authDomain: "panchayatsetu.firebaseapp.com",
+  projectId: "panchayatsetu",
+  storageBucket: "panchayatsetu.firebasestorage.app",
+  messagingSenderId: "1082762014645",
+  appId: "1:1082762014645:web:ef3a343c8d75907aba73fc"
 };
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
@@ -221,142 +220,147 @@ const profileImg = document.getElementById('profileImg');
 
 // Login
 document.getElementById('loginBtn').onclick = async () => {
-const email = document.getElementById('loginEmail').value;
-const password = document.getElementById('loginPassword').value;
-try { await auth.signInWithEmailAndPassword(email,password); }
-catch(err) { alert(err.message); }
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+  try { 
+    await auth.signInWithEmailAndPassword(email,password); 
+  } catch(err) { 
+    alert(err.message); 
+  }
 };
 
 // Auth check
 auth.onAuthStateChanged(async user=>{
-if(user){
-loginDiv.classList.add('hidden');
-dashboard.classList.remove('hidden');
+  if(user){
+    loginDiv.classList.add('hidden');
+    dashboard.classList.remove('hidden');
 
-const adminDoc = await db.collection('admins').doc(user.email).get();
-if(!adminDoc.exists){
-alert('आपण अधिकृत प्रशासक नाही.');
-auth.signOut();
-return;
-}
+    const adminDoc = await db.collection('admins').doc(user.email).get();
+    if(!adminDoc.exists){
+      alert('आपण अधिकृत प्रशासक नाही.');
+      auth.signOut();
+      return;
+    }
 
-const role = adminDoc.data().role || 'admin';
+    const role = adminDoc.data().role || 'admin';
 
-// Profile update
-profileEmail.innerText = user.email;
-profileRole.innerText = role;
-profileImg.innerText = user.email[0].toUpperCase();
+    // Profile update
+    profileEmail.innerText = user.email;
+    profileRole.innerText = role;
+    profileImg.innerText = user.email[0].toUpperCase();
 
-// Show all features to all admins
-superAdminPanel.classList.remove('hidden');
-loadAdmins();
-loadNotices();
-} else {
-loginDiv.classList.remove('hidden');
-dashboard.classList.add('hidden');
-}
+    // Show all features to everyone
+    superAdminPanel.classList.remove('hidden');
+    loadAdmins();
+    loadNotices();
+  } else {
+    loginDiv.classList.remove('hidden');
+    dashboard.classList.add('hidden');
+  }
 });
 
 document.getElementById('signOutBtn').onclick = ()=>auth.signOut();
 
 // Add Admin
 document.getElementById('addAdminBtn').onclick = async ()=>{
-const email=document.getElementById('newAdminEmail').value;
-const currentUser=auth.currentUser.email;
-if(!email) return alert('ईमेल भरा');
-await db.collection('admins').doc(email).set({role:'admin', createdBy:currentUser});
-alert('User added!');
-document.getElementById('newAdminEmail').value='';
-loadAdmins();
+  const email = document.getElementById('newAdminEmail').value;
+  const currentUser = auth.currentUser.email;
+  if(!email) return alert('ईमेल भरा');
+  await db.collection('admins').doc(email).set({role:'admin', createdBy:currentUser});
+  alert('User added!');
+  document.getElementById('newAdminEmail').value='';
+  loadAdmins();
 };
 
 // Load Admins
 async function loadAdmins(){
-const ul=document.getElementById('adminList');
-ul.innerHTML='';
-const snapshot=await db.collection('admins').get();
-snapshot.forEach(doc=>{
-const data=doc.data();
-const li=document.createElement('li');
-li.className='card';
-li.innerHTML=`${doc.id} - Role: ${data.role} (By ${data.createdBy}) <div class="admin-actions">
-<button onclick="deleteAdmin('${doc.id}')">Delete</button>
-<button onclick="resetPassword('${doc.id}')">Reset Password</button>
-</div>`;
-ul.appendChild(li);
-});
+  const ul = document.getElementById('adminList');
+  ul.innerHTML='';
+  const snapshot = await db.collection('admins').get();
+  snapshot.forEach(doc=>{
+    const data = doc.data();
+    const li = document.createElement('li');
+    li.className='card';
+    li.innerHTML=`${doc.id} - Role: ${data.role} (By ${data.createdBy}) <div class="admin-actions">
+      <button onclick="deleteAdmin('${doc.id}')">Delete</button>
+      <button onclick="resetPassword('${doc.id}')">Reset Password</button>
+    </div>`;
+    ul.appendChild(li);
+  });
 }
 
 // Delete admin
 async function deleteAdmin(email){
-if(confirm('Delete user?')){
-await db.collection('admins').doc(email).delete();
-loadAdmins();
-}
+  if(confirm('Delete user?')){
+    await db.collection('admins').doc(email).delete();
+    loadAdmins();
+  }
 }
 
 // Reset password
 async function resetPassword(email){
-await auth.sendPasswordResetEmail(email);
-alert('Password reset link sent to '+email);
+  await auth.sendPasswordResetEmail(email);
+  alert('Password reset link sent to '+email);
 }
 
 // Add Notice
 document.getElementById('saveNoticeBtn').onclick = async ()=>{
-const title=document.getElementById('noticeTitle').value;
-const message=document.getElementById('noticeMessage').value;
-if(!message.trim()) return alert('संदेश रिक्त राहू शकत नाही');
-await db.collection('notifications').add({
-title,message,
-createdAt:firebase.firestore.FieldValue.serverTimestamp(),
-createdBy:auth.currentUser.email
-});
-document.getElementById('noticeTitle').value='';
-document.getElementById('noticeMessage').value='';
-loadNotices();
+  const title=document.getElementById('noticeTitle').value;
+  const message=document.getElementById('noticeMessage').value;
+  if(!message.trim()) return alert('संदेश रिक्त राहू शकत नाही');
+  await db.collection('notifications').add({
+    title,
+    message,
+    createdAt:firebase.firestore.FieldValue.serverTimestamp(),
+    createdBy:auth.currentUser.email
+  });
+  document.getElementById('noticeTitle').value='';
+  document.getElementById('noticeMessage').value='';
+  loadNotices();
 };
 
 // Load Notices
 async function loadNotices(){
-const ul=document.getElementById('noticeList');
-ul.innerHTML='';
-const snapshot=await db.collection('notifications').orderBy('createdAt','desc').get();
-snapshot.forEach(doc=>{
-const data=doc.data();
-const li=document.createElement('li');
-li.className='card';
-li.innerHTML=`<strong>${data.title||''}</strong><br>${data.message} <div class="notice-meta">By: ${data.createdBy||'Unknown'}</div>`;
+  const ul=document.getElementById('noticeList');
+  ul.innerHTML='';
+  const snapshot=await db.collection('notifications').orderBy('createdAt','desc').get();
+  snapshot.forEach(doc=>{
+    const data=doc.data();
+    const li=document.createElement('li');
+    li.className='card';
+    li.innerHTML=`<strong>${data.title||''}</strong><br>${data.message} <div class="notice-meta">By: ${data.createdBy||'Unknown'}</div>`;
 
-// Show edit/delete for all admins
-const actions=document.createElement('div');
-actions.className='admin-actions';
+    // Show edit/delete for all admins
+    const actions=document.createElement('div');
+    actions.className='admin-actions';
 
-const editBtn=document.createElement('button');
-editBtn.textContent='Edit';
-editBtn.onclick=async ()=>{
-const newMsg=prompt('Edit message:',data.message);
-if(newMsg!==null){
-await db.collection('notifications').doc(doc.id).update({message:newMsg});
-loadNotices();
-}
-};
+    const editBtn=document.createElement('button');
+    editBtn.textContent='Edit';
+    editBtn.onclick=async ()=>{
+      const newMsg=prompt('Edit message:',data.message);
+      if(newMsg!==null){
+        await db.collection('notifications').doc(doc.id).update({message:newMsg});
+        loadNotices();
+      }
+    };
 
-const delBtn=document.createElement('button');
-delBtn.textContent='Delete';
-delBtn.onclick=async ()=>{
-if(confirm('Delete notice?')){
-await db.collection('notifications').doc(doc.id).delete();
-loadNotices();
-}
-};
+    const delBtn=document.createElement('button');
+    delBtn.textContent='Delete';
+    delBtn.onclick=async ()=>{
+      if(confirm('Delete notice?')){
+        await db.collection('notifications').doc(doc.id).delete();
+        loadNotices();
+      }
+    };
 
-actions.appendChild(editBtn);
-actions.appendChild(delBtn);
-li.appendChild(actions);
+    actions.appendChild(editBtn);
+    actions.appendChild(delBtn);
+    li.appendChild(actions);
 
-ul.appendChild(li);
-});
+    ul.appendChild(li);
+  });
 }
 </script>
 </body>
 </html>
+
