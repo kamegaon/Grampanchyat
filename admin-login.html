@@ -12,8 +12,8 @@
 
   <style>
     body { font-family: 'Arial', sans-serif; margin:0; background:#f7f9fc; color:#333; }
-    header { background:#cfe8fc; color:#222; padding:15px; text-align:center; font-size:22px;
-             box-shadow:0 4px 8px rgba(0,0,0,0.1); position:sticky; top:0; z-index:100; }
+    header { background:#cfe8fc; color:#222; padding:15px; text-align:center; font-size:24px;
+             box-shadow:0 4px 8px rgba(0,0,0,0.1); position:sticky; top:0; z-index:100; font-weight:bold; }
     h2 { color:#444; margin-top:20px; }
 
     .container { width:90%; max-width:900px; margin:20px auto; padding:15px; }
@@ -55,20 +55,59 @@
       background:#dceefc; display:flex; align-items:center; justify-content:center;
       font-size:28px; font-weight:bold; color:#444;
     }
+
+    /* Login box styling */
+    #loginDiv {
+      background: #e6f7ff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 4px 4px 15px rgba(0,0,0,0.1), -4px -4px 15px #fff;
+    }
+    #loginDiv h2 {
+      text-align: center;
+      color: #007acc;
+      margin-bottom: 20px;
+    }
+    #loginDiv input {
+      box-shadow: inset 2px 2px 5px #cce6ff, inset -2px -2px 5px #ffffff;
+    }
+    #loginDiv button {
+      width: 100%;
+      background: #007acc;
+      color: #fff;
+      font-weight: bold;
+      margin-top: 15px;
+      box-shadow: 3px 3px 8px rgba(0,0,0,0.2), -3px -3px 8px #fff;
+      transition: all 0.2s ease;
+    }
+    #loginDiv button:hover {
+      background: #005f99;
+      transform: translateY(-2px);
+      box-shadow: 5px 5px 10px rgba(0,0,0,0.2), -5px -5px 10px #fff;
+    }
+    /* Show password button */
+    #togglePassword {
+      position:absolute;
+      right:10px; top:50%;
+      transform:translateY(-50%);
+      background:#cfe8fc; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;
+    }
   </style>
 </head>
 <body>
 
-<header style="background:#cfe8fc; color:#222; font-size:24px; font-weight:bold; text-align:center; padding:20px; box-shadow:0 4px 8px rgba(0,0,0,0.1);">
-  🌸 ग्रामपंचायत - Admin Dashboard
-</header>
+<header>🌸 ग्रामपंचायत - Admin Dashboard</header>
+
 <!-- Login -->
 <div id="loginDiv" class="container">
   <h2>Login</h2>
   <label>Email</label>
   <input type="email" id="loginEmail" placeholder="आपला ईमेल">
   <label>Password</label>
-  <input type="password" id="loginPassword" placeholder="पासवर्ड">
+  <div style="position:relative;">
+    <input type="password" id="loginPassword" placeholder="पासवर्ड">
+    <button type="button" id="togglePassword">👁️</button>
+  </div>
   <button id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</button>
 </div>
 
@@ -90,22 +129,22 @@
     <h2>👑 Superadmin Controls</h2>
 
     <!-- Add Admin (Superadmin only) -->
-  <div class="card green">
-    <h3>नवीन Admin जोडा</h3>
-    <label>Admin Email</label>
-    <input type="email" id="newAdminEmail" placeholder="Admin ईमेल">
-    <button id="addAdminBtn">Add Admin</button>
-    <p style="font-size:12px; color:#555; margin-top:5px;">
-      ✅ Superadmin manually sets the password in Firebase Console after adding.
-    </p>
-  </div>
+    <div class="card green">
+      <h3>नवीन Admin जोडा</h3>
+      <label>Admin Email</label>
+      <input type="email" id="newAdminEmail" placeholder="Admin ईमेल">
+      <button id="addAdminBtn">Add Admin</button>
+      <p style="font-size:12px; color:#555; margin-top:5px;">
+        ✅ Superadmin manually sets the password in Firebase Console after adding.
+      </p>
+    </div>
 
     <!-- Admin List -->
-  <div class="card orange">
-    <h3>Admin यादी</h3>
-    <ul id="adminList"></ul>
+    <div class="card orange">
+      <h3>Admin यादी</h3>
+      <ul id="adminList"></ul>
+    </div>
   </div>
-</div>
 
   <!-- Notices -->
   <div class="card yellow">
@@ -148,65 +187,52 @@
   document.getElementById('loginBtn').onclick = async () => {
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
-    try {
-      await auth.signInWithEmailAndPassword(email,password);
-    } catch(err) { alert(err.message); }
+    try { await auth.signInWithEmailAndPassword(email,password); }
+    catch(err) { alert(err.message); }
   };
+
+  // Show/hide password
+  const togglePassword = document.getElementById('togglePassword');
+  const loginPassword = document.getElementById('loginPassword');
+  togglePassword.addEventListener('click', () => {
+    if(loginPassword.type==='password'){
+      loginPassword.type='text'; togglePassword.textContent='🙈';
+    } else { loginPassword.type='password'; togglePassword.textContent='👁️'; }
+  });
 
   // Auth check
   auth.onAuthStateChanged(async user=>{
     if(user){
-      loginDiv.classList.add('hidden');
-      dashboard.classList.remove('hidden');
-
+      loginDiv.classList.add('hidden'); dashboard.classList.remove('hidden');
       const adminDoc = await db.collection('admins').doc(user.email).get();
-      if(!adminDoc.exists){
-        alert('आपण अधिकृत प्रशासक नाही.');
-        auth.signOut(); return;
-      }
+      if(!adminDoc.exists){ alert('आपण अधिकृत प्रशासक नाही.'); auth.signOut(); return; }
       const role = adminDoc.data().role;
-
-      // Profile update
       profileEmail.innerText = user.email;
       profileRole.innerText = role;
       profileImg.innerText = user.email[0].toUpperCase();
-
-      if(role==='superadmin'){
-        superAdminPanel.classList.remove('hidden');
-        loadAdmins();
-      } else {
-        superAdminPanel.classList.add('hidden');
-      }
+      if(role==='superadmin'){ superAdminPanel.classList.remove('hidden'); loadAdmins(); }
+      else { superAdminPanel.classList.add('hidden'); }
       loadNotices(role,user.email);
-    } else {
-      loginDiv.classList.remove('hidden');
-      dashboard.classList.add('hidden');
-    }
+    } else { loginDiv.classList.remove('hidden'); dashboard.classList.add('hidden'); }
   });
 
   document.getElementById('signOutBtn').onclick = ()=>auth.signOut();
 
-  // Add Admin (superadmin only)
+  // Add Admin
   document.getElementById('addAdminBtn').onclick = async ()=>{
     const email=document.getElementById('newAdminEmail').value;
     const currentUser=auth.currentUser.email;
     if(!email) return alert('ईमेल भरा');
     await db.collection('admins').doc(email).set({role:'admin', createdBy:currentUser});
-    alert('User added!');
-    document.getElementById('newAdminEmail').value='';
-    loadAdmins();
+    alert('User added!'); document.getElementById('newAdminEmail').value=''; loadAdmins();
   };
 
-  // Load Admins (skip superadmins)
   async function loadAdmins(){
-    const ul=document.getElementById('adminList');
-    ul.innerHTML='';
+    const ul=document.getElementById('adminList'); ul.innerHTML='';
     const snapshot=await db.collection('admins').get();
     snapshot.forEach(doc=>{
-      const data=doc.data();
-      if(data.role==='superadmin') return; // ❌ Don't show superadmins
-      const li=document.createElement('li');
-      li.className='card';
+      const data=doc.data(); if(data.role==='superadmin') return;
+      const li=document.createElement('li'); li.className='card';
       li.innerHTML=`${doc.id} - Role: ${data.role} (By ${data.createdBy})
         <div class="admin-actions">
           <button onclick="deleteAdmin('${doc.id}')">Delete</button>
@@ -216,15 +242,9 @@
     });
   }
   async function deleteAdmin(email){
-    if(confirm('Delete user?')){
-      await db.collection('admins').doc(email).delete();
-      loadAdmins();
-    }
+    if(confirm('Delete user?')){ await db.collection('admins').doc(email).delete(); loadAdmins(); }
   }
-  async function resetPassword(email){
-    await auth.sendPasswordResetEmail(email);
-    alert('Password reset link sent to '+email);
-  }
+  async function resetPassword(email){ await auth.sendPasswordResetEmail(email); alert('Password reset link sent to '+email); }
 
   // Add Notice
   document.getElementById('saveNoticeBtn').onclick = async ()=>{
@@ -236,46 +256,26 @@
       createdAt:firebase.firestore.FieldValue.serverTimestamp(),
       createdBy:auth.currentUser.email
     });
-    document.getElementById('noticeTitle').value='';
-    document.getElementById('noticeMessage').value='';
+    document.getElementById('noticeTitle').value=''; document.getElementById('noticeMessage').value='';
     loadNotices();
   };
 
   // Load Notices
   async function loadNotices(role,email){
-    const ul=document.getElementById('noticeList');
-    ul.innerHTML='';
+    const ul=document.getElementById('noticeList'); ul.innerHTML='';
     const snapshot=await db.collection('notifications').orderBy('createdAt','desc').get();
     snapshot.forEach(doc=>{
-      const data=doc.data();
-      const li=document.createElement('li');
-      li.className='card';
+      const data=doc.data(); const li=document.createElement('li'); li.className='card';
       li.innerHTML=`<strong>${data.title||''}</strong><br>${data.message}
         <div class="notice-meta">By: ${data.createdBy||'Unknown'}</div>`;
-      // Edit/Delete
       if(role==='superadmin' || data.createdBy===email){
-        const actions=document.createElement('div');
-        actions.className='admin-actions';
-        const editBtn=document.createElement('button');
-        editBtn.textContent='Edit';
-        editBtn.onclick=async ()=>{
-          const newMsg=prompt('Edit message:',data.message);
-          if(newMsg!==null){
-            await db.collection('notifications').doc(doc.id).update({message:newMsg});
-            loadNotices(role,email);
-          }
-        };
-        const delBtn=document.createElement('button');
-        delBtn.textContent='Delete';
-        delBtn.onclick=async ()=>{
-          if(confirm('Delete notice?')){
-            await db.collection('notifications').doc(doc.id).delete();
-            loadNotices(role,email);
-          }
-        };
-        actions.appendChild(editBtn);
-        actions.appendChild(delBtn);
-        li.appendChild(actions);
+        const actions=document.createElement('div'); actions.className='admin-actions';
+        const editBtn=document.createElement('button'); editBtn.textContent='Edit';
+        editBtn.onclick=async ()=>{ const newMsg=prompt('Edit message:',data.message);
+          if(newMsg!==null){ await db.collection('notifications').doc(doc.id).update({message:newMsg}); loadNotices(role,email); } };
+        const delBtn=document.createElement('button'); delBtn.textContent='Delete';
+        delBtn.onclick=async ()=>{ if(confirm('Delete notice?')){ await db.collection('notifications').doc(doc.id).delete(); loadNotices(role,email); } };
+        actions.appendChild(editBtn); actions.appendChild(delBtn); li.appendChild(actions);
       }
       ul.appendChild(li);
     });
@@ -283,4 +283,3 @@
 </script>
 </body>
 </html>
-
