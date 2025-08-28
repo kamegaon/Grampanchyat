@@ -9,17 +9,64 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body { font-family: 'Arial', sans-serif; background:#f2f2f2; margin:0; padding:0; display:flex; flex-direction:column; align-items:center;}
-    h1,h2 { text-align:center; color:#222;}
-    .container { width:90%; max-width:800px; margin:20px auto; }
-    input,textarea,button { width:100%; padding:10px; margin:8px 0; border-radius:8px; border:none; font-size:16px; }
-    button { cursor:pointer; transition:0.2s; background:#e0e0e0; box-shadow:3px 3px 8px rgba(0,0,0,0.2),-3px -3px 8px rgba(255,255,255,0.7);}
-    button:hover { transform:translateY(-2px); box-shadow:5px 5px 10px rgba(0,0,0,0.2),-5px -5px 10px rgba(255,255,255,0.7);}
-    .card { background:#fff; padding:15px; border-radius:12px; margin:10px 0; box-shadow:4px 4px 12px rgba(0,0,0,0.1),-4px -4px 12px rgba(255,255,255,0.6);}
+    body { 
+      font-family: 'Arial', sans-serif; 
+      background:#f1f2f6; 
+      margin:0; padding:0; 
+      display:flex; flex-direction:column; align-items:center;
+    }
+    h1,h2 { text-align:center; color:#222; }
+    .container { 
+      width:90%; max-width:800px; margin:20px auto; 
+      padding:20px; border-radius:20px;
+      background:#f9f9f9;
+      box-shadow: 8px 8px 15px rgba(0,0,0,0.15), -8px -8px 15px #fff;
+      animation: fadeIn 0.6s ease;
+    }
+    input,textarea,button,select { 
+      width:100%; padding:12px; margin:10px 0; 
+      border-radius:10px; border:none; font-size:16px; 
+      background:#f0f0f0; 
+      box-shadow: inset 3px 3px 6px rgba(0,0,0,0.15), inset -3px -3px 6px #fff;
+      transition: all 0.2s ease;
+    }
+    input:focus,textarea:focus,select:focus {
+      outline:none;
+      box-shadow: inset 1px 1px 3px rgba(0,0,0,0.2), inset -1px -1px 3px #fff;
+    }
+    button { 
+      cursor:pointer; background:#e0e0e0; font-weight:bold;
+      box-shadow: 3px 3px 8px rgba(0,0,0,0.2), -3px -3px 8px #fff;
+    }
+    button:hover { transform:translateY(-2px); }
+    button:active { transform:scale(0.98); }
+    .card { 
+      background:#fff; padding:15px; border-radius:15px; margin:10px 0; 
+      box-shadow: 6px 6px 12px rgba(0,0,0,0.1), -6px -6px 12px #fff;
+      animation: slideUp 0.5s ease;
+    }
     .hidden { display:none;}
-    .admin-actions { display:flex; gap:10px; margin-top:5px; }
+    .admin-actions { display:flex; gap:10px; margin-top:8px; }
     .admin-actions button { width:auto; padding:6px 12px; font-size:14px;}
     label { font-weight:bold; margin-top:10px; display:block;}
+    /* Profile Bar */
+    .profile-bar {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:12px 20px; margin-bottom:15px;
+      background:#f8f9fa; border-radius:12px;
+      box-shadow: 4px 4px 10px rgba(0,0,0,0.15), -4px -4px 10px #fff;
+      animation: fadeIn 0.6s ease;
+    }
+    .profile-bar span { font-weight:bold; color:#333; }
+    .profile-bar button { width:auto; padding:8px 15px; }
+    /* Show password toggle */
+    .password-container { position:relative; }
+    .password-container i {
+      position:absolute; top:35%; right:12px; cursor:pointer; color:#666;
+    }
+    /* Animations */
+    @keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+    @keyframes slideUp { from {opacity:0; transform:translateY(30px);} to {opacity:1; transform:translateY(0);} }
   </style>
 </head>
 <body>
@@ -32,13 +79,19 @@
     <label>Email</label>
     <input type="email" id="loginEmail" placeholder="आपला ईमेल">
     <label>Password</label>
-    <input type="password" id="loginPassword" placeholder="पासवर्ड">
+    <div class="password-container">
+      <input type="password" id="loginPassword" placeholder="पासवर्ड">
+      <i id="togglePass" class="fas fa-eye"></i>
+    </div>
     <button id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</button>
   </div>
 
   <!-- Dashboard -->
   <div id="dashboard" class="container hidden">
-    <button id="signOutBtn"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+    <div class="profile-bar">
+      <span id="profileInfo">👤</span>
+      <button id="signOutBtn"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+    </div>
 
     <!-- Superadmin: Add Admin -->
     <div id="addAdminDiv" class="hidden">
@@ -50,7 +103,7 @@
         <option value="admin">Admin</option>
         <option value="superadmin">Superadmin</option>
       </select>
-      <button id="addAdminBtn">Add Admin</button>
+      <button id="addAdminBtn"><i class="fas fa-user-plus"></i> Add Admin</button>
     </div>
 
     <!-- Add Notice -->
@@ -60,7 +113,7 @@
       <input id="noticeTitle" placeholder="उदा: पाणीपुरवठा सूचना">
       <label>संदेश</label>
       <textarea id="noticeMessage" placeholder="संदेश येथे टाका..."></textarea>
-      <button id="saveNoticeBtn">सुरक्षित करा</button>
+      <button id="saveNoticeBtn"><i class="fas fa-save"></i> सुरक्षित करा</button>
     </div>
 
     <!-- Notice List -->
@@ -84,10 +137,16 @@
   const auth = firebase.auth();
   const db = firebase.firestore();
 
-  // Elements
-  const loginDiv = document.getElementById('loginDiv');
-  const dashboard = document.getElementById('dashboard');
-  const addAdminDiv = document.getElementById('addAdminDiv');
+  // Toggle Password
+  document.getElementById('togglePass').onclick = () => {
+    const passInput = document.getElementById('loginPassword');
+    const icon = document.getElementById('togglePass');
+    if(passInput.type === "password"){
+      passInput.type = "text"; icon.classList.replace("fa-eye","fa-eye-slash");
+    } else {
+      passInput.type = "password"; icon.classList.replace("fa-eye-slash","fa-eye");
+    }
+  };
 
   // Login
   document.getElementById('loginBtn').onclick = async () => {
@@ -103,6 +162,7 @@
     if(user){
       loginDiv.classList.add('hidden');
       dashboard.classList.remove('hidden');
+      document.getElementById('profileInfo').innerText = "👤 "+user.email;
 
       const adminDoc = await db.collection('admins').doc(user.email).get();
       if(!adminDoc.exists){
@@ -157,10 +217,9 @@
       const li = document.createElement('li');
       li.className='card';
       li.innerHTML=`<strong>${data.title||''}</strong><br>${data.message}<div class="admin-actions"></div>`;
-      // Edit/Delete
       const actions = li.querySelector('.admin-actions');
       const editBtn = document.createElement('button');
-      editBtn.textContent='Edit';
+      editBtn.innerHTML='<i class="fas fa-edit"></i> Edit';
       editBtn.onclick = async ()=>{
         const newMessage = prompt('Edit message:', data.message);
         if(newMessage!==null){
@@ -169,7 +228,7 @@
         }
       };
       const delBtn = document.createElement('button');
-      delBtn.textContent='Delete';
+      delBtn.innerHTML='<i class="fas fa-trash"></i> Delete';
       delBtn.onclick = async ()=>{
         if(confirm('Are you sure?')) {
           await db.collection('notifications').doc(doc.id).delete();
@@ -184,4 +243,3 @@
 </script>
 </body>
 </html>
-
