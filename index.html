@@ -38,8 +38,36 @@
     <a href="panchayat-info.html"><i class="fas fa-building"></i> ग्रामपंचायत माहिती</a>
     <a href="law.html"><i class="fas fa-gavel"></i> कायदे आणि नियम</a>
   </nav>
+<!-- Notice Bar SHEET -->
+  <div id="notice-bar" class="notice-bar">
+    <span id="notice" class="notice-text"></span>
+  </div>
+
+  <script>
+    async function fetchNotice() {
+      try {
+        const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRYmHwVuXHgocGoP7p1evwN8HN5cGneUv4Di0KIkk7Djvr7gC6U3F3PMwa1dqbQebaXM5IN3yyd_7Ig/pub?gid=1382462655&single=true&output=csv";
+        const response = await fetch(csvUrl);
+        const text = await response.text();
+        const lines = text.trim().split("\n");
+        const lastLine = lines[lines.length - 1];
+        const columns = lastLine.split(",");
+        const latestNotice = columns[1]?.trim();
+        if (latestNotice && latestNotice.toLowerCase() !== "no notice") {
+          document.getElementById("notice").textContent = latestNotice;
+          document.getElementById("notice-bar").style.display = "block";
+        } else {
+          document.getElementById("notice-bar").style.display = "none";
+        }
+      } catch (error) {
+        document.getElementById("notice-bar").style.display = "none";
+      }
+    }
+    fetchNotice();
+    setInterval(fetchNotice, 15000); // Refresh every 15 seconds
+  </script>
   <!-- Notice Bar -->
-  <div id="notice-bar" class="notice-bar" style="display:none;">
+  <div id="notice-bar1" class="notice-bar" style="display:none;">
     <span id="notice" class="notice-text"></span>
   </div>
  <!-- Main Content -->
@@ -286,6 +314,7 @@
   </script>
 </body>
 </html>
+
 
 
 
