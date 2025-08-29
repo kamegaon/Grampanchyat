@@ -444,11 +444,32 @@ img:hover {
             100% { transform: translateX(-100%); }
         }
 /* Firebase Notice (Light Red) */
+/* 🔔 Firebase Notice Bar */
 #notice-bar-firebase {
-    background: #ffebee;   /* very light red/pink */
-    color: #b71c1c;        /* dark red text */
+    display: none;              /* hidden by default */
+    background: #ffebee;        /* light red background */
+    color: #b71c1c;             /* dark red text */
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
     border-bottom: 2px solid #e57373; /* soft red border */
 }
+
+/* 🔔 Firebase Notice Text (scrolling) */
+#notice-firebase {
+    display: inline-block;
+    padding-left: 100%;
+    animation: scroll-left-firebase 25s linear infinite;
+}
+
+/* 🔔 Firebase Scroll Animation */
+@keyframes scroll-left-firebase {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
 /* img sliding */
  .slider-container {
     width: 400px;
@@ -569,6 +590,7 @@ img:hover {
 .video-window::-webkit-scrollbar {
   display: none;
 }
+
 
 
 
