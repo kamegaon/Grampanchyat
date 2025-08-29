@@ -515,3 +515,22 @@ img:hover {
   margin-left: 10px;
   color: #B71C1C; /* Bold red for updates */
 }
+/*vedio slider*/
+.video-window {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;   /* स्क्रोल करून व्हिडीओ पाहता येतील */
+  scroll-snap-type: x mandatory;
+  padding: 10px;
+}
+.video-window video {
+  flex: 0 0 auto;      /* size fix */
+  width: 250px;        /* हवे असल्यास बदला */
+  height: 400px;       /* height reel style */
+  object-fit: cover;
+  border-radius: 10px;
+  scroll-snap-align: start;
+}
+.video-window::-webkit-scrollbar {
+  display: none; /* स्क्रोलबार लपवण्यासाठी */
+}
