@@ -443,7 +443,12 @@ img:hover {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
-
+/* Firebase Notice (Light Red) */
+#notice-bar-firebase {
+    background: #ffebee;   /* very light red/pink */
+    color: #b71c1c;        /* dark red text */
+    border-bottom: 2px solid #e57373; /* soft red border */
+}
 /* img sliding */
  .slider-container {
     width: 400px;
@@ -564,5 +569,6 @@ img:hover {
 .video-window::-webkit-scrollbar {
   display: none;
 }
+
 
 
