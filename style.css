@@ -516,24 +516,11 @@ img:hover {
   color: #B71C1C; /* Bold red for updates */
 }
 /*vedio slider*/
-.video-window {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;   /* स्क्रोल करून व्हिडीओ पाहता येतील */
-  scroll-snap-type: x mandatory;
-  padding: 10px;
+.info-block {
+  margin: 30px auto;
+  max-width: 95%;
 }
-.video-window video {
-  flex: 0 0 auto;      /* size fix */
-  width: 250px;        /* हवे असल्यास बदला */
-  height: 400px;       /* height reel style */
-  object-fit: cover;
-  border-radius: 10px;
-  scroll-snap-align: start;
-}
-.video-window::-webkit-scrollbar {
-  display: none; /* स्क्रोलबार लपवण्यासाठी */
-}
+
 .info-block h2 {
   font-size: 26px;
   text-align: center;
@@ -543,19 +530,37 @@ img:hover {
   border-radius: 8px;
   margin-bottom: 15px;
   box-shadow: 0px 4px 8px rgba(0,0,0,0.3);
+  font-family: 'Baloo 2', cursive;
   letter-spacing: 1px;
-  animation: fadeInDown 1s ease-in-out;
 }
 
-/* Simple fade animation */
-@keyframes fadeInDown {
-  from { 
-    opacity: 0; 
-    transform: translateY(-20px);
-  }
-  to { 
-    opacity: 1; 
-    transform: translateY(0);
-  }
+.video-window {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;        /* horizontal scroll */
+  scroll-snap-type: x mandatory;
+  padding: 10px;
+  border-radius: 10px;
+  background: #111;
 }
 
+.video-window video {
+  flex: 0 0 auto;           /* fixed width cards */
+  width: 250px;             /* card width */
+  height: 400px;            /* reel-style height */
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  scroll-snap-align: start;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.video-window video:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.6);
+}
+
+/* Hide scrollbar */
+.video-window::-webkit-scrollbar {
+  display: none;
+}
